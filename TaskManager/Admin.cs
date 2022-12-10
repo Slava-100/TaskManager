@@ -1,6 +1,6 @@
 ﻿namespace TaskManager
 {
-    public class Admin
+    public class Admin : User
     {
 
     }
