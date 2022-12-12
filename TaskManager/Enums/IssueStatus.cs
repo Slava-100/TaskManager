@@ -1,6 +1,6 @@
 ﻿namespace TaskManager.Enums
 {
-    public enum StatusOfTask
+    public enum IssueStatus
     {
         UserStory,
         Backlog,
