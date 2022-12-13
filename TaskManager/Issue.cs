@@ -4,7 +4,7 @@ namespace TaskManager
 {
     public class Issue
     {
-        public int NumberTask { get; set; }
+        public int NumberIssue { get; set; }
 
         public string Description { get; set; }
 
@@ -14,9 +14,9 @@ namespace TaskManager
 
         public IssueStatus Status { get; set; }
 
-        public Issue(int numberTask, string description)
+        public Issue(int numberIssue, string description)
         {
-            NumberTask = numberTask;
+            NumberIssue = numberIssue;
             Description = description;
         }
     }
