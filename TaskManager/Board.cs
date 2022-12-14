@@ -10,14 +10,14 @@
 
         public List<Issue> Issues { get; private set; }
 
-        public List<int> Keys { get; private set; }
+        public int Key { get; private set; }
 
-        public Board(int numberBoard, string idAdmin)
+        public Board(int numberBoard, string idAdmin, int key)
         {
             IDMembers = new List<string>();
             IDAdmin = new List<string>();
             Issues = new List<Issue>();
-            Keys = new List<int>();
+            Key = key;
             NumberBoard = numberBoard;
             IDAdmin.Add(idAdmin);
         }

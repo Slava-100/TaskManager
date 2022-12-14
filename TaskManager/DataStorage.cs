@@ -30,6 +30,20 @@
             }
             NextNumberBoard = max + 1;
         }
+
+        public void AddNewUserByKey(int idBoard, int keyBoard, string idUser, string nameUser)
+        {
+            foreach(int currentNumberBoard in Boards.Keys)
+            {
+                if (currentNumberBoard == idBoard && keyBoard == Boards[currentNumberBoard].Key)
+                {
+                    User user = new User(idUser, nameUser);
+                    Boards[currentNumberBoard].IDMembers.Add(user.IDUser);
+                    user.BoardsForUser.Add(Boards[currentNumberBoard]);
+                    break;
+                }
+            }
+        }
     }
 }
 
