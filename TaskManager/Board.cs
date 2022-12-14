@@ -35,5 +35,20 @@
                 return 1;
             }
         }
+
+        public void AddBlokingAndBlockedByIssue(int blockedByCurrentIssue, int blockingCurrentIssue)
+        {
+            foreach (var currentIssue in Issues)
+            {
+                if (currentIssue.NumberIssue == blockingCurrentIssue)
+                {
+                    currentIssue.BlockedByCurrentIssue.Add(blockedByCurrentIssue);
+                }
+                if (currentIssue.NumberIssue == blockedByCurrentIssue)
+                {
+                    currentIssue.BlockingIssues.Add(blockingCurrentIssue);
+                }
+            }
+        }
     }
 }
