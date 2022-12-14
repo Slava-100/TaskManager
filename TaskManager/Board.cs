@@ -22,7 +22,7 @@
             IDAdmin.Add(idAdmin);
         }
 
-        public int GetNextNumberIssue()
+        private int GetNextNumberIssue()
         {
             if (Issues.Count > 0)
             {
