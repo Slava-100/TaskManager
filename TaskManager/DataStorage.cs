@@ -33,15 +33,22 @@
 
         public void AddNewUserByKey(int idBoard, int keyBoard, string idUser, string nameUser)
         {
-            foreach(int currentNumberBoard in Boards.Keys)
+            if (Boards.ContainsKey(idBoard))
             {
-                if (currentNumberBoard == idBoard && keyBoard == Boards[currentNumberBoard].Key)
+                if (keyBoard == Boards[idBoard].Key)
                 {
                     User user = new User(idUser, nameUser);
-                    Boards[currentNumberBoard].IDMembers.Add(user.IDUser);
-                    user.BoardsForUser.Add(Boards[currentNumberBoard]);
-                    break;
+                    Boards[idBoard].IDMembers.Add(user.IDUser);
+                    user.BoardsForUser.Add(Boards[idBoard]);
                 }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            else
+            {
+                throw new Exception();
             }
         }
     }
