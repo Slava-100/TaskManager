@@ -43,12 +43,12 @@
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception($"invalid password from the board {keyBoard}");
                 }
             }
             else
             {
-                throw new Exception();
+                throw new Exception($"does not exist with this id {idBoard}");
             }
         }
     }
