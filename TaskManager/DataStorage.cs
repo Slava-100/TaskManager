@@ -30,6 +30,14 @@
             }
             NextNumberBoard = max + 1;
         }
+
+        public int AddBoard(string idAdmin)
+        {
+            Board board = new Board(NextNumberBoard, idAdmin);
+            Boards.Add(board.NumberBoard, board);
+            NextNumberBoard = NextNumberBoard + 1;
+            return board.NumberBoard;
+        }
     }
 }
 
