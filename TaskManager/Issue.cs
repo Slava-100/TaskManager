@@ -24,7 +24,7 @@ namespace TaskManager
         {
             return obj is Issue issue &&
                    NumberIssue == issue.NumberIssue &&
-                   Description==issue.Description &&
+                   Description == issue.Description &&
                    IdUser == issue.IdUser &&
                    Comment == issue.Comment &&
                    Status == issue.Status;
