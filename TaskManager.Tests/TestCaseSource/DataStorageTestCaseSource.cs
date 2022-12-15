@@ -11,12 +11,25 @@ namespace TaskManager.Tests.TestCaseSource
 			int numberBoard = 1;
 			string idMember = "id";
 			int keyBoard = 1;
-			Board board = new Board(numberBoard, idMember, keyBoard);
+            string nameMember = "";
+            Board board = new Board(numberBoard, idMember, keyBoard);
+
             board.IDMembers.Add(idMember);
+
+			User user = new User(idMember, nameMember);
+
+			user.BoardsForUser.Add(board);
+
+			List<Board> expectedBoardForUser = user.BoardsForUser;
+
+			Dictionary<string, User> expectedDictionaryUsers = new Dictionary<string, User>
+			{
+				{idMember, user}
+			};
 
 			List<string> expectedIdMembers = board.IDMembers;
 
-			yield return new Object[] { numberBoard, StorageBoard, idMember, keyBoard, expectedIdMembers};
+			yield return new Object[] {nameMember, numberBoard, StorageBoard, idMember, keyBoard, expectedIdMembers, expectedDictionaryUsers, expectedBoardForUser};
 		}
 	}
 }
