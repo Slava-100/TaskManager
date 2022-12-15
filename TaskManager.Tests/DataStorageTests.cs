@@ -6,7 +6,7 @@ namespace TaskManager.Tests
 	public class DataStorageTests
 	{
 		[TestCaseSource(typeof(AddNewUserByKeyTestCaseSource))]
-		public void AddNewUserByKeyTest(List<Board> expectedBoardsForUser,Dictionary<int, User> expectedDictionaryUsers,string nameMember, int numberBoard, Dictionary<int,Board> StorageBoard, string idMember, int keyBoard, List<string> expectedIdMembers)
+		public void AddNewUserByKeyTest(string nameMember, int numberBoard, Dictionary<int,Board> StorageBoard, string idMember, int keyBoard, List<string> expectedIdMembers, Dictionary<string, User> expectedDictionaryUsers, List<Board> expectedBoardsForUser)
 		{
 			DataStorage dataStorage = new DataStorage();
 			dataStorage.Boards = StorageBoard;
@@ -16,7 +16,7 @@ namespace TaskManager.Tests
 
 			List<string> actualIdMembers = dataStorage.Boards[numberBoard].IDMembers;
 
-            CollectionAssert.AreEqual(expectedIdMembers, actualIdMembers);
+			CollectionAssert.AreEqual(expectedIdMembers, actualIdMembers);
 
 			List<Board> actualBoardForUser = dataStorage.Users[idMember].BoardsForUser;
 

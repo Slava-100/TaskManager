@@ -41,9 +41,6 @@
         {
             return obj is Board board &&
                    NumberBoard == board.NumberBoard &&
-                   EqualityComparer<List<string>>.Default.Equals(IDMembers, board.IDMembers) &&
-                   EqualityComparer<List<string>>.Default.Equals(IDAdmin, board.IDAdmin) &&
-                   EqualityComparer<List<Issue>>.Default.Equals(Issues, board.Issues) &&
                    Key == board.Key;
         }
     }

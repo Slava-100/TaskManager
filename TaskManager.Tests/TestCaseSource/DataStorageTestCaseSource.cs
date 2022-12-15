@@ -7,12 +7,16 @@ namespace TaskManager.Tests.TestCaseSource
     {
 		public IEnumerator GetEnumerator()
 		{
-			Dictionary<int, Board> StorageBoard = new Dictionary<int, Board>();
 			int numberBoard = 1;
 			string idMember = "id";
 			int keyBoard = 1;
             string nameMember = "";
             Board board = new Board(numberBoard, idMember, keyBoard);
+
+			Dictionary<int, Board> StorageBoard = new Dictionary<int, Board>()
+			{
+				{1, board}
+            };
 
             board.IDMembers.Add(idMember);
 
