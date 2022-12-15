@@ -20,16 +20,7 @@ namespace TaskManager.Tests
             Assert.That(actualBool, Is.EqualTo(expectedBool));
             actualBoards.Should().BeEquivalentTo(expectedBoards);
         }
-    }
-}
 
-﻿using FluentAssertions;
-using TaskManager;
-
-namespace TaskManager.Tests
-{
-    public class DataStorageTests
-    {
         [TestCaseSource(typeof(DataStorageTestCaseSource), nameof(DataStorageTestCaseSource.AddBoardTestSource))]
         public void AddBoardTest(Dictionary<int, Board> baseBoards, string idAdmin, Dictionary<int, Board> expectedBoards, int expectedNumberBoard)
         {
@@ -47,3 +38,5 @@ namespace TaskManager.Tests
         }
     }
 }
+
+

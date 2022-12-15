@@ -44,15 +44,7 @@ namespace TaskManager.Tests
 
             yield return new Object[] { baseBoards, boardNumber, expectedBoards, expectedBool };
         }
-    }
-}
 
-﻿using System.Collections;
-
-namespace TaskManager.Tests
-{
-    public static class DataStorageTestCaseSource
-    {
         public static IEnumerable AddBoardTestSource()
         {
             Dictionary<int, Board> baseBoards = new Dictionary<int, Board>();
@@ -68,4 +60,6 @@ namespace TaskManager.Tests
         }
     }
 }
+
+
 
