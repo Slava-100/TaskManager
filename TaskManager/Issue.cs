@@ -18,6 +18,16 @@ namespace TaskManager
         {
             NumberIssue = numberIssue;
             Description = description;
-        }        
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Issue issue &&
+                   NumberIssue == issue.NumberIssue &&
+                   Description==issue.Description &&
+                   IdUser == issue.IdUser &&
+                   Comment == issue.Comment &&
+                   Status == issue.Status;
+        }
     }
 }
