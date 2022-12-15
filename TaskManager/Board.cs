@@ -12,6 +12,8 @@
 
         public List<int> Keys { get; private set; }
 
+        private int _numberNextIssue = 1;
+
         public Board(int numberBoard, string idAdmin)
         {
             IDMembers = new List<string>();
@@ -22,18 +24,10 @@
             IDAdmin.Add(idAdmin);
         }
 
-        private int GetNextNumberIssue()
+        public void AddNewIssue(string description)
         {
-            if (Issues.Count > 0)
-            {
-                Issue issue = Issues.LastOrDefault();
-                int issueNumber = issue.NumberIssue;
-                return issueNumber + 1;
-            }
-            else
-            {
-                return 1;
-            }
+            Issues.Add(new Issue(_numberNextIssue, description));
+            _numberNextIssue += 1;
         }
     }
 }
