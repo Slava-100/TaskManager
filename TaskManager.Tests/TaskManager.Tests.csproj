@@ -20,4 +20,10 @@
     <ProjectReference Include="..\TaskManager\TaskManager.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="TestCaseSource\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestCaseSource\" />
+  </ItemGroup>
 </Project>
