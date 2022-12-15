@@ -13,7 +13,7 @@ namespace TaskManager.Tests.TestCaseSource
             string nameMember = "";
             Board board = new Board(numberBoard, idMember, keyBoard);
 
-			Dictionary<int, Board> StorageBoard = new Dictionary<int, Board>()
+			Dictionary<int, Board> storageBoard = new Dictionary<int, Board>()
 			{
 				{1, board}
             };
@@ -33,7 +33,7 @@ namespace TaskManager.Tests.TestCaseSource
 
 			List<string> expectedIdMembers = board.IDMembers;
 
-			yield return new Object[] {nameMember, numberBoard, StorageBoard, idMember, keyBoard, expectedIdMembers, expectedDictionaryUsers, expectedBoardForUser};
+			yield return new Object[] {nameMember, numberBoard, storageBoard, idMember, keyBoard, expectedIdMembers, expectedDictionaryUsers, expectedBoardForUser};
 		}
 	}
 }
