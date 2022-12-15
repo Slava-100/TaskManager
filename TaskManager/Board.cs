@@ -24,10 +24,33 @@
             IDAdmin.Add(idAdmin);
         }
 
+        private bool CheckIssueAvailabilityByNumber(int numberIssue)
+        {
+            return Issues.Exists(issue => issue.NumberIssue == numberIssue);
+        }
+
         public void AddNewIssue(string description)
         {
+            while (CheckIssueAvailabilityByNumber(_numberNextIssue))
+            {
+                _numberNextIssue += 1;
+            }
+
             Issues.Add(new Issue(_numberNextIssue, description));
             _numberNextIssue += 1;
+        }
+
+        public void RemoveIssue(int numberIssue)
+        {
+            if (CheckIssueAvailabilityByNumber(numberIssue))
+            {
+                Issue removableIssue = Issues.Find(issue => issue.NumberIssue == numberIssue);
+                Issues.Remove(removableIssue);
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException($"no issue with a number {numberIssue}");
+            }
         }
     }
 }
