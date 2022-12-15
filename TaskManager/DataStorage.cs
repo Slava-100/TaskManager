@@ -30,6 +30,11 @@
             }
             NextNumberBoard = max + 1;
         }
+
+        public bool RemoveBoard(int numberBoard)
+        {
+            return Boards.Remove(numberBoard);
+        }
     }
 }
 
