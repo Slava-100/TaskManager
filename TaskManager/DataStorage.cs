@@ -37,12 +37,11 @@
             {
                 if (keyBoard == Boards[idBoard].Key)
                 {
-                    User user = new User(idUser, nameUser);
-                    Boards[idBoard].IDMembers.Add(user.IDUser);
-                    user.BoardsForUser.Add(Boards[idBoard]);
-
                     if (Users.ContainsKey(idUser) == false)
                     {
+                        User user = new User(idUser, nameUser);
+                        Boards[idBoard].IDMembers.Add(user.IDUser);
+                        user.BoardsForUser.Add(Boards[idBoard]);
                         Users.Add(idUser, user);
                     }
                 }
