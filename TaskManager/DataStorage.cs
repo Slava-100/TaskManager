@@ -40,7 +40,11 @@
                     User user = new User(idUser, nameUser);
                     Boards[idBoard].IDMembers.Add(user.IDUser);
                     user.BoardsForUser.Add(Boards[idBoard]);
-                    Users.Add(idUser, user);
+
+                    if (Users.ContainsKey(idUser) == false)
+                    {
+                        Users.Add(idUser, user);
+                    }
                 }
                 else
                 {
