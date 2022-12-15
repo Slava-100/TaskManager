@@ -25,6 +25,12 @@ namespace TaskManager.Tests
             CollectionAssert.AreEqual(expectedBlockedByCurrentIssue, actualBlockedByCurrentIssue);
             CollectionAssert.AreEqual(expectedBlockingIssues, actualBlockingIssues);
         }
+        //[TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetNextNumberIssueTestSource))]
+        //public void GetNextNumberIssueTest(Board board, int expectedNumberIssue)
+        //{
+        //    int actualNumberIssue = board.GetNextNumberIssue();
+        //    Assert.AreEqual(expectedNumberIssue, actualNumberIssue);
+        //}
     }
 }
 
