@@ -31,6 +31,11 @@
             NextNumberBoard = max + 1;
         }
 
+        public bool RemoveBoard(int numberBoard)
+        {
+            return Boards.Remove(numberBoard);
+        }
+
         public int AddBoard(string idAdmin)
         {
             Board board = new Board(NextNumberBoard, idAdmin);
