@@ -11,7 +11,8 @@ namespace TaskManager.Tests.TestCaseSource
 			string idMember = "id";
 			int keyBoard = 1;
             string nameMember = "";
-            Board board = new Board(numberBoard, "id2", keyBoard);
+            Board board = new Board(numberBoard, "id2");
+			board.Key = keyBoard;
 
 			Dictionary<int, Board> storageBoard = new Dictionary<int, Board>()
 			{

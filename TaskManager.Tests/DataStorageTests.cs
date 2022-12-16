@@ -1,6 +1,7 @@
 ﻿using System;
 using TaskManager.Tests.TestCaseSource;
 
+
 namespace TaskManager.Tests
 {
 	public class DataStorageTests
@@ -51,8 +52,10 @@ namespace TaskManager.Tests
 
             Dictionary<int, Board> storageBoards = new Dictionary<int, Board>()
             {
-                { numberBoard, new Board(numberBoard,idMember,2) } 
+                { numberBoard, new Board(numberBoard,idMember) } 
             };
+
+            storageBoards[numberBoard].Key = 2;
 
             DataStorage dataStorage = new DataStorage();
             dataStorage.Boards = storageBoards;
