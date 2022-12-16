@@ -63,27 +63,14 @@
                     }
                     else if (Boards[idBoard].IDMembers.Contains(idUser) == false)
                     {
-                        Boards[idBoard].IDMembers.Add(Users[idUser].IDUser);
+                        Boards[idBoard].IDMembers.Add(idUser);
                         Users[idUser].BoardsForUser.Add(idBoard);
 
                         flag = true;
                     }
-                    else
-                    {
-
-                        flag = false;
-                    }
-                }
-                else
-                {
-                    flag = false;
                 }
             }
-            else
-            {
-                flag = false;
-            }
-
+           
             return flag;
         }
     }
