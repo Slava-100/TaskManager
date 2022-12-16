@@ -22,6 +22,43 @@ namespace TaskManager.Tests
 
             CollectionAssert.AreEqual(expectedDictionaryUsers, actualDictionaryUsers);
         }
+
+		[Test]
+		public void AddNewUserByKeyTest_WhenBoardDoesNotExistWithId()
+		{
+			DataStorage dataStorage = new DataStorage();
+            int numberBoard = 1;
+            string idMember = "id";
+            int keyBoard = 1;
+            string nameMember = "";
+
+            bool expectedFlag = false;
+            bool actualFlag = dataStorage.AddNewUserByKey(numberBoard,keyBoard,idMember,nameMember);
+
+            Assert.AreEqual(expectedFlag, actualFlag);
+        }
+
+        [Test]
+        public void AddNewUserByKeyTest_WhenInvalidPasswordFromTheBoard()
+        {
+            int numberBoard = 1;
+            string idMember = "id";
+            int keyBoard = 1;
+            string nameMember = "";
+
+            Dictionary<int, Board> storageBoards = new Dictionary<int, Board>()
+            {
+                { numberBoard, new Board(numberBoard,idMember,2) } 
+            };
+
+            DataStorage dataStorage = new DataStorage();
+            dataStorage.Boards = storageBoards;
+
+            bool expectedFlag = false;
+            bool actualFalg = dataStorage.AddNewUserByKey(numberBoard, keyBoard, idMember, nameMember);
+
+            Assert.AreEqual(expectedFlag, actualFalg);
+        }
     }
 }
 
