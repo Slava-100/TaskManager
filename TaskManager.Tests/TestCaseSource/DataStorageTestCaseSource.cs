@@ -37,18 +37,6 @@ namespace TaskManager.Tests.TestCaseSource
 			List<string> expectedIdMembers = board.IDMembers;
 
 			yield return new Object[] {nameMember, numberBoard, dataStorage, idMember, keyBoard, expectedIdMembers, expectedDictionaryUsers, expectedBoardForUser};
-
-			//User user2 = new User("1234", "qwerty");
-			//Dictionary<string, User> storageUsers = new Dictionary<string, User>()
-			//{
-			//	{"1234", user2}
-			//};
-
-			//dataStorage.Users = storageUsers;
-
-			//expectedDictionaryUsers = dataStorage.Users;
-
-   //         yield return new Object[] { "qwerty", numberBoard, dataStorage, "1234", keyBoard, expectedIdMembers, expectedDictionaryUsers, expectedBoardForUser };
         }
 	}
 }
