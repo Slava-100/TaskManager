@@ -19,7 +19,7 @@ namespace TaskManager.Tests
             int actualNumberIssue = board.GetNextNumberIssue();
             Assert.AreEqual(expectedNumberIssue, actualNumberIssue);
         }
-        
+
         [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.AddBlokingAndBlockedByIssueTestSource))]
         public void AddBlokingAndBlockedByIssueTest(Issue blockedByCurrentIssue, Issue blockingCurrentIssue, List<int> expectedBlockedByCurrentIssue, List<int> expectedBlockingIssues)
         {
@@ -54,12 +54,6 @@ namespace TaskManager.Tests
 
             Assert.AreEqual(exceptionResult, actualResult);
         }
-//        [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetNextNumberIssueTestSource))]
-//        public void GetNextNumberIssueTest(Board board, int expectedNumberIssue)
-//        {
-//            int actualNumberIssue = board.GetNextNumberIssue();
-//            Assert.AreEqual(expectedNumberIssue, actualNumberIssue);
-//        }
     }
 }
 
