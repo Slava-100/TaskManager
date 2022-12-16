@@ -2,9 +2,9 @@
 {
     public class Member : IUser
     {
-        public void AddNewIssue()
+        public bool AddNewIssue(Board board,string description)
         {
-            AddNewIssue();
+            return false;
         }
 
         public void RemoveIssue(int numberIssue)

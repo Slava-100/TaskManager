@@ -2,9 +2,9 @@
 {
     public class Admin : IUser
     {
-        public void AddNewIssue()
+        public bool AddNewIssue(Board board, string description)
         {
-           AddNewIssue();
+            return board.AddNewIssue(description);
         }
 
         public void RemoveIssue(int numberIssue)

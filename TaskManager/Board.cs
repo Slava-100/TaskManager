@@ -43,17 +43,17 @@
             return Issues.Exists(issue => issue.NumberIssue == numberIssue);
         }
 
-        public int AddNewIssue(string description)
+        public bool AddNewIssue(string description)
         {
-            while (CheckIssueAvailabilityByNumber(_numberNextIssue))
-            {
+                while (CheckIssueAvailabilityByNumber(_numberNextIssue))
+                {
+                    _numberNextIssue += 1;
+                }
+
+                Issues.Add(new Issue(_numberNextIssue, description));
                 _numberNextIssue += 1;
-            }
 
-            Issues.Add(new Issue(_numberNextIssue, description));
-            _numberNextIssue += 1;
-
-            return Issues[Issues.Count - 1].NumberIssue;
+                return true;
         }
 
         public bool RemoveIssue(int numberIssue)
