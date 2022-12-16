@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
 using System;
 using TaskManager.Tests.TestCaseSource;
-
+using static TaskManager.Tests.TestCaseSource.DataStorageTestCaseSource;
 
 namespace TaskManager.Tests
 {
-	public class DataStorageTests
-	{
+    public class DataStorageTests
+    {
 		[TestCaseSource(typeof(AddNewUserByKeyTestCaseSource))]
 		public void AddNewUserByKeyTest(string nameMember, int numberBoard, DataStorage dataStorage, string idMember, int keyBoard, List<string> expectedIdMembers, Dictionary<string, User> expectedDictionaryUsers, List<int> expectedBoardsForUser)
 		{
