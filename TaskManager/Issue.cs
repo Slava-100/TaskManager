@@ -4,6 +4,10 @@ namespace TaskManager
 {
     public class Issue
     {
+        public List<int> BlockedByCurrentIssue { get; set; }
+
+        public List<int> BlockingIssues { get; set; }
+
         public int NumberIssue { get; set; }
 
         public string Description { get; set; }
@@ -16,6 +20,8 @@ namespace TaskManager
 
         public Issue(int numberIssue, string description)
         {
+            BlockedByCurrentIssue = new List<int>();
+            BlockingIssues = new List<int>();
             NumberIssue = numberIssue;
             Description = description;
         }
