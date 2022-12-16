@@ -35,5 +35,10 @@
                    IDUser == user.IDUser &&
                    NameUser == user.NameUser;
         }
+
+        internal void AddNewIssue(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
