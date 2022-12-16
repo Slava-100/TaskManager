@@ -44,6 +44,11 @@
                         user.BoardsForUser.Add(Boards[idBoard]);
                         Users.Add(idUser, user);
                     }
+                    else if (Boards[idBoard].IDMembers.Contains(idUser) == false)
+                    {
+                        Boards[idBoard].IDMembers.Add(Users[idUser].IDUser);
+                        Users[idUser].BoardsForUser.Add(Boards[idBoard]);
+                    }
                 }
                 else
                 {
