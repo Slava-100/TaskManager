@@ -2,9 +2,26 @@
 {
     public class User
     {
+        IUser _user;
+
+        public void SelectRole(bool isAdmin)
+        {
+            if (isAdmin)
+            {
+
+            }
+            else
+            { 
+            
+            }
+        }
+
         public string IDUser { get; private set; }
+
         public string NameUser { get; private set; }
+
         public List<int> BoardsForUser { get; private set; }
+
         public User(string idUser, string nameUser)
         {
             IDUser = idUser;
@@ -18,5 +35,7 @@
                    IDUser == user.IDUser &&
                    NameUser == user.NameUser;
         }
+
+
     }
 }
