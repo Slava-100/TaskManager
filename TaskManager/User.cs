@@ -8,11 +8,11 @@
         {
             if (isAdmin)
             {
-
+                _user = new Admin();
             }
             else
-            { 
-            
+            {
+                _user = new Member();
             }
         }
 
@@ -35,7 +35,5 @@
                    IDUser == user.IDUser &&
                    NameUser == user.NameUser;
         }
-
-
     }
 }
