@@ -24,12 +24,26 @@
             IDAdmin.Add(idAdmin);
         }
 
+        private int GetNextNumberIssue()
+        {
+            if (Issues.Count > 0)
+            {
+                Issue issue = Issues.LastOrDefault();
+                int issueNumber = issue.NumberIssue;
+                return issueNumber + 1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
         private bool CheckIssueAvailabilityByNumber(int numberIssue)
         {
             return Issues.Exists(issue => issue.NumberIssue == numberIssue);
         }
 
-        public void AddNewIssue(string description)
+        public int AddNewIssue(string description)
         {
             while (CheckIssueAvailabilityByNumber(_numberNextIssue))
             {
@@ -38,18 +52,22 @@
 
             Issues.Add(new Issue(_numberNextIssue, description));
             _numberNextIssue += 1;
+
+            return Issues[Issues.Count-1].NumberIssue;
         }
 
-        public void RemoveIssue(int numberIssue)
+        public bool RemoveIssue(int numberIssue)
         {
             if (CheckIssueAvailabilityByNumber(numberIssue))
             {
                 Issue removableIssue = Issues.Find(issue => issue.NumberIssue == numberIssue);
                 Issues.Remove(removableIssue);
+
+                return true;
             }
             else
             {
-                throw new ArgumentOutOfRangeException($"no issue with a number {numberIssue}");
+                return false;
             }
         }
     }
