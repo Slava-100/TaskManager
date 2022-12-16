@@ -12,7 +12,7 @@
 
         public List<Issue> Issues { get; private set; }
 
-        public int Key { get;  set; }
+        public int Key { get; set; }
 
         public Board(int numberBoard, string idAdmin)
         {
@@ -53,7 +53,7 @@
             Issues.Add(new Issue(_numberNextIssue, description));
             _numberNextIssue += 1;
 
-            return Issues[Issues.Count-1].NumberIssue;
+            return Issues[Issues.Count - 1].NumberIssue;
         }
 
         public bool RemoveIssue(int numberIssue)

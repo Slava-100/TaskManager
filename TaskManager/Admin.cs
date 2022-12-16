@@ -2,9 +2,9 @@
 {
     public class Admin : IUser
     {
-        public void AddNewIssue(string description)
+        public void AddNewIssue()
         {
-            AddNewIssue(description);
+           AddNewIssue();
         }
 
         public void RemoveIssue(int numberIssue)

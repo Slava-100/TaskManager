@@ -2,7 +2,7 @@
 {
     public interface IUser
     {
-        void AddNewIssue(string description);
+        void AddNewIssue();
 
         void RemoveIssue(int numberIssue);
 
