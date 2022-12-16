@@ -25,9 +25,9 @@ namespace TaskManager.Tests.TestCaseSource
 
 			User user = new User(idMember, nameMember);
 
-			user.BoardsForUser.Add(board);
+			user.BoardsForUser.Add(numberBoard);
 
-			List<Board> expectedBoardForUser = user.BoardsForUser;
+			List<int> expectedBoardForUser = user.BoardsForUser;
 
 			Dictionary<string, User> expectedDictionaryUsers = new Dictionary<string, User>
 			{

@@ -6,7 +6,7 @@ namespace TaskManager.Tests
 	public class DataStorageTests
 	{
 		[TestCaseSource(typeof(AddNewUserByKeyTestCaseSource))]
-		public void AddNewUserByKeyTest(string nameMember, int numberBoard, DataStorage dataStorage, string idMember, int keyBoard, List<string> expectedIdMembers, Dictionary<string, User> expectedDictionaryUsers, List<Board> expectedBoardsForUser)
+		public void AddNewUserByKeyTest(string nameMember, int numberBoard, DataStorage dataStorage, string idMember, int keyBoard, List<string> expectedIdMembers, Dictionary<string, User> expectedDictionaryUsers, List<int> expectedBoardsForUser)
 		{
 			dataStorage.AddNewUserByKey(numberBoard, keyBoard, idMember, nameMember);
 
@@ -14,44 +14,13 @@ namespace TaskManager.Tests
 
             CollectionAssert.AreEqual(expectedIdMembers, actualIdMembers);
 
-            List<Board> actualBoardForUser = dataStorage.Users[idMember].BoardsForUser;
+            List<int> actualBoardForUser = dataStorage.Users[idMember].BoardsForUser;
 
             CollectionAssert.AreEqual(expectedBoardsForUser, actualBoardForUser);
 
             Dictionary<string, User> actualDictionaryUsers = dataStorage.Users;
 
             CollectionAssert.AreEqual(expectedDictionaryUsers, actualDictionaryUsers);
-        }
-
-		[Test]
-		public void AddNewUserByKeyTest_WhenBoardDoesNotExistWithId_ShuldException()
-		{
-			DataStorage dataStorage = new DataStorage();
-            int numberBoard = 1;
-            string idMember = "id";
-            int keyBoard = 1;
-            string nameMember = "";
-			
-			Assert.Throws<Exception>(() => dataStorage.AddNewUserByKey(numberBoard,keyBoard,idMember,nameMember));
-        }
-
-        [Test]
-        public void AddNewUserByKeyTest_WhenInvalidPasswordFromTheBoard_ShuldException()
-        {
-            int numberBoard = 1;
-            string idMember = "id";
-            int keyBoard = 1;
-            string nameMember = "";
-
-            Dictionary<int, Board> storageBoards = new Dictionary<int, Board>()
-            {
-                { numberBoard, new Board(numberBoard,idMember,2) } 
-            };
-
-            DataStorage dataStorage = new DataStorage();
-            dataStorage.Boards = storageBoards;
-           
-            Assert.Throws<Exception>(() => dataStorage.AddNewUserByKey(numberBoard, keyBoard, idMember, nameMember));
         }
     }
 }

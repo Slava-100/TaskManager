@@ -4,12 +4,12 @@
     {
         public string IDUser { get; private set; }
         public string NameUser { get; private set; }
-        public List<Board> BoardsForUser { get; private set; }
+        public List<int> BoardsForUser { get; private set; }
         public User(string idUser, string nameUser)
         {
             IDUser = idUser;
             NameUser = nameUser;
-            BoardsForUser = new List<Board>();
+            BoardsForUser = new List<int>();
         }
 
         public override bool Equals(object? obj)
