@@ -8,7 +8,10 @@ namespace TaskManager.Tests
 		[TestCaseSource(typeof(AddNewUserByKeyTestCaseSource))]
 		public void AddNewUserByKeyTest(string nameMember, int numberBoard, DataStorage dataStorage, string idMember, int keyBoard, List<string> expectedIdMembers, Dictionary<string, User> expectedDictionaryUsers, List<int> expectedBoardsForUser)
 		{
-			dataStorage.AddNewUserByKey(numberBoard, keyBoard, idMember, nameMember);
+            bool expectedFlag = true;
+			bool actualFlag = dataStorage.AddNewUserByKey(numberBoard, keyBoard, idMember, nameMember);
+
+            Assert.AreEqual(expectedFlag, actualFlag);
 
             List<string> actualIdMembers = dataStorage.Boards[numberBoard].IDMembers;
 
