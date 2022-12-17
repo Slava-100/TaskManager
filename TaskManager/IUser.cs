@@ -6,7 +6,7 @@
 
         bool RemoveIssue(Board board, int numberIssue);
 
-        void AddBlokingAndBlockedByIssue(int blockedByCurrentIssue, int blockingCurrentIssue);
+        bool AddBlokingAndBlockedByIssue(Board board, int blockedByCurrentIssue, int blockingCurrentIssue);
         
         int AddBoard(string idAdmin);
 

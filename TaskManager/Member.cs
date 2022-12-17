@@ -13,9 +13,9 @@
             return false;
         }
 
-        public void AddBlokingAndBlockedByIssue(int blockedByCurrentIssue, int blockingCurrentIssue)
+        public bool AddBlokingAndBlockedByIssue(Board board, int blockedByCurrentIssue, int blockingCurrentIssue)
         {
-            AddBlokingAndBlockedByIssue(blockedByCurrentIssue, blockingCurrentIssue);
+            return false;
         }
 
         public void RemoveBoard(int numberBoard)

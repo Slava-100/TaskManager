@@ -19,6 +19,10 @@ if (user.SelectRole(board))
     user.AddNewIssue(board, "333", out int issueId333);
     user.AddNewIssue(board,"444", out int issueId444);
     user.RemoveIssue(board, issueId444);
+
+    user.AddNewIssue(board, "555", out int issueId555);
+    user.AddBlokingAndBlockedByIssue(board, issueId333, issueId555);
+
 }
 
 Console.WriteLine();

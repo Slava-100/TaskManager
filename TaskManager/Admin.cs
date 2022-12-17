@@ -14,9 +14,10 @@
             return board.RemoveIssue(numberIssue);
         }
 
-        public void AddBlokingAndBlockedByIssue(int blockedByCurrentIssue, int blockingCurrentIssue)
+        public bool AddBlokingAndBlockedByIssue(Board board, int blockedByCurrentIssue, int blockingCurrentIssue)
         {
-            AddBlokingAndBlockedByIssue(blockedByCurrentIssue, blockingCurrentIssue);
+            board.AddBlokingAndBlockedByIssue(blockedByCurrentIssue, blockingCurrentIssue);
+            return true;
         }
 
         public void RemoveBoard(int numberBoard)

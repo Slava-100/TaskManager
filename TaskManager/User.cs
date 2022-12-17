@@ -35,6 +35,11 @@ namespace TaskManager
             return _user.RemoveIssue(board, numberIssue);
         }
 
+        public bool AddBlokingAndBlockedByIssue(Board board, int blockedByCurrentIssue, int blockingCurrentIssue)
+        {
+            return _user.AddBlokingAndBlockedByIssue(board, blockedByCurrentIssue, blockingCurrentIssue);
+        }
+
         public string IDUser { get; private set; }
 
         public string NameUser { get; private set; }
