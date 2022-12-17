@@ -1,4 +1,8 @@
-﻿namespace TaskManager
+﻿using System;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+namespace TaskManager
 {
     public class DataStorage
     {
@@ -10,12 +14,49 @@
 
         public Dictionary<string, User> Users { get; set; }
 
+        private static DataStorage _instance;
+
         public DataStorage()
         {
             Boards = new Dictionary<int, Board>();
             Users = new Dictionary<string, User>();
             Path = @".\DataStorage.txt";
             UpdateNextNumberBoard();
+            ReturnFromFile();
+        }
+
+        public static DataStorage GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new DataStorage();
+            }
+            return _instance;
+        }
+
+        public void RewriteFile()
+        {
+            using (StreamWriter file = new StreamWriter(Path))
+            {
+                string serialiseForFile = JsonSerializer.Serialize(Boards);
+                file.WriteLine(serialiseForFile);
+                serialiseForFile= JsonSerializer.Serialize(Users);
+                file.WriteLine(serialiseForFile);
+            }
+        }
+
+        public void ReturnFromFile()
+        {
+            if(File.Exists(Path))
+            {
+                using (StreamReader file = new StreamReader(Path))
+                {
+                    string deserialiseFromFile = file.ReadLine();
+                    Boards = JsonSerializer.Deserialize<Dictionary<int, Board>>(deserialiseFromFile);
+                    deserialiseFromFile = file.ReadLine();
+                    Users = JsonSerializer.Deserialize<Dictionary<string, User>>(deserialiseFromFile);
+                }
+            }
         }
 
         private void UpdateNextNumberBoard()
