@@ -96,13 +96,5 @@
                 }
             }
         }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is Board board &&
-                   NumberBoard == board.NumberBoard &&
-                   Key == board.Key &&
-                   IDMembers.SequenceEqual(board.IDMembers);
-        }
     }
 }
