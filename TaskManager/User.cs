@@ -4,19 +4,19 @@ namespace TaskManager
 {
     public class User
     {
-        private IUser _user;
+        private AbstractUser _user;
 
         //public void SelectRole(bool isAdmin)
         public bool SelectRole(Board board)
         {
             if (board.IDAdmin.Contains(IDUser))
             {
-                _user = new Admin();
+                _user = new AdminUser();
                 return true;
             }
             else if (board.IDMembers.Contains(IDUser))
             {
-                _user = new Member();
+                _user = new MemberUser();
                 return true;
             }
             else
@@ -35,9 +35,9 @@ namespace TaskManager
             return _user.RemoveIssue(board, numberIssue);
         }
 
-        public bool AddBlokingAndBlockedByIssue(Board board, int blockedByCurrentIssue, int blockingCurrentIssue)
+        public void AddBlokingAndBlockedByIssue(Board board, int blockedByCurrentIssue, int blockingCurrentIssue)
         {
-            return _user.AddBlokingAndBlockedByIssue(board, blockedByCurrentIssue, blockingCurrentIssue);
+            _user.AddBlokingAndBlockedByIssue(board, blockedByCurrentIssue, blockingCurrentIssue);
         }
 
         public string IDUser { get; private set; }
