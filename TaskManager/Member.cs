@@ -2,8 +2,9 @@
 {
     public class Member : IUser
     {
-        public bool AddNewIssue(Board board,string description)
+        public bool AddNewIssue(Board board,string description, out int issueId)
         {
+            issueId = -1;
             return false;
         }
 

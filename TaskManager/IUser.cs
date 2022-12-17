@@ -2,7 +2,7 @@
 {
     public interface IUser
     {
-        bool AddNewIssue(Board board,string description);
+        bool AddNewIssue(Board board,string description, out int issueId);
 
         bool RemoveIssue(Board board, int numberIssue);
 
@@ -15,4 +15,3 @@
         void AddNewUserByKey(int idBoard, int keyBoard, string idUser, string nameUser);
     }
 }
-//, out int issueId

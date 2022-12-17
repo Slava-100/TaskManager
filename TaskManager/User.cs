@@ -25,9 +25,9 @@ namespace TaskManager
             }
         }
 
-        public bool AddNewIssue(Board board, string description)
+        public bool AddNewIssue(Board board, string description, out int issueId)
         {
-            return _user.AddNewIssue(board, description);
+            return _user.AddNewIssue(board, description, out issueId);
         }
 
         public bool RemoveIssue(Board board, int numberIssue)

@@ -2,9 +2,11 @@
 {
     public class Admin : IUser
     {
-        public bool AddNewIssue(Board board, string description)
+        public bool AddNewIssue(Board board, string description, out int issueId)
         {
-            return board.AddNewIssue(description);
+            var isAddIssue = board.AddNewIssue(description);
+            issueId = board.Issues.First(issue=>issue.Description==description).NumberIssue;
+            return isAddIssue;
         }
 
         public bool RemoveIssue(Board board, int numberIssue)
