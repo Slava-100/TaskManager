@@ -29,6 +29,8 @@ namespace TaskManager
         public override bool Equals(object? obj)
         {
             return obj is Issue issue &&
+                   BlockedByCurrentIssue.SequenceEqual(issue.BlockedByCurrentIssue)&&
+                   BlockingIssues.SequenceEqual(issue.BlockingIssues)&&
                    NumberIssue == issue.NumberIssue &&
                    Description == issue.Description &&
                    IdUser == issue.IdUser &&

@@ -1,1 +1,1 @@
-﻿Console.WriteLine("Hy");
+Console.WriteLine("Hy");
