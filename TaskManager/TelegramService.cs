@@ -40,7 +40,16 @@ namespace TaskManager
             {
                 if (update.Message.Text.ToLower() == "/start")
                 {
-                    _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Привет. Меня зовут {_bot.GetMeAsync().Result.FirstName}");
+                    bool newUser = false;
+                    if (newUser) //если нет в dataStorage среди юзеров, то расскажи о себе
+                    {
+                        _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Привет. Меня зовут {_bot.GetMeAsync().Result.FirstName}. Я предоставляю удобную командную работу над общим проектом," +
+                            $" а именно создание доски в которую можно добавлять, удалять задачи, брать задачи на выполнение, менять их статус... Начнём работу?");
+                    }
+                    else
+                    {
+                        _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Привет, рад тебя видеть снова!");
+                    }
                 }
                 else
                 {
