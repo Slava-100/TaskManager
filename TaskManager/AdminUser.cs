@@ -17,9 +17,9 @@
             board.AddBlokingAndBlockedByIssue(blockedByCurrentIssue, blockingCurrentIssue);
         }
 
-        public override void RemoveBoard(int numberBoard)
+        public override bool RemoveBoard(int numberBoard)
         {
-            RemoveBoard(numberBoard);
+           return RemoveBoard(numberBoard);
         }
 
         public override int AddBoard(string idAdmin)

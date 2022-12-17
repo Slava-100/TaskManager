@@ -16,9 +16,9 @@
         {
         }
 
-        public override void RemoveBoard(int numberBoard)
+        public override bool RemoveBoard(int numberBoard)
         {
-            RemoveBoard(numberBoard);
+            return false;
         }
 
         public override int AddBoard(string idAdmin)

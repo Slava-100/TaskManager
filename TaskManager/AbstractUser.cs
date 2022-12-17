@@ -10,7 +10,7 @@
 
         public abstract int AddBoard(string idAdmin);
 
-        public abstract void RemoveBoard(int numberBoard);
+        public abstract bool RemoveBoard(int numberBoard);
 
         public abstract void AddNewUserByKey(int idBoard, int keyBoard, string idUser, string nameUser);
     }
