@@ -7,9 +7,9 @@
             return false;
         }
 
-        public void RemoveIssue(int numberIssue)
+        public bool RemoveIssue(Board board, int numberIssue)
         {
-            RemoveIssue(numberIssue);
+            return false;
         }
 
         public void AddBlokingAndBlockedByIssue(int blockedByCurrentIssue, int blockingCurrentIssue)
@@ -22,9 +22,9 @@
             RemoveBoard(numberBoard);
         }
 
-        public void AddBoard(string idAdmin)
+        public int AddBoard(string idAdmin)
         {
-            AddBoard(idAdmin);
+            return -1;
         }
 
         public void AddNewUserByKey(int idBoard, int keyBoard, string idUser, string nameUser)

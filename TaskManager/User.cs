@@ -14,12 +14,12 @@ namespace TaskManager
                 _user = new Admin();
                 return true;
             }
-            else if(board.IDMembers.Contains(IDUser))
+            else if (board.IDMembers.Contains(IDUser))
             {
                 _user = new Member();
                 return true;
             }
-            else 
+            else
             {
                 return false;
             }
@@ -28,6 +28,11 @@ namespace TaskManager
         public bool AddNewIssue(Board board, string description)
         {
             return _user.AddNewIssue(board, description);
+        }
+
+        public bool RemoveIssue(Board board, int numberIssue)
+        {
+            return _user.RemoveIssue(board, numberIssue);
         }
 
         public string IDUser { get; private set; }

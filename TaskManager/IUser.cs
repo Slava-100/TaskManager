@@ -4,11 +4,11 @@
     {
         bool AddNewIssue(Board board,string description);
 
-        void RemoveIssue(int numberIssue);
+        bool RemoveIssue(Board board, int numberIssue);
 
         void AddBlokingAndBlockedByIssue(int blockedByCurrentIssue, int blockingCurrentIssue);
         
-        void AddBoard(string idAdmin);
+        int AddBoard(string idAdmin);
 
         void RemoveBoard(int numberBoard);
 
