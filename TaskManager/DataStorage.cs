@@ -21,8 +21,8 @@ namespace TaskManager
             Boards = new Dictionary<int, Board>();
             Users = new Dictionary<string, User>();
             Path = @".\DataStorage.txt";
-            UpdateNextNumberBoard();
             ReturnFromFile();
+            UpdateNextNumberBoard();
         }
 
         public static DataStorage GetInstance()
