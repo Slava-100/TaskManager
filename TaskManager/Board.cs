@@ -90,7 +90,8 @@
         {
             return obj is Board board &&
                    NumberBoard == board.NumberBoard &&
-                   Key == board.Key;
+                   Key == board.Key &&
+                   IDMembers.SequenceEqual(board.IDMembers);
         }
     }
 }
