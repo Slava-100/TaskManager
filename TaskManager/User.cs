@@ -57,7 +57,8 @@ namespace TaskManager
         {
             return obj is User user &&
                    IDUser == user.IDUser &&
-                   NameUser == user.NameUser;
+                   NameUser == user.NameUser &&
+                   BoardsForUser.SequenceEqual(user.BoardsForUser);
         }
     }
 }

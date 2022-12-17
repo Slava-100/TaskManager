@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 
 namespace TaskManager.Tests.TestCaseSource
 {
@@ -98,6 +97,53 @@ namespace TaskManager.Tests.TestCaseSource
             }
 
 
+        }
+
+        public class TestCaseForRewriteAndReturnTest : IEnumerable
+        {
+            public IEnumerator GetEnumerator()
+            {
+                Dictionary<int, Board> boards = new Dictionary<int, Board>()
+                {
+                    {1,new Board(1,"22") },
+                    {2,new Board(2,"33") },
+                    {3,new Board(3,"44") }
+                };
+                List<Issue> tasks = new List<Issue>()
+                {
+                    new Issue(1,"QQQ"),
+                    new Issue(2,"QQQ"),
+                    new Issue(3,"QQQ")
+                };
+
+                for (int i = 1; i < boards.Count; i++)
+                {
+                    boards[i].Issues.AddRange(tasks);
+                }
+
+                Dictionary<string, User> users = new Dictionary<string, User>()
+                {
+                    {"22",new User("22","Valerka")},
+                    {"33",new User("33","Pasha")},
+                    {"44",new User("44","Kesha")}
+                };
+
+                yield return new object[] { boards, users };
+
+                users.Clear();
+
+                yield return new object[] { boards, users };
+
+                boards.Clear();
+                users = new Dictionary<string, User>()
+                {
+                    {"22",new User("22","Valerka")},
+                    {"33",new User("33","Pasha")},
+                    {"44",new User("44","Kesha")}
+                };
+
+                yield return new object[] { boards, users };
+            }
         }
     }
 }
