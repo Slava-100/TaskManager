@@ -15,3 +15,4 @@
         void AddNewUserByKey(int idBoard, int keyBoard, string idUser, string nameUser);
     }
 }
+//, out int issueId

@@ -4,7 +4,7 @@ namespace TaskManager
 {
     public class User
     {
-        public IUser _user;
+        private IUser _user;
 
         //public void SelectRole(bool isAdmin)
         public bool SelectRole(Board board)
@@ -25,10 +25,10 @@ namespace TaskManager
             }
         }
 
-        //public bool AddNewIssue(string description)
-        //{
-        //    return _user.AddNewIssue(description);
-        //}
+        public bool AddNewIssue(Board board, string description)
+        {
+            return _user.AddNewIssue(board, description);
+        }
 
         public string IDUser { get; private set; }
 

@@ -9,7 +9,7 @@ board.IDAdmin.Add(user.IDUser);
 
 if (user.SelectRole(board))
 {
-    user._user.AddNewIssue(board,"2222");
+    user.AddNewIssue(board,"111");
 }
 
 Console.WriteLine();
