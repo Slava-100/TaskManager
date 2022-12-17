@@ -12,7 +12,7 @@
 
         public List<Issue> Issues { get; private set; }
 
-        public int Key { get;  set; }
+        public int Key { get; set; }
 
         public Board(int numberBoard, string idAdmin)
         {
@@ -43,17 +43,17 @@
             return Issues.Exists(issue => issue.NumberIssue == numberIssue);
         }
 
-        public int AddNewIssue(string description)
+        public bool AddNewIssue(string description)
         {
-            while (CheckIssueAvailabilityByNumber(_numberNextIssue))
-            {
+                while (CheckIssueAvailabilityByNumber(_numberNextIssue))
+                {
+                    _numberNextIssue += 1;
+                }
+
+                Issues.Add(new Issue(_numberNextIssue, description));
                 _numberNextIssue += 1;
-            }
 
-            Issues.Add(new Issue(_numberNextIssue, description));
-            _numberNextIssue += 1;
-
-            return Issues[Issues.Count-1].NumberIssue;
+                return true;
         }
 
         public bool RemoveIssue(int numberIssue)
@@ -90,7 +90,8 @@
         {
             return obj is Board board &&
                    NumberBoard == board.NumberBoard &&
-                   Key == board.Key;
+                   Key == board.Key &&
+                   IDMembers.SequenceEqual(board.IDMembers);
         }
     }
 }
