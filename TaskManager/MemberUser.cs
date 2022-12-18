@@ -20,15 +20,5 @@
         {
             return false;
         }
-
-        public override int AddBoard(string idAdmin)
-        {
-            return -1;
-        }
-
-        public override void AddNewUserByKey(int idBoard, int keyBoard, string idUser, string nameUser)
-        {
-            AddNewUserByKey(idBoard, keyBoard, idUser, nameUser);
-        }
     }
 }

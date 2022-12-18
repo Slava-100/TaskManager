@@ -6,7 +6,19 @@ namespace TaskManager
     {
         private AbstractUser _user;
 
-        //public void SelectRole(bool isAdmin)
+        public string IDUser { get; private set; }
+
+        public string NameUser { get; private set; }
+
+        public List<int> BoardsForUser { get; private set; }
+
+        public User(string idUser, string nameUser)
+        {
+            IDUser = idUser;
+            NameUser = nameUser;
+            BoardsForUser = new List<int>();
+        }
+
         public bool SelectRole(Board board)
         {
             if (board.IDAdmin.Contains(IDUser))
@@ -40,17 +52,19 @@ namespace TaskManager
             _user.AddBlokingAndBlockedByIssue(board, blockedByCurrentIssue, blockingCurrentIssue);
         }
 
-        public string IDUser { get; private set; }
-
-        public string NameUser { get; private set; }
-
-        public List<int> BoardsForUser { get; private set; }
-
-        public User(string idUser, string nameUser)
+        public int AddBoard()
         {
-            IDUser = idUser;
-            NameUser = nameUser;
-            BoardsForUser = new List<int>();
+            return DataStorage.GetInstance().AddBoard(IDUser);
+        }
+
+        public bool RemoveBoard(int numberBoard)
+        {
+            return _user.RemoveBoard(numberBoard);
+        }
+
+        public void AddNewUserByKey(int idBoard, int keyBoard)
+        {
+            DataStorage.GetInstance().AddNewUserByKey(idBoard, keyBoard, IDUser, NameUser);
         }
 
         public override bool Equals(object? obj)

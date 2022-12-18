@@ -19,17 +19,7 @@
 
         public override bool RemoveBoard(int numberBoard)
         {
-           return RemoveBoard(numberBoard);
-        }
-
-        public override int AddBoard(string idAdmin)
-        {
-            return AddBoard(idAdmin);
-        }
-
-        public override void AddNewUserByKey(int idBoard, int keyBoard, string idUser, string nameUser)
-        {
-            AddNewUserByKey(idBoard, keyBoard, idUser, nameUser);
+            return DataStorage.RemoveBoard(numberBoard);
         }
     }
 }
