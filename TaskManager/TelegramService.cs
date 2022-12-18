@@ -34,26 +34,37 @@ namespace TaskManager
         {
             string name = update.Message.Chat.FirstName;
             long id = update.Message.Chat.Id;
+            
             Console.WriteLine(name + " " + id);
             
             if (update.Message.Text is not null)
             {
-                if (update.Message.Text.ToLower() == "/start")
+                switch (update.Message.Text)
                 {
-                    bool flag = DataStorage.GetInstance().Users.ContainsKey(update.Message.Chat.Id);
-                    if (!flag) 
-                    {
-                        _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Привет. Меня зовут {_bot.GetMeAsync().Result.FirstName}. Я предоставляю удобную командную работу над общим проектом," +
-                            $" а именно создание доски в которую можно добавлять, удалять задачи, брать задачи на выполнение, менять их статус... Начнём работу?");
-                    }
-                    else
-                    {
-                        _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Привет, рад тебя видеть снова!");
-                    }
-                }
-                else
-                {
-                    _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Я не понимаю тебя!");
+                    case "/start" or "/Start":
+                        bool flag = DataStorage.GetInstance().Users.ContainsKey(update.Message.Chat.Id);
+                        if (!flag)
+                        {
+                            _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Привет. Меня зовут {_bot.GetMeAsync().Result.FirstName}. Я предоставляю удобную командную работу над общим проектом," +
+                                $" а именно создание доски в которую можно добавлять, удалять задачи, брать задачи на выполнение, менять их статус... Начнём работу? (Да/нет)");
+                        }
+                        else
+                        {
+                            _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Привет, рад тебя видеть снова!");
+                        }
+                        break;
+
+                    case "Да":
+                        _bot.SendTextMessageAsync(update.Message.Chat.Id, "\n 1 - Присоединиться к существующей доске \n 2 - Создать доску");
+                        break;
+
+                    case "1":
+                        _bot.SendTextMessageAsync(update.Message.Chat.Id, "");
+                        break;
+
+                    default:
+                        _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Я не понимаю тебя!");
+                        break;
                 }
             }
         }
