@@ -25,14 +25,14 @@ namespace TaskManager.Tests
         }
 
         [TestCaseSource(typeof(AddNewUserByKeyTestCaseSource))]
-        public void AddNewUserByKeyTest(string nameMember, int numberBoard, DataStorage dataStorage, string idMember, int keyBoard, List<string> expectedIdMembers, Dictionary<string, User> expectedDictionaryUsers, List<int> expectedBoardsForUser)
+        public void AddNewUserByKeyTest(string nameMember, int numberBoard, DataStorage dataStorage, long idMember, int keyBoard, List<long> expectedIdMembers, Dictionary<long, User> expectedDictionaryUsers, List<int> expectedBoardsForUser)
         {
             bool expectedFlag = true;
             bool actualFlag = dataStorage.AddNewUserByKey(numberBoard, keyBoard, idMember, nameMember);
 
             Assert.AreEqual(expectedFlag, actualFlag);
 
-            List<string> actualIdMembers = dataStorage.Boards[numberBoard].IDMembers;
+            List<long> actualIdMembers = dataStorage.Boards[numberBoard].IDMembers;
 
             CollectionAssert.AreEqual(expectedIdMembers, actualIdMembers);
 
@@ -40,7 +40,7 @@ namespace TaskManager.Tests
 
             CollectionAssert.AreEqual(expectedBoardsForUser, actualBoardForUser);
 
-            Dictionary<string, User> actualDictionaryUsers = dataStorage.Users;
+            Dictionary<long, User> actualDictionaryUsers = dataStorage.Users;
 
             CollectionAssert.AreEqual(expectedDictionaryUsers, actualDictionaryUsers);
         }
@@ -50,7 +50,7 @@ namespace TaskManager.Tests
         {
             DataStorage dataStorage = new DataStorage();
             int numberBoard = 1;
-            string idMember = "id";
+            long idMember = 12;
             int keyBoard = 1;
             string nameMember = "";
 
@@ -64,7 +64,7 @@ namespace TaskManager.Tests
         public void AddNewUserByKeyTest_WhenInvalidPasswordFromTheBoard()
         {
             int numberBoard = 1;
-            string idMember = "id";
+            long idMember = 12;
             int keyBoard = 1;
             string nameMember = "";
 
@@ -101,7 +101,7 @@ namespace TaskManager.Tests
         }
 
         [TestCaseSource(typeof(DataStorageTestCaseSource), nameof(DataStorageTestCaseSource.AddBoardTestSource))]
-        public void AddBoardTest(Dictionary<int, Board> baseBoards, string idAdmin, Dictionary<int, Board> expectedBoards, int expectedNumberBoard)
+        public void AddBoardTest(Dictionary<int, Board> baseBoards, long idAdmin, Dictionary<int, Board> expectedBoards, int expectedNumberBoard)
         {
             //Given
             DataStorage dataStorage = new DataStorage();
@@ -117,7 +117,7 @@ namespace TaskManager.Tests
         }
 
         [TestCaseSource(typeof(TestCaseForRewriteAndReturnTest))]
-        public void RewriteFileTest(Dictionary<int, Board> boards, Dictionary<string, User> users)
+        public void RewriteFileTest(Dictionary<int, Board> boards, Dictionary<long, User> users)
         {
             _dataStorage.Boards = boards;
             _dataStorage.Users = users;
@@ -127,19 +127,19 @@ namespace TaskManager.Tests
                 string jsn = sr.ReadLine();
                 _dataStorage.Boards = JsonSerializer.Deserialize<Dictionary<int, Board>>(jsn);
                 jsn = sr.ReadLine();
-                _dataStorage.Users = JsonSerializer.Deserialize<Dictionary<string, User>>(jsn);
+                _dataStorage.Users = JsonSerializer.Deserialize<Dictionary<long, User>>(jsn);
             }
             Dictionary<int, Board> expectedBoards = boards;
             Dictionary<int, Board> actualBoards = _dataStorage.Boards;
-            Dictionary<string, User> expectedUsers = users;
-            Dictionary<string, User> actualUsers = _dataStorage.Users;
+            Dictionary<long, User> expectedUsers = users;
+            Dictionary<long, User> actualUsers = _dataStorage.Users;
 
             CollectionAssert.AreEqual(actualBoards, expectedBoards);
             CollectionAssert.AreEqual(actualUsers, expectedUsers);
         }
 
         [TestCaseSource(typeof(TestCaseForRewriteAndReturnTest))]
-        public void ReturnFromFIleTest(Dictionary<int, Board> boards, Dictionary<string, User> users)
+        public void ReturnFromFIleTest(Dictionary<int, Board> boards, Dictionary<long, User> users)
         {
             _dataStorage.Boards = boards;
             _dataStorage.Users = users;
@@ -153,8 +153,8 @@ namespace TaskManager.Tests
             _dataStorage.ReturnFromFile();
             Dictionary<int, Board> expectedBoards = boards;
             Dictionary<int, Board> actualBoards = _dataStorage.Boards;
-            Dictionary<string, User> expectedUsers = users;
-            Dictionary<string, User> actualUsers = _dataStorage.Users;
+            Dictionary<long, User> expectedUsers = users;
+            Dictionary<long, User> actualUsers = _dataStorage.Users;
 
             CollectionAssert.AreEqual(actualBoards, expectedBoards);
             CollectionAssert.AreEqual(actualUsers, expectedUsers);

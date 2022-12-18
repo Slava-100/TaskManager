@@ -12,14 +12,14 @@ namespace TaskManager
 
         public Dictionary<int, Board> Boards { get; set; }
 
-        public Dictionary<string, User> Users { get; set; }
+        public Dictionary<long, User> Users { get; set; }
 
         private static DataStorage _instance;
 
         public DataStorage()
         {
             Boards = new Dictionary<int, Board>();
-            Users = new Dictionary<string, User>();
+            Users = new Dictionary<long, User>();
             Path = @".\DataStorage.txt";
             ReturnFromFile();
             UpdateNextNumberBoard();
@@ -54,7 +54,7 @@ namespace TaskManager
                     string deserialiseFromFile = file.ReadLine();
                     Boards = JsonSerializer.Deserialize<Dictionary<int, Board>>(deserialiseFromFile);
                     deserialiseFromFile = file.ReadLine();
-                    Users = JsonSerializer.Deserialize<Dictionary<string, User>>(deserialiseFromFile);
+                    Users = JsonSerializer.Deserialize<Dictionary<long, User>>(deserialiseFromFile);
                 }
             }
         }
@@ -77,7 +77,7 @@ namespace TaskManager
             return Boards.Remove(numberBoard);
         }
 
-        public int AddBoard(string idAdmin)
+        public int AddBoard(long idAdmin)
         {
             Board board = new Board(NextNumberBoard, idAdmin);
             Boards.Add(board.NumberBoard, board);
@@ -85,7 +85,7 @@ namespace TaskManager
             return board.NumberBoard;
         }
 
-        public bool AddNewUserByKey(int idBoard, int keyBoard, string idUser, string nameUser)
+        public bool AddNewUserByKey(int idBoard, int keyBoard, long idUser, string nameUser)
         {
             bool flag = false;
 

@@ -7,8 +7,8 @@ Console.WriteLine("Hy");
 //TelegramService client = new TelegramService();
 //Console.ReadLine();
 
-TaskManager.User admin = new TaskManager.User("adminID", "admin");
-TaskManager.User member = new TaskManager.User("memberID", "member");
+TaskManager.User admin = new TaskManager.User(12, "admin");
+TaskManager.User member = new TaskManager.User(23, "member");
 
 int boardAdmin = admin.AddBoard();
 int boardMember = member.AddBoard();
@@ -27,7 +27,7 @@ admin.RemoveBoard(boardMember);
 
 
 
-TaskManager.User user = new TaskManager.User("3", "3");
+TaskManager.User user = new TaskManager.User(3, "3");
 user.AddNewUserByKey(boardMember, 0);
 
 Console.WriteLine();

@@ -6,9 +6,9 @@
 
         public int NumberBoard { get; private set; }
 
-        public List<string> IDMembers { get; private set; }
+        public List<long> IDMembers { get; private set; }
 
-        public List<string> IDAdmin { get; private set; }
+        public List<long> IDAdmin { get; private set; }
 
         public List<Issue> Issues { get; private set; }
 
@@ -25,10 +25,10 @@
                    Key == board.Key;
         }
 
-        public Board(int numberBoard, string idAdmin)
+        public Board(int numberBoard, long idAdmin)
         {
-            IDMembers = new List<string>();
-            IDAdmin = new List<string>();
+            IDMembers = new List<long>();
+            IDAdmin = new List<long>();
             Issues = new List<Issue>();
             Key = 0;
             NumberBoard = numberBoard;

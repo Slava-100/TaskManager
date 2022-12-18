@@ -12,7 +12,7 @@ namespace TaskManager
 
         public string Description { get; set; }
 
-        public string IdUser { get; set; }
+        public long IdUser { get; set; }
 
         public string Comment { get; set; }
 

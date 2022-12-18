@@ -6,13 +6,13 @@ namespace TaskManager
     {
         private AbstractUser _user;
 
-        public string IDUser { get; private set; }
+        public long IDUser { get; private set; }
 
         public string NameUser { get; private set; }
 
         public List<int> BoardsForUser { get; private set; }
 
-        public User(string idUser, string nameUser)
+        public User(long idUser, string nameUser)
         {
             IDUser = idUser;
             NameUser = nameUser;

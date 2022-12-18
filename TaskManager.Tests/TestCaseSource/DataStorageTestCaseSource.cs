@@ -6,8 +6,8 @@ namespace TaskManager.Tests.TestCaseSource
     {
         public static IEnumerable RemoveBoardTestSource()
         {
-            Board board1 = new Board(1, "1");
-            Board board2 = new Board(2, "2");
+            Board board1 = new Board(1, 1);
+            Board board2 = new Board(2, 2);
             Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
             {
                 { 1, board1},
@@ -22,8 +22,8 @@ namespace TaskManager.Tests.TestCaseSource
 
             yield return new Object[] { baseBoards, boardNumber, expectedBoards, expectedBool };
 
-            Board board10 = new Board(10, "10");
-            Board board21 = new Board(21, "21");
+            Board board10 = new Board(10, 10);
+            Board board21 = new Board(21, 21);
             baseBoards = new Dictionary<int, Board>
             {
                 { 10, board10},
@@ -48,8 +48,8 @@ namespace TaskManager.Tests.TestCaseSource
         public static IEnumerable AddBoardTestSource()
         {
             Dictionary<int, Board> baseBoards = new Dictionary<int, Board>();
-            string idAdmin = "idAdmin";
-            Board addBoard = new Board(1, "idAdmin");
+            long idAdmin = 12;
+            Board addBoard = new Board(1, 12);
             Dictionary<int, Board> expectedBoards = new Dictionary<int, Board>
             {
               {addBoard.NumberBoard, addBoard }
@@ -64,16 +64,16 @@ namespace TaskManager.Tests.TestCaseSource
             public IEnumerator GetEnumerator()
             {
                 int numberBoard = 1;
-                string idMember = "id";
+                long idMember = 123;
                 int keyBoard = 1;
                 string nameMember = "";
-                Board board = new Board(numberBoard, "id2");
+                Board board = new Board(numberBoard, 1234);
                 board.Key = keyBoard;
 
                 Dictionary<int, Board> storageBoard = new Dictionary<int, Board>()
-            {
+                {
                 {1, board}
-            };
+                };
 
                 DataStorage dataStorage = new DataStorage();
                 dataStorage.Boards = storageBoard;
@@ -86,12 +86,12 @@ namespace TaskManager.Tests.TestCaseSource
 
                 List<int> expectedBoardForUser = user.BoardsForUser;
 
-                Dictionary<string, User> expectedDictionaryUsers = new Dictionary<string, User>
-            {
+                Dictionary<long, User> expectedDictionaryUsers = new Dictionary<long, User>
+                {
                 {idMember, user}
-            };
+                };
 
-                List<string> expectedIdMembers = board.IDMembers;
+                List<long> expectedIdMembers = board.IDMembers;
 
                 yield return new Object[] { nameMember, numberBoard, dataStorage, idMember, keyBoard, expectedIdMembers, expectedDictionaryUsers, expectedBoardForUser };
             }
@@ -105,9 +105,9 @@ namespace TaskManager.Tests.TestCaseSource
             {
                 Dictionary<int, Board> boards = new Dictionary<int, Board>()
                 {
-                    {1,new Board(1,"22") },
-                    {2,new Board(2,"33") },
-                    {3,new Board(3,"44") }
+                    {1,new Board(1,22) },
+                    {2,new Board(2,33) },
+                    {3,new Board(3,44) }
                 };
                 List<Issue> tasks = new List<Issue>()
                 {
@@ -123,9 +123,9 @@ namespace TaskManager.Tests.TestCaseSource
 
                 Dictionary<string, User> users = new Dictionary<string, User>()
                 {
-                    {"22",new User("22","Valerka")},
-                    {"33",new User("33","Pasha")},
-                    {"44",new User("44","Kesha")}
+                    {"22",new User(22,"Valerka")},
+                    {"33",new User(33,"Pasha")},
+                    {"44",new User(44,"Kesha")}
                 };
 
                 yield return new object[] { boards, users };
@@ -137,9 +137,9 @@ namespace TaskManager.Tests.TestCaseSource
                 boards.Clear();
                 users = new Dictionary<string, User>()
                 {
-                    {"22",new User("22","Valerka")},
-                    {"33",new User("33","Pasha")},
-                    {"44",new User("44","Kesha")}
+                    {"22",new User(22,"Valerka")},
+                    {"33",new User(33,"Pasha")},
+                    {"44",new User(44,"Kesha")}
                 };
 
                 yield return new object[] { boards, users };
