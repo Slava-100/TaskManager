@@ -40,8 +40,8 @@ namespace TaskManager
             {
                 if (update.Message.Text.ToLower() == "/start")
                 {
-                    bool newUser = false;
-                    if (newUser) //если нет в dataStorage среди юзеров, то расскажи о себе
+                    bool flag = DataStorage.GetInstance().Users.ContainsKey(update.Message.Chat.Id);
+                    if (!flag) 
                     {
                         _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Привет. Меня зовут {_bot.GetMeAsync().Result.FirstName}. Я предоставляю удобную командную работу над общим проектом," +
                             $" а именно создание доски в которую можно добавлять, удалять задачи, брать задачи на выполнение, менять их статус... Начнём работу?");
