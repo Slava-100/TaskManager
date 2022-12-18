@@ -5,6 +5,8 @@ using System.Text.Json;
 //using Newtonsoft.Json;
 using TaskManager.Tests.TestCaseSource;
 using static TaskManager.Tests.TestCaseSource.DataStorageTestCaseSource;
+//using Newtonsoft.Json;
+//using Telegram.Bot.Types;
 
 namespace TaskManager.Tests
 {
@@ -19,7 +21,7 @@ namespace TaskManager.Tests
 
         public void SetUp()
         {
-            _path = @".\TestDataStorage";
+            _path = @".\TestDataStorage.txt";
             _dataStorage = DataStorage.GetInstance();
             _dataStorage.Path = _path;
         }
@@ -116,49 +118,75 @@ namespace TaskManager.Tests
             actualBoards.Should().BeEquivalentTo(expectedBoards);
         }
 
-        [TestCaseSource(typeof(TestCaseForRewriteAndReturnTest))]
-        public void RewriteFileTest(Dictionary<int, Board> boards, Dictionary<long, User> users)
+        [Test]
+        public void testboard()
         {
-            _dataStorage.Boards = boards;
-            _dataStorage.Users = users;
-            _dataStorage.RewriteFile();
-            using (StreamReader sr = new StreamReader(_dataStorage.Path))
+            string path = @".\mazafakatest.txt";
+
+            Board expectedBoard = new Board(1,11);
+
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                string serialiseForFile = JsonSerializer.Serialize(expectedBoard);
+                sw.WriteLine(serialiseForFile);
+            }
+
+            Board actualBoard = new Board();
+
+            using (StreamReader sr = new StreamReader(path))
             {
                 string jsn = sr.ReadLine();
-                _dataStorage.Boards = JsonSerializer.Deserialize<Dictionary<int, Board>>(jsn);
-                jsn = sr.ReadLine();
-                _dataStorage.Users = JsonSerializer.Deserialize<Dictionary<long, User>>(jsn);
+                actualBoard = JsonSerializer.Deserialize<Board>(jsn);
             }
-            Dictionary<int, Board> expectedBoards = boards;
-            Dictionary<int, Board> actualBoards = _dataStorage.Boards;
-            Dictionary<long, User> expectedUsers = users;
-            Dictionary<long, User> actualUsers = _dataStorage.Users;
 
-            CollectionAssert.AreEqual(actualBoards, expectedBoards);
-            CollectionAssert.AreEqual(actualUsers, expectedUsers);
+            Assert.AreEqual(expectedBoard, actualBoard);
+
         }
 
-        [TestCaseSource(typeof(TestCaseForRewriteAndReturnTest))]
-        public void ReturnFromFIleTest(Dictionary<int, Board> boards, Dictionary<long, User> users)
-        {
-            _dataStorage.Boards = boards;
-            _dataStorage.Users = users;
-            using (StreamWriter sw = new StreamWriter(_dataStorage.Path))
-            {
-                string serialiseToFile = JsonSerializer.Serialize(_dataStorage.Boards);
-                sw.WriteLine(serialiseToFile);
-                serialiseToFile = JsonSerializer.Serialize(_dataStorage.Users);
-                sw.WriteLine(serialiseToFile);
-            }
-            _dataStorage.ReturnFromFile();
-            Dictionary<int, Board> expectedBoards = boards;
-            Dictionary<int, Board> actualBoards = _dataStorage.Boards;
-            Dictionary<long, User> expectedUsers = users;
-            Dictionary<long, User> actualUsers = _dataStorage.Users;
+        //[TestCaseSource(typeof(TestCaseForRewriteAndReturnTest))]
+        //public void RewriteFileTest(Dictionary<int, Board> boards, Dictionary<long, User> users)
+        //{
+        //    _dataStorage.Boards = boards;
+        //    _dataStorage.Users = users;
+        //    _dataStorage.RewriteFile();
+        //    using (StreamReader sr = new StreamReader(_dataStorage.Path))
+        //    {
+        //        string jsn = sr.ReadLine();
+        //        _dataStorage.Boards = JsonConvert.DeserializeObject<Dictionary<int, Board>>(jsn);
+        //        jsn = sr.ReadLine();
+        //        _dataStorage.Users = JsonConvert.DeserializeObject<Dictionary<long, User>>(jsn);
+        //    }
+        //    Dictionary<int, Board> expectedBoards = boards;
+        //    Dictionary<int, Board> actualBoards = _dataStorage.Boards;
+        //    Dictionary<long, User> expectedUsers = users;
+        //    Dictionary<long, User> actualUsers = _dataStorage.Users;
 
-            CollectionAssert.AreEqual(actualBoards, expectedBoards);
-            CollectionAssert.AreEqual(actualUsers, expectedUsers);
-        }
+        //    CollectionAssert.AreEqual(actualBoards, expectedBoards);
+        //    CollectionAssert.AreEqual(actualUsers, expectedUsers);
+        //}
+
+        //[TestCaseSource(typeof(TestCaseForRewriteAndReturnTest))]
+        //public void ReturnFromFIleTest(Dictionary<int, Board> boards, Dictionary<long, User> users)
+        //{
+        //    _dataStorage.Boards = boards;
+        //    _dataStorage.Users = users;
+
+        //    using (StreamWriter sw = new StreamWriter(_dataStorage.Path))
+        //    {
+        //        string serialiseToFile = JsonSerializer.Serialize(_dataStorage.Boards);
+        //        sw.WriteLine(serialiseToFile);
+        //        serialiseToFile = JsonSerializer.Serialize(_dataStorage.Users);
+        //        sw.WriteLine(serialiseToFile);
+        //    }
+        //    _dataStorage.ReturnFromFile();
+        //    Dictionary<int, Board> expectedBoards = boards;
+        //    Dictionary<int, Board> actualBoards = _dataStorage.Boards;
+        //    Dictionary<long, User> expectedUsers = users;
+        //    Dictionary<long, User> actualUsers = _dataStorage.Users;
+
+        //    CollectionAssert.AreEqual(actualBoards, expectedBoards);
+        //    CollectionAssert.AreEqual(actualUsers, expectedUsers);
+        //}
     }    
 }
 

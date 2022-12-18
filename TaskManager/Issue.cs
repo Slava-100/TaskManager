@@ -26,6 +26,12 @@ namespace TaskManager
             Description = description;
         }
 
+        public Issue()
+        {
+            BlockedByCurrentIssue = new List<int>();
+            BlockingIssues = new List<int>();
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is Issue issue &&
