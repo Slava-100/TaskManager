@@ -46,36 +46,36 @@ namespace TaskManager
         public override bool Equals(object? obj)
         {
             #region
-            if (obj is Issue)
-            {
-                List<int> blockedByCurrentIssue = ((Issue)obj).BlockedByCurrentIssue;
+            //if (obj is Issue)
+            //{
+            //    List<int> blockedByCurrentIssue = ((Issue)obj).BlockedByCurrentIssue;
 
-                if (blockedByCurrentIssue.Count != BlockedByCurrentIssue.Count)
-                {
-                    return false;
-                }
-                for (int i = 0; i < BlockedByCurrentIssue.Count; i++)
-                {
-                    if (!BlockedByCurrentIssue[i].Equals(blockedByCurrentIssue[i]))
-                    {
-                        return false;
-                    }
-                }
+            //    if (blockedByCurrentIssue.Count != BlockedByCurrentIssue.Count)
+            //    {
+            //        return false;
+            //    }
+            //    for (int i = 0; i < BlockedByCurrentIssue.Count; i++)
+            //    {
+            //        if (!BlockedByCurrentIssue[i].Equals(blockedByCurrentIssue[i]))
+            //        {
+            //            return false;
+            //        }
+            //    }
 
-                List<int> blockingIssues = ((Issue)obj).BlockingIssues;
+            //    List<int> blockingIssues = ((Issue)obj).BlockingIssues;
 
-                if (blockingIssues.Count != BlockingIssues.Count)
-                {
-                    return false;
-                }
-                for (int i = 0; i < BlockingIssues.Count; i++)
-                {
-                    if (!BlockingIssues[i].Equals(blockingIssues[i]))
-                    {
-                        return false;
-                    }
-                }
-            }
+            //    if (blockingIssues.Count != BlockingIssues.Count)
+            //    {
+            //        return false;
+            //    }
+            //    for (int i = 0; i < BlockingIssues.Count; i++)
+            //    {
+            //        if (!BlockingIssues[i].Equals(blockingIssues[i]))
+            //        {
+            //            return false;
+            //        }
+            //    }
+            //}
             #endregion
 
             return obj is Issue issue &&
