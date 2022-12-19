@@ -8,19 +8,22 @@ namespace TaskManager
     {
         public int NextNumberBoard { get; private set; }
 
-        public string Path { get; set; }
+        public string PathFileForBoards { get; set; }
+        
+        public string PathFileForClient { get; set; }
 
         public Dictionary<int, Board> Boards { get; set; }
 
-        public Dictionary<long, User> Users { get; set; }
+        public Dictionary<long, User> Clients { get; set; }
 
         private static DataStorage _instance;
 
         public DataStorage()
         {
             Boards = new Dictionary<int, Board>();
-            Users = new Dictionary<long, User>();
-            Path = @".\DataStorage.txt";
+            Clients = new Dictionary<long, User>();
+            PathFileForBoards = @".\PathFileForBoards.txt";
+            PathFileForClient = @".\PathFileForClient.txt";
             ReturnFromFile();
             UpdateNextNumberBoard();
         }
@@ -34,27 +37,41 @@ namespace TaskManager
             return _instance;
         }
 
-        public void RewriteFile()
+        public void RewriteFileForBoards()
         {
-            using (StreamWriter file = new StreamWriter(Path))
+            using (StreamWriter file = new StreamWriter(PathFileForBoards))
             {
                 string serialiseForFile = JsonSerializer.Serialize(Boards);
                 file.WriteLine(serialiseForFile);
-                serialiseForFile= JsonSerializer.Serialize(Users);
+            }
+        }
+
+        public void RewriteFileForClients()
+        {
+            using (StreamWriter file = new StreamWriter(PathFileForClient))
+            {
+                string serialiseForFile = JsonSerializer.Serialize(Clients);
                 file.WriteLine(serialiseForFile);
             }
         }
 
         public void ReturnFromFile()
         {
-            if(File.Exists(Path))
+            if(File.Exists(PathFileForBoards))
             {
-                using (StreamReader file = new StreamReader(Path))
+                using (StreamReader file = new StreamReader(PathFileForBoards))
                 {
                     string deserialiseFromFile = file.ReadLine();
                     Boards = JsonSerializer.Deserialize<Dictionary<int, Board>>(deserialiseFromFile);
-                    deserialiseFromFile = file.ReadLine();
-                    Users = JsonSerializer.Deserialize<Dictionary<long, User>>(deserialiseFromFile);
+                }
+            }
+
+            if (File.Exists(PathFileForClient))
+            {
+                using (StreamReader file = new StreamReader(PathFileForClient))
+                {
+                    string deserialiseFromFile = file.ReadLine();
+                    Clients = JsonSerializer.Deserialize<Dictionary<long,User>>(deserialiseFromFile);
                 }
             }
         }
@@ -93,19 +110,19 @@ namespace TaskManager
             {
                 if (keyBoard == Boards[idBoard].Key)
                 {
-                    if (Users.ContainsKey(idUser) == false)
+                    if (Clients.ContainsKey(idUser) == false)
                     {
                         User user = new User(idUser, nameUser);
                         Boards[idBoard].IDMembers.Add(user.IDUser);
                         user.BoardsForUser.Add(idBoard);
-                        Users.Add(idUser, user);
+                        Clients.Add(idUser, user);
 
                         flag = true;
                     }
                     else if (Boards[idBoard].IDMembers.Contains(idUser) == false)
                     {
                         Boards[idBoard].IDMembers.Add(idUser);
-                        Users[idUser].BoardsForUser.Add(idBoard);
+                        Clients[idUser].BoardsForUser.Add(idBoard);
 
                         flag = true;
                     }

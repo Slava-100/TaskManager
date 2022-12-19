@@ -36,14 +36,12 @@ namespace TaskManager.Tests
         }
 
         [TestCaseSource(typeof(TestCaseForAddNewIssueTest))]
-        public void AddNewIssueTest(List<Issue> issues, string description, bool exceptionResult, int exceptionNumberNewIssue)
+        public void AddNewIssueTest(List<Issue> issues, string description, bool exceptionResult)
         {
             _board.Issues.AddRange(issues);
-          // int actualNumberNewIssue = _board.AddNewIssue(description);
-            bool actualResult = _board.Issues.Exists(issue => issue.Description == description);
+            bool actualResult = _board.AddNewIssue(description);
 
             Assert.AreEqual(exceptionResult, actualResult);
-          //  Assert.AreEqual(exceptionNumberNewIssue, actualNumberNewIssue);
         }
 
         [TestCaseSource(typeof(TestCaseForRemoveIssueTest))]

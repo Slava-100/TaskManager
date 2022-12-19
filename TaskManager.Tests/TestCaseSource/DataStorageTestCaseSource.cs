@@ -112,8 +112,8 @@ namespace TaskManager.Tests.TestCaseSource
                 List<Issue> tasks = new List<Issue>()
                 {
                     new Issue(1,"QQQ"),
-                    new Issue(2,"QQQ"),
-                    new Issue(3,"QQQ")
+                    new Issue(2,"WWW"),
+                    new Issue(3,"EEE")
                 };
 
                 for (int i = 1; i < boards.Count; i++)
@@ -121,25 +121,25 @@ namespace TaskManager.Tests.TestCaseSource
                     boards[i].Issues.AddRange(tasks);
                 }
 
-                Dictionary<string, User> users = new Dictionary<string, User>()
+                Dictionary<long, User> users = new Dictionary<long, User>()
                 {
-                    {"22",new User(22,"Valerka")},
-                    {"33",new User(33,"Pasha")},
-                    {"44",new User(44,"Kesha")}
+                    {22,new User(22,"Valerka")},
+                    {33,new User(33,"Pasha")},
+                    {44,new User(44,"Kesha")}
                 };
 
                 yield return new object[] { boards, users };
 
-                users.Clear();
+                users = new Dictionary<long, User>();
 
                 yield return new object[] { boards, users };
 
-                boards.Clear();
-                users = new Dictionary<string, User>()
+                boards = new Dictionary<int, Board>();
+                users = new Dictionary<long, User>()
                 {
-                    {"22",new User(22,"Valerka")},
-                    {"33",new User(33,"Pasha")},
-                    {"44",new User(44,"Kesha")}
+                    {22,new User(22,"Valerka")},
+                    {33,new User(33,"Pasha")},
+                    {44,new User(44,"Kesha")}
                 };
 
                 yield return new object[] { boards, users };
