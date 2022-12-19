@@ -19,7 +19,10 @@
 
         public bool RemoveBoard(int numberBoard)
         {
-            return DataStorage.GetInstance().RemoveBoard(numberBoard);
+            DataStorage dataStorage = DataStorage.GetInstance();
+            bool tmp = dataStorage.RemoveBoard(numberBoard);
+            dataStorage.RewriteFileForBoards();
+            return tmp;
         }
     }
 }

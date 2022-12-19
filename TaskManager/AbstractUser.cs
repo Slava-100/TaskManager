@@ -4,9 +4,9 @@
     {
         private DataStorage _dataStorage = DataStorage.GetInstance();
 
-        public int AddBoard(long idAdmin)
-        {
-            return _dataStorage.AddBoard(idAdmin);
-        }
+        //public int AddBoard(long idAdmin)
+        //{
+        //    return _dataStorage.AddBoard(idAdmin);
+        //}
     }
 }

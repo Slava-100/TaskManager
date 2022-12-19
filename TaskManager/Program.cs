@@ -4,9 +4,14 @@ using User = TaskManager.User;
 
 Console.WriteLine("Hy");
 
+DataStorage storage = DataStorage.GetInstance();
 
 User user = new User(1, "qqq");
 user.AddBoard();
+storage.ReturnFromFile();
+Console.WriteLine(storage.Boards[1].NumberBoard);
+
+
 
 //TelegramService client = new TelegramService();
 //Console.ReadLine();
@@ -34,7 +39,7 @@ user.AddBoard();
 //TaskManager.User user = new TaskManager.User(3, "3");
 //user.AddNewUserByKey(boardMember, 0);
 
-//Console.WriteLine();
+Console.WriteLine();
 
 
 

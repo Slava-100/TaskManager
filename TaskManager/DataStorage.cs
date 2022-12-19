@@ -16,7 +16,7 @@ namespace TaskManager
 
         public Dictionary<long, User> Clients { get; set; }
 
-        private static DataStorage _instance;
+        private static DataStorage _instance=new DataStorage();
 
         public DataStorage()
         {
@@ -99,6 +99,7 @@ namespace TaskManager
             Board board = new Board(NextNumberBoard, idAdmin);
             Boards.Add(board.NumberBoard, board);
             NextNumberBoard = NextNumberBoard + 1;
+            RewriteFileForBoards();
             return board.NumberBoard;
         }
 

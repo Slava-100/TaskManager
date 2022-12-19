@@ -42,7 +42,7 @@ namespace TaskManager
                 switch (update.Message.Text)
                 {
                     case "/start" or "/Start":
-                        bool flag = DataStorage.GetInstance().Users.ContainsKey(update.Message.Chat.Id);
+                        bool flag = DataStorage.GetInstance().Clients.ContainsKey(update.Message.Chat.Id);
                         if (!flag)
                         {
                             _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Привет. Меня зовут {_bot.GetMeAsync().Result.FirstName}. Я предоставляю удобную командную работу над общим проектом," +

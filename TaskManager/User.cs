@@ -1,18 +1,18 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace TaskManager
+﻿namespace TaskManager
 {
     public class User
     {
         private AbstractUser _userRole;
+
+        private DataStorage _dataStorage = DataStorage.GetInstance();
+
+        private Board _activeBoard;
 
         public long IDUser { get; private set; }
 
         public string NameUser { get; private set; }
 
         public List<int> BoardsForUser { get; private set; }
-
-        public Board ActiveBoard { get; private set; }
 
         public User(long idUser, string nameUser)
         {
@@ -21,14 +21,19 @@ namespace TaskManager
             BoardsForUser = new List<int>();
         }
 
+        public User()
+        {
+            BoardsForUser = new List<int>();
+        }
+
         public bool SelectRole()
         {
-            if (ActiveBoard.IDAdmin.Contains(IDUser))
+            if (_activeBoard.IDAdmin.Contains(IDUser))
             {
                 _userRole = new AdminUser();
                 return true;
             }
-            else if (ActiveBoard.IDMembers.Contains(IDUser))
+            else if (_activeBoard.IDMembers.Contains(IDUser))
             {
                 _userRole = new MemberUser();
                 return true;
@@ -43,7 +48,7 @@ namespace TaskManager
         {
             if (_userRole is AdminUser)
             {
-                return ((AdminUser)_userRole).AddNewIssue(ActiveBoard, description);
+                return ((AdminUser)_userRole).AddNewIssue(_activeBoard, description);
             }
             return false;
         }
@@ -52,7 +57,7 @@ namespace TaskManager
         {
             if (_userRole is AdminUser)
             {
-                return ((AdminUser)_userRole).RemoveIssue(ActiveBoard, numberIssue);
+                return ((AdminUser)_userRole).RemoveIssue(_activeBoard, numberIssue);
             }
             return false;
         }
@@ -61,11 +66,14 @@ namespace TaskManager
         {
             if (_userRole is AdminUser adminUser)
             {
-                adminUser.AddBlokingAndBlockedByIssue(ActiveBoard, blockedByCurrentIssue, blockingCurrentIssue);
+                adminUser.AddBlokingAndBlockedByIssue(_activeBoard, blockedByCurrentIssue, blockingCurrentIssue);
             }
         }
 
-        public int AddBoard() => _userRole.AddBoard(IDUser);
+        public int AddBoard()
+        {
+            return _dataStorage.AddBoard(IDUser);
+        }
 
         public bool RemoveBoard(int numberBoard)
         {
@@ -73,6 +81,7 @@ namespace TaskManager
             {
                 return adminUser.RemoveBoard(numberBoard);
             }
+            
             return false;
         }
 
