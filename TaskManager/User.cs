@@ -12,6 +12,8 @@ namespace TaskManager
 
         public List<int> BoardsForUser { get; private set; }
 
+        public Board ActiveBoard { get; private set; }
+
         public User(long idUser, string nameUser)
         {
             IDUser = idUser;
@@ -19,14 +21,14 @@ namespace TaskManager
             BoardsForUser = new List<int>();
         }
 
-        public bool SelectRole(Board board)
+        public bool SelectRole()
         {
-            if (board.IDAdmin.Contains(IDUser))
+            if (ActiveBoard.IDAdmin.Contains(IDUser))
             {
                 _userRole = new AdminUser();
                 return true;
             }
-            else if (board.IDMembers.Contains(IDUser))
+            else if (ActiveBoard.IDMembers.Contains(IDUser))
             {
                 _userRole = new MemberUser();
                 return true;
@@ -37,36 +39,33 @@ namespace TaskManager
             }
         }
 
-        public bool AddNewIssue(Board board, string description)
+        public bool AddNewIssue(string description)
         {
-            if (_userRole is AdminUser adminUser)
+            if (_userRole is AdminUser)
             {
-                return adminUser.AddNewIssue(board, description);
+                return ((AdminUser)_userRole).AddNewIssue(ActiveBoard, description);
             }
             return false;
         }
 
-        public bool RemoveIssue(Board board, int numberIssue)
+        public bool RemoveIssue(int numberIssue)
         {
-            if (_userRole is AdminUser adminUser)
+            if (_userRole is AdminUser)
             {
-                return adminUser.RemoveIssue(board, numberIssue);
+                return ((AdminUser)_userRole).RemoveIssue(ActiveBoard, numberIssue);
             }
             return false;
         }
 
-        public void AddBlokingAndBlockedByIssue(Board board, int blockedByCurrentIssue, int blockingCurrentIssue)
+        public void AddBlokingAndBlockedByIssue(int blockedByCurrentIssue, int blockingCurrentIssue)
         {
             if (_userRole is AdminUser adminUser)
             {
-                adminUser.AddBlokingAndBlockedByIssue(board, blockedByCurrentIssue, blockingCurrentIssue);
+                adminUser.AddBlokingAndBlockedByIssue(ActiveBoard, blockedByCurrentIssue, blockingCurrentIssue);
             }
         }
 
-        public int AddBoard()
-        {
-            return DataStorage.GetInstance().AddBoard(IDUser);
-        }
+        public int AddBoard() => _userRole.AddBoard(IDUser);
 
         public bool RemoveBoard(int numberBoard)
         {
