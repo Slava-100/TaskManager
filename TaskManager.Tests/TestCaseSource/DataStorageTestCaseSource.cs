@@ -80,13 +80,13 @@ namespace TaskManager.Tests.TestCaseSource
 
                 board.IDMembers.Add(idMember);
 
-                User user = new User(idMember, nameMember);
+                Client user = new Client(idMember, nameMember);
 
                 user.BoardsForUser.Add(numberBoard);
 
                 List<int> expectedBoardForUser = user.BoardsForUser;
 
-                Dictionary<long, User> expectedDictionaryUsers = new Dictionary<long, User>
+                Dictionary<long, Client> expectedDictionaryUsers = new Dictionary<long, Client>
                 {
                 {idMember, user}
                 };
@@ -121,25 +121,25 @@ namespace TaskManager.Tests.TestCaseSource
                     boards[i].Issues.AddRange(tasks);
                 }
 
-                Dictionary<long, User> users = new Dictionary<long, User>()
+                Dictionary<long, Client> users = new Dictionary<long, Client>()
                 {
-                    {22,new User(22,"Valerka")},
-                    {33,new User(33,"Pasha")},
-                    {44,new User(44,"Kesha")}
+                    {22,new Client(22,"Valerka")},
+                    {33,new Client(33,"Pasha")},
+                    {44,new Client(44,"Kesha")}
                 };
 
                 yield return new object[] { boards, users };
 
-                users = new Dictionary<long, User>();
+                users = new Dictionary<long, Client>();
 
                 yield return new object[] { boards, users };
 
                 boards = new Dictionary<int, Board>();
-                users = new Dictionary<long, User>()
+                users = new Dictionary<long, Client>()
                 {
-                    {22,new User(22,"Valerka")},
-                    {33,new User(33,"Pasha")},
-                    {44,new User(44,"Kesha")}
+                    {22,new Client(22,"Valerka")},
+                    {33,new Client(33,"Pasha")},
+                    {44,new Client(44,"Kesha")}
                 };
 
                 yield return new object[] { boards, users };

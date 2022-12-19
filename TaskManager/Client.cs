@@ -1,6 +1,6 @@
 ﻿namespace TaskManager
 {
-    public class User
+    public class Client
     {
         private AbstractUser _userRole;
 
@@ -14,16 +14,22 @@
 
         public List<int> BoardsForUser { get; private set; }
 
-        public User(long idUser, string nameUser)
+        public Client(long idUser, string nameUser)
         {
             IDUser = idUser;
             NameUser = nameUser;
             BoardsForUser = new List<int>();
         }
 
-        public User()
+        public Client()
         {
             BoardsForUser = new List<int>();
+        }
+
+        public void SetActiveBoard(int numberBoard)
+        {
+            _activeBoard = _dataStorage.Boards[numberBoard];
+            SelectRole();
         }
 
         public bool SelectRole()
@@ -92,7 +98,7 @@
 
         public override bool Equals(object? obj)
         {
-            return obj is User user &&
+            return obj is Client user &&
                    IDUser == user.IDUser &&
                    NameUser == user.NameUser &&
                    BoardsForUser.SequenceEqual(user.BoardsForUser);

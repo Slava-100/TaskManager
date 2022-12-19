@@ -25,7 +25,7 @@ namespace TaskManager.Tests
         }
 
         [TestCaseSource(typeof(AddNewUserByKeyTestCaseSource))]
-        public void AddNewUserByKeyTest(string nameMember, int numberBoard, DataStorage dataStorage, long idMember, int keyBoard, List<long> expectedIdMembers, Dictionary<long, User> expectedDictionaryUsers, List<int> expectedBoardsForUser)
+        public void AddNewUserByKeyTest(string nameMember, int numberBoard, DataStorage dataStorage, long idMember, int keyBoard, List<long> expectedIdMembers, Dictionary<long, Client> expectedDictionaryUsers, List<int> expectedBoardsForUser)
         {
             bool expectedFlag = true;
             bool actualFlag = dataStorage.AddNewUserByKey(numberBoard, keyBoard, idMember, nameMember);
@@ -40,7 +40,7 @@ namespace TaskManager.Tests
 
             CollectionAssert.AreEqual(expectedBoardsForUser, actualBoardForUser);
 
-            Dictionary<long, User> actualDictionaryUsers = dataStorage.Clients;
+            Dictionary<long, Client> actualDictionaryUsers = dataStorage.Clients;
 
             CollectionAssert.AreEqual(expectedDictionaryUsers, actualDictionaryUsers);
         }

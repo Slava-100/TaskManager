@@ -14,14 +14,14 @@ namespace TaskManager
 
         public Dictionary<int, Board> Boards { get; set; }
 
-        public Dictionary<long, User> Clients { get; set; }
+        public Dictionary<long, Client> Clients { get; set; }
 
         private static DataStorage _instance=new DataStorage();
 
         public DataStorage()
         {
             Boards = new Dictionary<int, Board>();
-            Clients = new Dictionary<long, User>();
+            Clients = new Dictionary<long, Client>();
             PathFileForBoards = @".\PathFileForBoards.txt";
             PathFileForClient = @".\PathFileForClient.txt";
             ReturnFromFile();
@@ -71,7 +71,7 @@ namespace TaskManager
                 using (StreamReader file = new StreamReader(PathFileForClient))
                 {
                     string deserialiseFromFile = file.ReadLine();
-                    Clients = JsonSerializer.Deserialize<Dictionary<long,User>>(deserialiseFromFile);
+                    Clients = JsonSerializer.Deserialize<Dictionary<long,Client>>(deserialiseFromFile);
                 }
             }
         }
@@ -113,7 +113,7 @@ namespace TaskManager
                 {
                     if (Clients.ContainsKey(idUser) == false)
                     {
-                        User user = new User(idUser, nameUser);
+                        Client user = new Client(idUser, nameUser);
                         Boards[idBoard].IDMembers.Add(user.IDUser);
                         user.BoardsForUser.Add(idBoard);
                         Clients.Add(idUser, user);
