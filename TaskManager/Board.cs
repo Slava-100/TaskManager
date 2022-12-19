@@ -97,9 +97,9 @@
             return obj is Board board &&
                    _numberNextIssue == board._numberNextIssue &&
                    NumberBoard == board.NumberBoard &&
-                   //IDMembers.SequenceEqual(board.IDMembers) &&
-                   //IDAdmin.SequenceEqual(board.IDAdmin) &&
-                   //Issues.SequenceEqual(board.Issues) &&
+                   IDMembers.SequenceEqual(board.IDMembers) &&
+                   IDAdmin.SequenceEqual(board.IDAdmin) &&
+                   Issues.SequenceEqual(board.Issues) &&
                    Key == board.Key;
         }
 
