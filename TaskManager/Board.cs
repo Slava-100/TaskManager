@@ -4,26 +4,15 @@
     {
         private int _numberNextIssue = 1;
 
-        public int NumberBoard { get; private set; }
+        public int NumberBoard { get;  set; }
 
-        public List<long> IDMembers { get; private set; }
+        public List<long> IDMembers { get; set; }
 
-        public List<long> IDAdmin { get; private set; }
+        public List<long> IDAdmin { get; set; }
 
-        public List<Issue> Issues { get; private set; }
+        public List<Issue> Issues { get;  set; }
 
         public int Key { get; set; }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is Board board &&
-                   _numberNextIssue == board._numberNextIssue &&
-                   NumberBoard == board.NumberBoard &&
-                   IDMembers.SequenceEqual(board.IDMembers) &&
-                   IDAdmin.SequenceEqual(board.IDAdmin) &&
-                   Issues.SequenceEqual(board.Issues)&&
-                   Key == board.Key;
-        }
 
         public Board(int numberBoard, long idAdmin)
         {
@@ -33,6 +22,85 @@
             Key = 0;
             NumberBoard = numberBoard;
             IDAdmin.Add(idAdmin);
+        }
+
+        public Board()
+        {
+            IDMembers = new List<long>();
+            IDAdmin = new List<long>();
+            Issues = new List<Issue>();
+        }
+
+        public Board(int numberNextIssue, int numberBoard, List<long> iDMembers, List<long> iDAdmin, List<Issue> issues, int key)
+        {
+            _numberNextIssue = numberNextIssue;
+            NumberBoard = numberBoard;
+            IDMembers = iDMembers;
+            IDAdmin = iDAdmin;
+            Issues = issues;
+            Key = key;
+        }
+
+        public override string ToString()
+        {
+            return $"{NumberBoard},{IDAdmin}";
+        }
+
+        public override bool Equals(object? obj)
+        {
+            #region
+            //if (obj is Board)
+            //{
+            //    List<long> idMambers = ((Board)obj).IDMembers;
+
+            //    if (idMambers.Count != IDMembers.Count)
+            //    {
+            //        return false;
+            //    }
+            //    for (int i = 0; i < IDMembers.Count; i++)
+            //    {
+            //        if (!IDMembers[i].Equals(idMambers[i]))
+            //        {
+            //            return false;
+            //        }
+            //    }
+
+            //    List<long> idAdmins = ((Board)obj).IDAdmin;
+
+            //    if (idAdmins.Count != IDAdmin.Count)
+            //    {
+            //        return false;
+            //    }
+            //    for (int i = 0; i < IDAdmin.Count; i++)
+            //    {
+            //        if (!IDAdmin[i].Equals(idAdmins[i]))
+            //        {
+            //            return false;
+            //        }
+            //    }
+
+            //    List<Issue> tmpIssues = ((Board)obj).Issues;
+
+            //    if (tmpIssues.Count != Issues.Count)
+            //    {
+            //        return false;
+            //    }
+            //    for (int i = 0; i < Issues.Count; i++)
+            //    {
+            //        if (!Issues[i].Equals(tmpIssues[i]))
+            //        {
+            //            return false;
+            //        }
+            //    }
+            //}
+            #endregion
+            return obj is Board board &&
+                   _numberNextIssue == board._numberNextIssue &&
+                   NumberBoard == board.NumberBoard &&
+                   IDMembers.SequenceEqual(board.IDMembers) &&
+                   IDAdmin.SequenceEqual(board.IDAdmin) &&
+                   Issues.SequenceEqual(board.Issues) &&
+                   Key == board.Key;
         }
 
         public int GetNextNumberIssue()

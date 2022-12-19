@@ -70,16 +70,14 @@ namespace TaskManager.Tests.TestCases
                 };
                 string description = "QQQ";
                 bool exceptionResult = true;
-                int exceptionNumberNewIssue = 5;
-
-                yield return new object[] { issues, description, exceptionResult, exceptionNumberNewIssue };
+                
+                yield return new object[] { issues, description, exceptionResult};
 
                 issues = new List<Issue>();
                 description = "YYY";
                 exceptionResult = true;
-                exceptionNumberNewIssue = 1;
 
-                yield return new object[] { issues, description, exceptionResult, exceptionNumberNewIssue };
+                yield return new object[] { issues, description, exceptionResult};
             }
         }
 
