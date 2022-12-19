@@ -1,10 +1,12 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace TaskManager
+﻿namespace TaskManager
 {
     public class User
     {
-        private AbstractUser _user;
+        private AbstractUser _userRole;
+
+        private DataStorage _dataStorage = DataStorage.GetInstance();
+
+        private Board _activeBoard;
 
         public long IDUser { get; private set; }
 
@@ -19,16 +21,21 @@ namespace TaskManager
             BoardsForUser = new List<int>();
         }
 
-        public bool SelectRole(Board board)
+        public User()
         {
-            if (board.IDAdmin.Contains(IDUser))
+            BoardsForUser = new List<int>();
+        }
+
+        public bool SelectRole()
+        {
+            if (_activeBoard.IDAdmin.Contains(IDUser))
             {
-                _user = new AdminUser();
+                _userRole = new AdminUser();
                 return true;
             }
-            else if (board.IDMembers.Contains(IDUser))
+            else if (_activeBoard.IDMembers.Contains(IDUser))
             {
-                _user = new MemberUser();
+                _userRole = new MemberUser();
                 return true;
             }
             else
@@ -37,29 +44,45 @@ namespace TaskManager
             }
         }
 
-        public bool AddNewIssue(Board board, string description)
+        public bool AddNewIssue(string description)
         {
-            return _user.AddNewIssue(board, description);
+            if (_userRole is AdminUser)
+            {
+                return ((AdminUser)_userRole).AddNewIssue(_activeBoard, description);
+            }
+            return false;
         }
 
-        public bool RemoveIssue(Board board, int numberIssue)
+        public bool RemoveIssue(int numberIssue)
         {
-            return _user.RemoveIssue(board, numberIssue);
+            if (_userRole is AdminUser)
+            {
+                return ((AdminUser)_userRole).RemoveIssue(_activeBoard, numberIssue);
+            }
+            return false;
         }
 
-        public void AddBlokingAndBlockedByIssue(Board board, int blockedByCurrentIssue, int blockingCurrentIssue)
+        public void AddBlokingAndBlockedByIssue(int blockedByCurrentIssue, int blockingCurrentIssue)
         {
-            _user.AddBlokingAndBlockedByIssue(board, blockedByCurrentIssue, blockingCurrentIssue);
+            if (_userRole is AdminUser adminUser)
+            {
+                adminUser.AddBlokingAndBlockedByIssue(_activeBoard, blockedByCurrentIssue, blockingCurrentIssue);
+            }
         }
 
         public int AddBoard()
         {
-            return DataStorage.GetInstance().AddBoard(IDUser);
+            return _dataStorage.AddBoard(IDUser);
         }
 
         public bool RemoveBoard(int numberBoard)
         {
-            return _user.RemoveBoard(numberBoard);
+            if (_userRole is AdminUser adminUser)
+            {
+                return adminUser.RemoveBoard(numberBoard);
+            }
+            
+            return false;
         }
 
         public void AddNewUserByKey(int idBoard, int keyBoard)

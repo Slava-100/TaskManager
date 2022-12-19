@@ -124,23 +124,29 @@
 
         public bool AddNewIssue(string description)
         {
-                while (CheckIssueAvailabilityByNumber(_numberNextIssue))
-                {
-                    _numberNextIssue += 1;
-                }
+            DataStorage _dataStorage = DataStorage.GetInstance();
 
-                Issues.Add(new Issue(_numberNextIssue, description));
+            while (CheckIssueAvailabilityByNumber(_numberNextIssue))
+            {
                 _numberNextIssue += 1;
-
-                return true;
+            }
+            
+            Issues.Add(new Issue(_numberNextIssue, description));
+            _numberNextIssue += 1;
+            _dataStorage.RewriteFileForBoards();
+            
+            return true;
         }
 
         public bool RemoveIssue(int numberIssue)
         {
+            DataStorage _dataStorage = DataStorage.GetInstance();
+
             if (CheckIssueAvailabilityByNumber(numberIssue))
             {
                 Issue removableIssue = Issues.Find(issue => issue.NumberIssue == numberIssue);
                 Issues.Remove(removableIssue);
+                _dataStorage.RewriteFileForBoards();
 
                 return true;
             }

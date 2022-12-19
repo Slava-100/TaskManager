@@ -1,11 +1,20 @@
 ﻿using TaskManager;
 using Telegram.Bot.Types;
+using User = TaskManager.User;
 
 Console.WriteLine("Hy");
 
+DataStorage storage = DataStorage.GetInstance();
 
-TelegramService client = new TelegramService();
-Console.ReadLine();
+User user = new User(1, "qqq");
+user.AddBoard();
+storage.ReturnFromFile();
+Console.WriteLine(storage.Boards[1].NumberBoard);
+
+
+
+//TelegramService client = new TelegramService();
+//Console.ReadLine();
 
 //TaskManager.User admin = new TaskManager.User(12, "admin");
 //TaskManager.User member = new TaskManager.User(23, "member");
@@ -30,5 +39,7 @@ Console.ReadLine();
 //TaskManager.User user = new TaskManager.User(3, "3");
 //user.AddNewUserByKey(boardMember, 0);
 
-//Console.WriteLine();
+Console.WriteLine();
+
+
 
