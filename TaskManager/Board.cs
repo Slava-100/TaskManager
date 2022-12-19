@@ -4,7 +4,7 @@
     {
         private int _numberNextIssue = 1;
 
-        public int NumberBoard { get;  private set; }
+        public int NumberBoard { get;  set; }
 
         public List<long> IDMembers { get; set; }
 

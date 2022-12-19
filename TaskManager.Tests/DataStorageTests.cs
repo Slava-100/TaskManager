@@ -156,8 +156,8 @@ namespace TaskManager.Tests
             Dictionary<long, User> expectedUsers = users;
             Dictionary<long, User> actualUsers = _dataStorage.Users;
 
-            CollectionAssert.AreEqual(actualBoards, expectedBoards);
-            CollectionAssert.AreEqual(actualUsers, expectedUsers);
+            CollectionAssert.AreEqual(expectedBoards, actualBoards);
+            CollectionAssert.AreEqual(expectedUsers, actualUsers);
         }
 
         [TestCaseSource(typeof(TestCaseForRewriteAndReturnTest))]
@@ -179,8 +179,8 @@ namespace TaskManager.Tests
             Dictionary<long, User> expectedUsers = users;
             Dictionary<long, User> actualUsers = _dataStorage.Users;
 
-            CollectionAssert.AreEqual(actualBoards, expectedBoards);
-            CollectionAssert.AreEqual(actualUsers, expectedUsers);
+            CollectionAssert.AreEqual(expectedBoards,actualBoards);
+            CollectionAssert.AreEqual(expectedUsers,actualUsers);
         }
     }    
 }
