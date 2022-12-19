@@ -4,13 +4,13 @@
     {
         private int _numberNextIssue = 1;
 
-        public int NumberBoard { get; private set; }
+        public int NumberBoard { get;  private set; }
 
-        public List<long> IDMembers { get; private set; }
+        public List<long> IDMembers { get; set; }
 
-        public List<long> IDAdmin { get; private set; }
+        public List<long> IDAdmin { get; set; }
 
-        public List<Issue> Issues { get; private set; }
+        public List<Issue> Issues { get;  set; }
 
         public int Key { get; set; }
 

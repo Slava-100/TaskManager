@@ -130,19 +130,19 @@ namespace TaskManager.Tests.TestCaseSource
 
                 yield return new object[] { boards, users };
 
-                users = new Dictionary<long, User>();
+                //users = new Dictionary<long, User>();
 
-                yield return new object[] { boards, users };
+                //yield return new object[] { boards, users };
 
-                boards = new Dictionary<int, Board>();
-                users = new Dictionary<long, User>()
-                {
-                    {22,new User(22,"Valerka")},
-                    {33,new User(33,"Pasha")},
-                    {44,new User(44,"Kesha")}
-                };
+                //boards = new Dictionary<int, Board>();
+                //users = new Dictionary<long, User>()
+                //{
+                //    {22,new User(22,"Valerka")},
+                //    {33,new User(33,"Pasha")},
+                //    {44,new User(44,"Kesha")}
+                //};
 
-                yield return new object[] { boards, users };
+                //yield return new object[] { boards, users };
             }
         }
     }
