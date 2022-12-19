@@ -4,7 +4,7 @@ namespace TaskManager
 {
     public class User
     {
-        private AbstractUser _user;
+        private AbstractUser _userRole;
 
         public long IDUser { get; private set; }
 
@@ -23,12 +23,12 @@ namespace TaskManager
         {
             if (board.IDAdmin.Contains(IDUser))
             {
-                _user = new AdminUser();
+                _userRole = new AdminUser();
                 return true;
             }
             else if (board.IDMembers.Contains(IDUser))
             {
-                _user = new MemberUser();
+                _userRole = new MemberUser();
                 return true;
             }
             else
@@ -39,17 +39,28 @@ namespace TaskManager
 
         public bool AddNewIssue(Board board, string description)
         {
-            return _user.AddNewIssue(board, description);
+            if (_userRole is AdminUser adminUser)
+            {
+                return adminUser.AddNewIssue(board, description);
+            }
+            return false;
         }
 
         public bool RemoveIssue(Board board, int numberIssue)
         {
-            return _user.RemoveIssue(board, numberIssue);
+            if (_userRole is AdminUser adminUser)
+            {
+                return adminUser.RemoveIssue(board, numberIssue);
+            }
+            return false;
         }
 
         public void AddBlokingAndBlockedByIssue(Board board, int blockedByCurrentIssue, int blockingCurrentIssue)
         {
-            _user.AddBlokingAndBlockedByIssue(board, blockedByCurrentIssue, blockingCurrentIssue);
+            if (_userRole is AdminUser adminUser)
+            {
+                adminUser.AddBlokingAndBlockedByIssue(board, blockedByCurrentIssue, blockingCurrentIssue);
+            }
         }
 
         public int AddBoard()
@@ -59,7 +70,11 @@ namespace TaskManager
 
         public bool RemoveBoard(int numberBoard)
         {
-            return _user.RemoveBoard(numberBoard);
+            if (_userRole is AdminUser adminUser)
+            {
+                return adminUser.RemoveBoard(numberBoard);
+            }
+            return false;
         }
 
         public void AddNewUserByKey(int idBoard, int keyBoard)
