@@ -2,5 +2,10 @@
 {
     public abstract class AbstractUser
     {
+        public void AttachIssueToClient(Board board, Issue issue, long IDUser)
+        {
+            issue.IdUser = IDUser;
+            board.Issues.Add(issue);
+        }
     }
 }
