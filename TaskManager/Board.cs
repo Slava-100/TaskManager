@@ -8,7 +8,7 @@
 
         public List<long> IDMembers { get; set; }
 
-        public List<long> IDMember { get; set; }
+        public List<long> IDAdmin { get; set; }
 
         public List<Issue> Issues { get;  set; }
 
@@ -17,17 +17,17 @@
         public Board(int numberBoard, long idAdmin)
         {
             IDMembers = new List<long>();
-            IDMember = new List<long>();
+            IDAdmin = new List<long>();
             Issues = new List<Issue>();
             Key = 0;
             NumberBoard = numberBoard;
-            IDMember.Add(idAdmin);
+            IDAdmin.Add(idAdmin);
         }
 
         public Board()
         {
             IDMembers = new List<long>();
-            IDMember = new List<long>();
+            IDAdmin = new List<long>();
             Issues = new List<Issue>();
         }
 
@@ -36,14 +36,14 @@
             _numberNextIssue = numberNextIssue;
             NumberBoard = numberBoard;
             IDMembers = iDMembers;
-            IDMember = iDAdmin;
+            IDAdmin = iDAdmin;
             Issues = issues;
             Key = key;
         }
 
         public override string ToString()
         {
-            return $"{NumberBoard},{IDMember}";
+            return $"{NumberBoard},{IDAdmin}";
         }
 
         public override bool Equals(object? obj)
@@ -98,7 +98,7 @@
                    _numberNextIssue == board._numberNextIssue &&
                    NumberBoard == board.NumberBoard &&
                    IDMembers.SequenceEqual(board.IDMembers) &&
-                   IDMember.SequenceEqual(board.IDMember) &&
+                   IDAdmin.SequenceEqual(board.IDAdmin) &&
                    Issues.SequenceEqual(board.Issues) &&
                    Key == board.Key;
         }

@@ -16,7 +16,7 @@ namespace TaskManager
 
         public Dictionary<long, Client> Clients { get; set; }
 
-        private static DataStorage _instance=new DataStorage();
+        private static DataStorage _instance;
 
         public DataStorage()
         {

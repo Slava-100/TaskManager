@@ -11,10 +11,10 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(AdminUserTestCaseSource), nameof(AdminUserTestCaseSource.AttachIssueToClientTestCaseSource))]
         public void AttachIssueToClientTest(List<Issue> baseIssues, Board board, Issue attachIssue, long IDUser, List<Issue> expectedIssues)
         {
-            DataStorage.GetInstance().PathFileForClient = @"C:\Users\Кристина\Desktop\MakeUPro\Коды\Tests\AdminUserTest.txt";
-            string path = DataStorage.GetInstance().PathFileForClient;
-            DataStorage.GetInstance().Boards = new Dictionary<int, Board> { { board.NumberBoard, board } };
-            board.IDMember.Add(IDUser);
+            string path = @".\PathFileForClientTest.txt";
+            //DataStorage.GetInstance().PathFileForClient = path;
+            //DataStorage.GetInstance().Boards = new Dictionary<int, Board> { { board.NumberBoard, board } };
+            //board.IDAdmin.Add(IDUser);
             attachIssue.IdUser = IDUser;
             using (StreamWriter sw = new StreamWriter(path))
             {

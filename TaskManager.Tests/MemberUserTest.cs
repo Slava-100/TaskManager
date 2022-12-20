@@ -12,7 +12,7 @@ namespace TaskManager.Tests
             DataStorage.GetInstance().PathFileForClient = @"C:\Users\Кристина\Desktop\MakeUPro\Коды\Tests\MemberUserTest.txt";
             string path = DataStorage.GetInstance().PathFileForClient;
             DataStorage.GetInstance().Boards = new Dictionary<int, Board> { { board.NumberBoard, board } };
-            board.IDMember.Add(IDUser);
+            board.IDMembers.Add(IDUser);
             attachIssue.IdUser = IDUser;
             using (StreamWriter sw = new StreamWriter(path))
             {

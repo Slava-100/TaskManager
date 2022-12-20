@@ -36,7 +36,7 @@ namespace TaskManager
 
         public bool SelectRole()
         {
-            if (_activeBoard.IDMember.Contains(IDUser))
+            if (_activeBoard.IDAdmin.Contains(IDUser))
             {
                 _userRole = new AdminUser();
                 return true;
@@ -100,7 +100,7 @@ namespace TaskManager
 
         public void AttachIssueToClient(Issue issue)
         {
-            if (BoardsForUser.Contains(issue.NumberIssue) && SelectRole())
+            if (_activeBoard.Issues.Contains(issue) && SelectRole())
             {
                 _userRole.AttachIssueToClient(_activeBoard, issue, IDUser);
                 _dataStorage.RewriteFileForBoards();
