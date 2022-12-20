@@ -107,16 +107,6 @@ namespace TaskManager
             }
         }
 
-
-        //public void AttachIssueToClient(Board board, Issue issue, long IDUser)
-        //{
-        //    issue.IdUser = IDUser;
-        //    board.Issues.Add(issue);
-        //    Client client = new Client();
-        //    // client.IDUser = IDUser;
-        //    client.BoardsForUser.Add(board.NumberBoard);
-        //}
-
         public override bool Equals(object? obj)
         {
             return obj is Client user &&
