@@ -8,30 +8,61 @@ namespace TaskManager.Tests
 {
     public class AdminUserTest
     {
-        [TestCaseSource(typeof(AdminUserTestCaseSource), nameof(AdminUserTestCaseSource.AttachIssueToClientTestCaseSource))]
-        public void AttachIssueToClientTest(List<Issue> baseIssues, Board board, Issue attachIssue, long IDUser, List<Issue> expectedIssues)
+        private string _pathBoards;
+        private string _pathClient;
+
+        private DataStorage _dataStorage;
+
+        [SetUp]
+
+        public void SetUp()
         {
-            string path = @".\PathFileForClientTest.txt";
-            //DataStorage.GetInstance().PathFileForClient = path;
-            //DataStorage.GetInstance().Boards = new Dictionary<int, Board> { { board.NumberBoard, board } };
-            //board.IDAdmin.Add(IDUser);
-            attachIssue.IdUser = IDUser;
-            using (StreamWriter sw = new StreamWriter(path))
+            _pathBoards = @".\TestBoards.txt";
+            _pathClient = @".\TestClient.txt";
+            _dataStorage = DataStorage.GetInstance();
+            _dataStorage.PathFileForBoards = _pathBoards;
+            _dataStorage.PathFileForClient = _pathClient;
+            _dataStorage.Boards = new Dictionary<int, Board>();
+            _dataStorage.Clients = new Dictionary<long, Client>();
+            _dataStorage.UpdateNextNumberBoard();
+        }
+
+        [TestCaseSource(typeof(AdminUserTestCaseSource), nameof(AdminUserTestCaseSource.AttachIssueToClientTestCaseSource))]
+        public void AttachIssueToClientTest(Dictionary<int, Board> baseBoards, Dictionary<long, Client> baseClients, Client client, Dictionary<int, Board> expectedBoards, int idAttachIssue, Dictionary<long, Client> expectedClients)
+        {
+
+            // (Board board, Issue issue, long IDUser)
+            using (StreamWriter sw = new StreamWriter(_pathBoards))
             {
-                string jsn = JsonSerializer.Serialize(baseIssues);
+                string jsn = JsonSerializer.Serialize(baseBoards);
                 sw.WriteLine(jsn);
             }
-            AdminUser adminUser = new AdminUser();
-            adminUser.AttachIssueToClient(board, attachIssue, IDUser);
-            List<Issue> actualIssues = new List<Issue>();
-            using (StreamReader sr = new StreamReader(path))
+            using (StreamWriter sw = new StreamWriter(_pathClient))
+            {
+                string jsn = JsonSerializer.Serialize(baseClients);
+                sw.WriteLine(jsn);
+            }
+            _dataStorage.Boards = baseBoards;
+            _dataStorage.Clients = baseClients;
+            client.SetActiveBoard(10);
+            client.AttachIssueToClient(idAttachIssue);
+            Dictionary<int, Board> actualBoards;
+            Dictionary<long, Client> actualClients;
+            using (StreamReader sr = new StreamReader(_pathBoards))
             {
                 string jsn = sr.ReadLine();
-                actualIssues = JsonSerializer.Deserialize<List<Issue>>(jsn);
+                actualBoards = JsonSerializer.Deserialize<Dictionary<int, Board>>(jsn);
             }
-            
-            actualIssues.Should().BeEquivalentTo(expectedIssues);
+            using (StreamReader sr = new StreamReader(_pathClient))
+            {
+                string jsn = sr.ReadLine();
+                actualClients = JsonSerializer.Deserialize<Dictionary<long, Client>>(jsn);
+            }
+            actualBoards.Should().BeEquivalentTo(expectedBoards);
+            actualClients.Should().BeEquivalentTo(expectedClients);
         }
+
+        //(Board board, Issue issue, long IDUser)
 
         [TearDown]
         public void Teardown()

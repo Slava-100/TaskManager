@@ -10,11 +10,11 @@ namespace TaskManager
 
         private Board _activeBoard;
 
-        public long IDUser { get; private set; }
+        public long IDUser { get; set; }
 
-        public string NameUser { get; private set; }
+        public string NameUser { get; set; }
 
-        public List<int> BoardsForUser { get; private set; }
+        public List<int> BoardsForUser { get; set; }
 
         public Client(long idUser, string nameUser)
         {
@@ -98,12 +98,12 @@ namespace TaskManager
             DataStorage.GetInstance().AddNewUserByKey(idBoard, keyBoard, IDUser, NameUser);
         }
 
-        public void AttachIssueToClient(Issue issue)
+        public void AttachIssueToClient(int IdIssue)
         {
-            if (_activeBoard.Issues.Contains(issue) && SelectRole())
+            var issue = _activeBoard.Issues.FirstOrDefault(curentIssue => IdIssue == curentIssue.NumberIssue);
+            if (issue != null && SelectRole())
             {
                 _userRole.AttachIssueToClient(_activeBoard, issue, IDUser);
-                _dataStorage.RewriteFileForBoards();
             }
         }
 

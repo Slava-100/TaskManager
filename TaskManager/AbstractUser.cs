@@ -5,6 +5,8 @@
         public void AttachIssueToClient(Board board, Issue issue, long IDUser)
         {
             issue.IdUser = IDUser;
+            DataStorage.GetInstance().RewriteFileForBoards();
+            DataStorage.GetInstance().RewriteFileForClients();
         }
     }
 }
