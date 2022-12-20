@@ -76,7 +76,7 @@ namespace TaskManager
             }
         }
 
-        private void UpdateNextNumberBoard()
+        public void UpdateNextNumberBoard()
         {
             int max = 0;
             foreach (int currentNumberBoard in Boards.Keys)
