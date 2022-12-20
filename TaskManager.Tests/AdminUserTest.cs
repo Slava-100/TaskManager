@@ -28,24 +28,14 @@ namespace TaskManager.Tests
         }
 
         [TestCaseSource(typeof(AdminUserTestCaseSource), nameof(AdminUserTestCaseSource.AttachIssueToClientTestCaseSource))]
-        public void AttachIssueToClientTest(Dictionary<int, Board> baseBoards, Dictionary<long, Client> baseClients, Client client, Dictionary<int, Board> expectedBoards, int idAttachIssue, Dictionary<long, Client> expectedClients)
+        public void AttachIssueToClientTest(Dictionary<int, Board> baseBoards, Dictionary<long, Client> baseClients, Board board, Issue attachIssue, long idUser, Dictionary<int, Board> expectedBoards, Dictionary<long, Client> expectedClients)
         {
-
-            // (Board board, Issue issue, long IDUser)
-            using (StreamWriter sw = new StreamWriter(_pathBoards))
-            {
-                string jsn = JsonSerializer.Serialize(baseBoards);
-                sw.WriteLine(jsn);
-            }
-            using (StreamWriter sw = new StreamWriter(_pathClient))
-            {
-                string jsn = JsonSerializer.Serialize(baseClients);
-                sw.WriteLine(jsn);
-            }
             _dataStorage.Boards = baseBoards;
             _dataStorage.Clients = baseClients;
-            client.SetActiveBoard(10);
-            client.AttachIssueToClient(idAttachIssue);
+
+            AdminUser adminUser = new AdminUser();
+            adminUser.AttachIssueToClient(board, attachIssue, idUser);
+
             Dictionary<int, Board> actualBoards;
             Dictionary<long, Client> actualClients;
             using (StreamReader sr = new StreamReader(_pathBoards))
@@ -62,12 +52,12 @@ namespace TaskManager.Tests
             actualClients.Should().BeEquivalentTo(expectedClients);
         }
 
-        //(Board board, Issue issue, long IDUser)
 
         [TearDown]
         public void Teardown()
         {
-            File.Delete(@"C:\Users\Кристина\Desktop\MakeUPro\Коды\Tests\AdminUserTest.txt");
+            File.Delete(_pathBoards);
+            File.Delete(_pathClient);
         }
     }
 }

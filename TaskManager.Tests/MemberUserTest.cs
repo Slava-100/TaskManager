@@ -6,35 +6,55 @@ namespace TaskManager.Tests
 {
     public class MemberUserTest
     {
-        [TestCaseSource(typeof(MemberUserTestCaseSource), nameof(MemberUserTestCaseSource.AttachIssueToClientTestCaseSource))]
-        public void AttachIssueToClientTest(List<Issue> baseIssues, Board board, Issue attachIssue, long IDUser, List<Issue> expectedIssues)
+        private string _pathBoards;
+        private string _pathClient;
+
+        private DataStorage _dataStorage;
+
+        [SetUp]
+
+        public void SetUp()
         {
-            DataStorage.GetInstance().PathFileForClient = @"C:\Users\Кристина\Desktop\MakeUPro\Коды\Tests\MemberUserTest.txt";
-            string path = DataStorage.GetInstance().PathFileForClient;
-            DataStorage.GetInstance().Boards = new Dictionary<int, Board> { { board.NumberBoard, board } };
-            board.IDMembers.Add(IDUser);
-            attachIssue.IdUser = IDUser;
-            using (StreamWriter sw = new StreamWriter(path))
-            {
-                string jsn = JsonSerializer.Serialize(baseIssues);
-                sw.WriteLine(jsn);
-            }
-            AdminUser adminUser = new AdminUser();
-            adminUser.AttachIssueToClient(board, attachIssue, IDUser);
-            List<Issue> actualIssues = new List<Issue>();
-            using (StreamReader sr = new StreamReader(path))
+            _pathBoards = @".\TestBoards.txt";
+            _pathClient = @".\TestClient.txt";
+            _dataStorage = DataStorage.GetInstance();
+            _dataStorage.PathFileForBoards = _pathBoards;
+            _dataStorage.PathFileForClient = _pathClient;
+            _dataStorage.Boards = new Dictionary<int, Board>();
+            _dataStorage.Clients = new Dictionary<long, Client>();
+            _dataStorage.UpdateNextNumberBoard();
+        }
+
+        [TestCaseSource(typeof(MemberUserTestCaseSource), nameof(MemberUserTestCaseSource.AttachIssueToClientTestCaseSource))]
+        public void AttachIssueToClientTest(Dictionary<int, Board> baseBoards, Dictionary<long, Client> baseClients, Board board, Issue attachIssue, long idUser, Dictionary<int, Board> expectedBoards, Dictionary<long, Client> expectedClients)
+        {
+            _dataStorage.Boards = baseBoards;
+            _dataStorage.Clients = baseClients;
+
+            MemberUser memberUser = new MemberUser();
+            memberUser.AttachIssueToClient(board, attachIssue, idUser);
+
+            Dictionary<int, Board> actualBoards;
+            Dictionary<long, Client> actualClients;
+            using (StreamReader sr = new StreamReader(_pathBoards))
             {
                 string jsn = sr.ReadLine();
-                actualIssues = JsonSerializer.Deserialize<List<Issue>>(jsn);
+                actualBoards = JsonSerializer.Deserialize<Dictionary<int, Board>>(jsn);
             }
-
-            actualIssues.Should().BeEquivalentTo(expectedIssues);
+            using (StreamReader sr = new StreamReader(_pathClient))
+            {
+                string jsn = sr.ReadLine();
+                actualClients = JsonSerializer.Deserialize<Dictionary<long, Client>>(jsn);
+            }
+            actualBoards.Should().BeEquivalentTo(expectedBoards);
+            actualClients.Should().BeEquivalentTo(expectedClients);
         }
 
         [TearDown]
         public void Teardown()
         {
-            File.Delete(@"C:\Users\Кристина\Desktop\MakeUPro\Коды\Tests\MemberUserTest.txt");
+            File.Delete(_pathBoards);
+            File.Delete(_pathClient);
         }
     }
 }

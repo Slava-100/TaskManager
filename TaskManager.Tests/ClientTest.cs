@@ -30,16 +30,6 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(ClientTestCaseSource), nameof(ClientTestCaseSource.AttachIssueToClientTestCaseSource))]
         public void AttachIssueToClientTest(Dictionary<int, Board> baseBoards, Board board, Dictionary<long, Client> baseClients, Client client, Dictionary<int, Board> expectedBoards, int idAttachIssue, Dictionary<long, Client> expectedClients)
         {
-            using (StreamWriter sw = new StreamWriter(_pathBoards))
-            {
-                string jsn = JsonSerializer.Serialize(baseBoards);
-                sw.WriteLine(jsn);
-            }
-            using (StreamWriter sw = new StreamWriter(_pathClient))
-            {
-                string jsn = JsonSerializer.Serialize(baseClients);
-                sw.WriteLine(jsn);
-            }
             _dataStorage.Boards = baseBoards;
             _dataStorage.Clients = baseClients;
             client.SetActiveBoard(board.NumberBoard);
@@ -69,11 +59,3 @@ namespace TaskManager.Tests
     }
 }
 
-//public void AttachIssueToClient(Issue issue)
-//{
-//    if (BoardsForUser.Contains(issue.NumberIssue) && SelectRole())
-//    {
-//        _userRole.AttachIssueToClient(_activeBoard, issue, IDUser);
-//        _dataStorage.RewriteFileForBoards();
-//    }
-//}

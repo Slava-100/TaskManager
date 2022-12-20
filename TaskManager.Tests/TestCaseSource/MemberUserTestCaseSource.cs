@@ -6,21 +6,34 @@ namespace TaskManager.Tests.TestCaseSource
     {
         public static IEnumerable AttachIssueToClientTestCaseSource()
         {
-            Issue issue1 = new Issue();
-            Issue issue2 = new Issue(20, "20");
-            Issue attachIssue = new Issue(30, "30");
-            List<Issue> baseIssues = new List<Issue> { issue1, issue2, attachIssue };
-            Board board = new Board(50, 50);
-            long IDUser = 50;
-            List<Issue> expectedIssues = new List<Issue> { issue1, issue2, attachIssue };
+            Issue issue10 = new Issue(10, "10");
+            Issue attachIssue = new Issue(20, "20");
+            Client admin = new Client(50, "50");
+            Board board = new Board(100, 50);
+            board.Issues.Add(issue10);
+            board.Issues.Add(attachIssue);
+            Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
+            {
+                { board.NumberBoard, board}
+            };
+            Client client = new Client(40, "40");
+            long idUser = client.IDUser;
+            Dictionary<long, Client> baseClients = new Dictionary<long, Client>
+            {
+                { 50, admin },
+                { 40, client}
+            };
+            Dictionary<int, Board> expectedBoards = new Dictionary<int, Board>
+            {
+                { board.NumberBoard, board}
+            };
+            Dictionary<long, Client> expectedClients = new Dictionary<long, Client>
+             {
+                 { 50, admin },
+                { 40, client}
+            };
 
-            yield return new Object[] { baseIssues, board, attachIssue, IDUser, expectedIssues };
-
-            attachIssue = new Issue(80, "80");
-            baseIssues = new List<Issue> { attachIssue };
-            expectedIssues = new List<Issue> { attachIssue };
-
-            yield return new Object[] { baseIssues, board, attachIssue, IDUser, expectedIssues };
+            yield return new object[] { baseBoards, baseClients, board, attachIssue, idUser, expectedBoards, expectedClients };
         }
     }
 }
