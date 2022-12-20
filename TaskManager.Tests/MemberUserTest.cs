@@ -9,7 +9,7 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(MemberUserTestCaseSource), nameof(MemberUserTestCaseSource.AttachIssueToClientTestCaseSource))]
         public void AttachIssueToClientTest(List<Issue> baseIssues, Board board, Issue attachIssue, long IDUser, List<Issue> expectedIssues)
         {
-            DataStorage.GetInstance().PathFileForClient = @"C:\Users\Кристина\Desktop\MakeUPro\Коды\Tests\AdminUserTest.txt";
+            DataStorage.GetInstance().PathFileForClient = @"C:\Users\Кристина\Desktop\MakeUPro\Коды\Tests\MemberUserTest.txt";
             string path = DataStorage.GetInstance().PathFileForClient;
             DataStorage.GetInstance().Boards = new Dictionary<int, Board> { { board.NumberBoard, board } };
             board.IDMember.Add(IDUser);
@@ -29,6 +29,12 @@ namespace TaskManager.Tests
             }
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
+        }
+
+        [TearDown]
+        public void Teardown()
+        {
+            File.Delete(@"C:\Users\Кристина\Desktop\MakeUPro\Коды\Tests\MemberUserTest.txt");
         }
     }
 }

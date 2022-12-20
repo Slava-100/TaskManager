@@ -32,6 +32,12 @@ namespace TaskManager.Tests
             
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
+
+        [TearDown]
+        public void Teardown()
+        {
+            File.Delete(@"C:\Users\Кристина\Desktop\MakeUPro\Коды\Tests\AdminUserTest.txt");
+        }
     }
 }
 
