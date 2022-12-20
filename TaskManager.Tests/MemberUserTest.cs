@@ -1,14 +1,12 @@
-﻿using System.Text.Json;
-using TaskManager;
+﻿using FluentAssertions;
+using System.Text.Json;
 using TaskManager.Tests.TestCaseSource;
-using FluentAssertions;
-
 
 namespace TaskManager.Tests
 {
-    public class AdminUserTest
+    public class MemberUserTest
     {
-        [TestCaseSource(typeof(AdminUserTestCaseSource), nameof(AdminUserTestCaseSource.AttachIssueToClientTestCaseSource))]
+        [TestCaseSource(typeof(MemberUserTestCaseSource), nameof(MemberUserTestCaseSource.AttachIssueToClientTestCaseSource))]
         public void AttachIssueToClientTest(List<Issue> baseIssues, Board board, Issue attachIssue, long IDUser, List<Issue> expectedIssues)
         {
             DataStorage.GetInstance().PathFileForClient = @"C:\Users\Кристина\Desktop\MakeUPro\Коды\Tests\AdminUserTest.txt";
@@ -29,9 +27,8 @@ namespace TaskManager.Tests
                 string jsn = sr.ReadLine();
                 actualIssues = JsonSerializer.Deserialize<List<Issue>>(jsn);
             }
-            
+
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
     }
 }
-

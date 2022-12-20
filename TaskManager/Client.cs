@@ -36,7 +36,7 @@ namespace TaskManager
 
         public bool SelectRole()
         {
-            if (_activeBoard.IDAdmin.Contains(IDUser))
+            if (_activeBoard.IDMember.Contains(IDUser))
             {
                 _userRole = new AdminUser();
                 return true;
