@@ -1,15 +1,20 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 
 namespace TaskManager
 {
     public class TelegramService
     {
-        ITelegramBotClient _bot;
+        private ITelegramBotClient _bot;
 
+        private Dictionary<long, UserService> _UserServices;
+        DataStorage _dataStorage = DataStorage.GetInstance();
         public TelegramService()
         {
+            _UserServices = new Dictionary<long, UserService>();
+
             string token = @"5934008674:AAGx_6xThM933nF22Dxk6VdRUxrBAX03NSk";
             _bot = new TelegramBotClient(token);
 
@@ -32,40 +37,33 @@ namespace TaskManager
 
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
-            string name = update.Message.Chat.FirstName;
-            long id = update.Message.Chat.Id;
-            
-            Console.WriteLine(name + " " + id);
-            
-            if (update.Message.Text is not null)
+            long chatId = -1;
+
+            switch (update.Type)
             {
-                switch (update.Message.Text)
-                {
-                    case "/start" or "/Start":
-                        bool flag = DataStorage.GetInstance().Clients.ContainsKey(update.Message.Chat.Id);
-                        if (!flag)
+                case UpdateType.Message:
+                    if (update.Message.Text is not null)
+                    {
+                        string text = update.Message.Text.ToLower();
+                        chatId = update.Message.Chat.Id;
+
+                        if (text == "/start")
                         {
-                            _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Привет. Меня зовут {_bot.GetMeAsync().Result.FirstName}. Я предоставляю удобную командную работу над общим проектом," +
-                                $" а именно создание доски в которую можно добавлять, удалять задачи, брать задачи на выполнение, менять их статус... Начнём работу? (Да/нет)"+"/Да"+"/нет");
+                            if (!_dataStorage.Clients.ContainsKey(chatId))
+                            {
+                                _UserServices.Add(chatId, new UserService(chatId, update.Message.Chat.FirstName, _bot));
+                            }
                         }
-                        else
-                        {
-                            _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Привет, рад тебя видеть снова!");
-                        }
-                        break;
+                    }
+                    break;
+                case UpdateType.CallbackQuery:
+                    chatId = update.CallbackQuery.Message.Chat.Id;
+                    break;
+            }
 
-                    case "Да":
-                        _bot.SendTextMessageAsync(update.Message.Chat.Id, "\n 1 - Присоединиться к существующей доске \n 2 - Создать доску");
-                        break;
-
-                    case "1":
-                        _bot.SendTextMessageAsync(update.Message.Chat.Id, "");
-                        break;
-
-                    default:
-                        _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Я не понимаю тебя!");
-                        break;
-                }
+            if (chatId != -1)
+            {
+                _UserServices[chatId].HandleUpdate(update);
             }
         }
 
