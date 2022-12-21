@@ -16,7 +16,7 @@ namespace TaskManager
 
         public Dictionary<long, Client> Clients { get; set; }
 
-        private static DataStorage _instance=new DataStorage();
+        private static DataStorage _instance;
 
         public DataStorage()
         {
@@ -76,7 +76,7 @@ namespace TaskManager
             }
         }
 
-        private void UpdateNextNumberBoard()
+        public void UpdateNextNumberBoard()
         {
             int max = 0;
             foreach (int currentNumberBoard in Boards.Keys)

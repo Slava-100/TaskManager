@@ -25,7 +25,4 @@
   <ItemGroup>
     <None Remove="TestCaseSource\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestCaseSource\" />
-  </ItemGroup>
 </Project>

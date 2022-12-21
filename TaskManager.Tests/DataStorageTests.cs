@@ -20,8 +20,11 @@ namespace TaskManager.Tests
             _pathBoards = @".\TestBoards.txt";
             _pathClient = @".\TestClient.txt";
             _dataStorage = DataStorage.GetInstance();
-            _dataStorage.PathFileForBoards= _pathBoards;
+            _dataStorage.PathFileForBoards = _pathBoards;
             _dataStorage.PathFileForClient = _pathClient;
+            _dataStorage.Boards = new Dictionary<int, Board>();
+            _dataStorage.Clients = new Dictionary<long, Client>();
+            _dataStorage.UpdateNextNumberBoard();
         }
 
         [TestCaseSource(typeof(AddNewUserByKeyTestCaseSource))]
@@ -88,12 +91,11 @@ namespace TaskManager.Tests
         public void RemoveBoardTest(Dictionary<int, Board> baseBoards, int boardNumber, Dictionary<int, Board> expectedBoards, bool expectedBool)
         {
             //Given
-            DataStorage dataStorage = new DataStorage();
-            dataStorage.Boards = baseBoards;
+            _dataStorage.Boards = baseBoards;
 
             //When
-            bool actualBool = dataStorage.RemoveBoard(boardNumber);
-            Dictionary<int, Board> actualBoards = dataStorage.Boards;
+            bool actualBool = _dataStorage.RemoveBoard(boardNumber);
+            Dictionary<int, Board> actualBoards = _dataStorage.Boards;
 
             //Then
             Assert.That(actualBool, Is.EqualTo(expectedBool));
@@ -104,16 +106,22 @@ namespace TaskManager.Tests
         public void AddBoardTest(Dictionary<int, Board> baseBoards, long idAdmin, Dictionary<int, Board> expectedBoards, int expectedNumberBoard)
         {
             //Given
-            DataStorage dataStorage = new DataStorage();
-            dataStorage.Boards = baseBoards;
+            _dataStorage.Boards = baseBoards;
 
             //When
-            int actualNumberBoard = dataStorage.AddBoard(idAdmin);
-            Dictionary<int, Board> actualBoards = dataStorage.Boards;
+            int actualNumberBoard = _dataStorage.AddBoard(idAdmin);
+            Dictionary<int, Board> actualBoards = _dataStorage.Boards;
 
             //Then
             Assert.That(actualNumberBoard, Is.EqualTo(expectedNumberBoard));
             actualBoards.Should().BeEquivalentTo(expectedBoards);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            File.Delete(_pathClient);
+            File.Delete(_pathBoards);
         }
 
         //[Test]
@@ -185,7 +193,7 @@ namespace TaskManager.Tests
         //    CollectionAssert.AreEqual(expectedBoards,actualBoards);
         //    CollectionAssert.AreEqual(expectedUsers,actualUsers);
         //}
-    }    
+    }
 }
 
 

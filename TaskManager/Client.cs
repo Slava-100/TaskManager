@@ -1,4 +1,6 @@
-﻿namespace TaskManager
+﻿using Telegram.Bot.Types;
+
+namespace TaskManager
 {
     public class Client
     {
@@ -8,11 +10,11 @@
 
         private Board _activeBoard;
 
-        public long IDUser { get; private set; }
+        public long IDUser { get; set; }
 
-        public string NameUser { get; private set; }
+        public string NameUser { get; set; }
 
-        public List<int> BoardsForUser { get; private set; }
+        public List<int> BoardsForUser { get; set; }
 
         public Client(long idUser, string nameUser)
         {
@@ -87,13 +89,28 @@
             {
                 return adminUser.RemoveBoard(numberBoard);
             }
-            
+
             return false;
         }
 
         public void AddNewUserByKey(int idBoard, int keyBoard)
         {
             DataStorage.GetInstance().AddNewUserByKey(idBoard, keyBoard, IDUser, NameUser);
+        }
+
+        public void AttachIssueToClient(int IdIssue)
+        {
+            var issue = _activeBoard.Issues.FirstOrDefault(currentIssue => IdIssue == currentIssue.NumberIssue);
+
+            if (issue != null)
+            {
+                var issueInWork = _activeBoard.Issues.FirstOrDefault(crntIssue => crntIssue.Status == Enums.IssueStatus.InProgress && crntIssue.IdUser == IDUser);
+
+                if (issueInWork == null && issue.IsAssignable && SelectRole())
+                {
+                    _userRole.AttachIssueToClient(_activeBoard, issue, IDUser);
+                }
+            }
         }
 
         public override bool Equals(object? obj)
