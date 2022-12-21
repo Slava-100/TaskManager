@@ -18,7 +18,7 @@ namespace TaskManager
 
         public IssueStatus Status { get; set; }
 
-        public bool IsAssignable => Status == IssueStatus.Backlog && IdUser == 0;
+        public bool IsAssignable =>  (Status == IssueStatus.Backlog || Status == IssueStatus.UserStory) && IdUser == 0;
 
         public Issue(int numberIssue, string description)
         {

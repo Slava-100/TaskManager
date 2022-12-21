@@ -100,10 +100,16 @@ namespace TaskManager
 
         public void AttachIssueToClient(int IdIssue)
         {
-            var issue = _activeBoard.Issues.FirstOrDefault(curentIssue => IdIssue == curentIssue.NumberIssue);
-            if (issue != null && issue.IsAssignable && SelectRole())
+            var issue = _activeBoard.Issues.FirstOrDefault(currentIssue => IdIssue == currentIssue.NumberIssue);
+
+            if (issue != null)
             {
-                _userRole.AttachIssueToClient(_activeBoard, issue, IDUser);
+                var issueInWork = _activeBoard.Issues.FirstOrDefault(crntIssue => crntIssue.Status == Enums.IssueStatus.InProgress && crntIssue.IdUser == IDUser);
+
+                if (issueInWork == null && issue.IsAssignable && SelectRole())
+                {
+                    _userRole.AttachIssueToClient(_activeBoard, issue, IDUser);
+                }
             }
         }
 

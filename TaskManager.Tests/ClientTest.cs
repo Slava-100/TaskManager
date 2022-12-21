@@ -32,6 +32,9 @@ namespace TaskManager.Tests
         {
             _dataStorage.Boards = baseBoards;
             _dataStorage.Clients = baseClients;
+            _dataStorage.RewriteFileForBoards();
+            _dataStorage.RewriteFileForClients();
+
             client.SetActiveBoard(board.NumberBoard);
                         client.AttachIssueToClient(idAttachIssue);
             Dictionary<int, Board> actualBoards;
