@@ -1,9 +1,15 @@
-﻿using Telegram.Bot.Types;
+﻿using TaskManager.Handlers;
+using Telegram.Bot;
+using Telegram.Bot.Types;
 
 namespace TaskManager
 {
     public class Client
     {
+        private IHandler _handler = new StartHandler();
+
+        public ITelegramBotClient TgmClient { get; private set; }
+
         private AbstractUser _userRole;
 
         private DataStorage _dataStorage = DataStorage.GetInstance();
@@ -16,16 +22,27 @@ namespace TaskManager
 
         public List<int> BoardsForUser { get; set; }
 
-        public Client(long idUser, string nameUser)
+        public Client(long idUser, string nameUser,ITelegramBotClient client)
         {
             IDUser = idUser;
             NameUser = nameUser;
             BoardsForUser = new List<int>();
+            TgmClient= client;
         }
 
         public Client()
         {
             BoardsForUser = new List<int>();
+        }
+
+        public void SetHendler(IHandler hendler)
+        {
+            _handler = hendler;
+        }
+
+        public void HandlerUpdate(Update update)
+        {
+            _handler.HandlerUpdate(update, this);
         }
 
         public void SetActiveBoard(int numberBoard)

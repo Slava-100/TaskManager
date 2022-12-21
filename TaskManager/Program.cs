@@ -1,6 +1,4 @@
 ﻿using TaskManager;
-using Telegram.Bot.Types;
-using Client = TaskManager.Client;
 
 //Console.WriteLine("Hy");
 
@@ -12,7 +10,8 @@ using Client = TaskManager.Client;
 //Console.WriteLine(storage.Boards[1].NumberBoard);
 
 
-
+DataStorage dataStorage = DataStorage.GetInstance();
+dataStorage.ReturnFromFile();
 TelegramService client = new TelegramService();
 Console.ReadLine();
 
