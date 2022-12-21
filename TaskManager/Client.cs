@@ -101,7 +101,7 @@ namespace TaskManager
         public void AttachIssueToClient(int IdIssue)
         {
             var issue = _activeBoard.Issues.FirstOrDefault(curentIssue => IdIssue == curentIssue.NumberIssue);
-            if (issue != null && SelectRole())
+            if (issue != null && issue.IsAssignable && SelectRole())
             {
                 _userRole.AttachIssueToClient(_activeBoard, issue, IDUser);
             }
