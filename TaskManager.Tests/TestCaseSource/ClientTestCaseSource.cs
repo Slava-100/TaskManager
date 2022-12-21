@@ -9,6 +9,7 @@ namespace TaskManager.Tests.TestCaseSource
         {
             Issue issue1 = new Issue(1, "1");
             Issue attachIssue = new Issue(2, "2");
+            attachIssue.Status = Enums.IssueStatus.Backlog;
             Board board = new Board(10, 5);
             board.Issues.Add(issue1);
             board.Issues.Add(attachIssue);
@@ -38,6 +39,7 @@ namespace TaskManager.Tests.TestCaseSource
 
             Issue issue10 = new Issue(10, "10");
             attachIssue = new Issue(20, "20");
+            attachIssue.Status = Enums.IssueStatus.Backlog;
             Client admin = new Client(22, "22");
             board = new Board(22, 22);
             board.Issues.Add(issue10);
