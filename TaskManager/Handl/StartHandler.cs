@@ -55,6 +55,7 @@ namespace TaskManager.Handl
                                         new InlineKeyboardButton("Продолжить работу со своей доской") {CallbackData="ContinueWorking"}
                                     }
                                 });
+
             userServise.TgClient.SendTextMessageAsync(userServise.Id, "Привет! Ты в главном меню управления досками!!!", replyMarkup: keyboard);
         }
     }

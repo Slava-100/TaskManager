@@ -7,12 +7,22 @@ namespace TaskManager
 {
     public class UserService
     {
+        private static UserService _instance;
         public ITelegramBotClient TgClient { get; set; }
         private IHandler _handler;
         public long Id { get; set; }
         public string Name { get; set; }
 
-        public UserService(long id, string name, ITelegramBotClient client)
+        public static UserService GetInstance(long id, string name, ITelegramBotClient client)
+        {
+            if (_instance == null)
+            {
+                _instance = new UserService(id, name, client);
+            }
+            return _instance;
+        }
+
+        private UserService(long id, string name, ITelegramBotClient client)
         {
             TgClient = client;
             Id = id;

@@ -9,12 +9,10 @@ namespace TaskManager
     {
         private ITelegramBotClient _bot;
 
-        private Dictionary<long, UserService> _UserServices;
+        UserService _userService;
         DataStorage _dataStorage = DataStorage.GetInstance();
         public TelegramService()
         {
-            _UserServices = new Dictionary<long, UserService>();
-
             string token = @"5934008674:AAGx_6xThM933nF22Dxk6VdRUxrBAX03NSk";
             _bot = new TelegramBotClient(token);
 
@@ -49,9 +47,9 @@ namespace TaskManager
 
                         if (text == "/start")
                         {
-                            if (!_dataStorage.Clients.ContainsKey(chatId))
+                            if (_userService == null)
                             {
-                                _UserServices.Add(chatId, new UserService(chatId, update.Message.Chat.FirstName, _bot));
+                                _userService = UserService.GetInstance(chatId,update.Message.Chat.FirstName, _bot);
                             }
                         }
                     }
@@ -63,7 +61,7 @@ namespace TaskManager
 
             if (chatId != -1)
             {
-                _UserServices[chatId].HandleUpdate(update);
+                _userService.HandleUpdate(update);
             }
         }
 
