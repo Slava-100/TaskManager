@@ -400,6 +400,8 @@ namespace TaskManager.Tests.TestCaseSource
 
         public static IEnumerable GetAllBoardsByNumbersOfBoardTestCaseSource()
         {
+            //1. Проверка, если запрашиваем доски для Админа
+
             Client client = new Client(10, "10");
             Board board1 = new Board(1, 10);
             Board board2 = new Board(2, 10);
@@ -431,7 +433,48 @@ namespace TaskManager.Tests.TestCaseSource
             client.BoardsForUser = expBoardsForUser;
             List<Board> expectedBoards = new List<Board> { expBoard1, expBoard2 };
 
-            yield return new Object[] { client ,baseBoards, baseBoardsForUser, expectedBoards };
+            yield return new Object[] { client, baseBoards, baseBoardsForUser, expectedBoards };
+
+            //2. Проверка, если запрашиваем доски для Мембера
+
+            Client admin = new Client(10, "10");
+            client = new Client(100, "100");
+            board1 = new Board(10, 10);
+            board1.IDMembers.Add(100);
+            board2 = new Board(20, 10);
+            board2.IDMembers.Add(100);
+            baseBoardsForUser = new List<int>
+            {
+            board1.NumberBoard,
+            board2.NumberBoard
+            };
+            baseBoards = new Dictionary<int, Board>
+            {
+                {board1.NumberBoard, board1 },
+                {board2.NumberBoard, board2 }
+            };
+            client.BoardsForUser = baseBoardsForUser;
+
+            Client expAdmin = new Client(10, "10");
+            expClient = new Client(100, "100");
+            expBoard1 = new Board(10, 10);
+            expBoard1.IDMembers.Add(100);
+            expBoard2 = new Board(20, 10);
+            expBoard2.IDMembers.Add(100);
+            expBaseBoards = new Dictionary<int, Board>
+            {
+                {expBoard1.NumberBoard, expBoard1 },
+                {expBoard2.NumberBoard, expBoard2 }
+            };
+            expBoardsForUser = new List<int>
+            {
+            expBoard1.NumberBoard,
+            expBoard2.NumberBoard
+            };
+            client.BoardsForUser = expBoardsForUser;
+            expectedBoards = new List<Board> { expBoard1, expBoard2 };
+
+            yield return new Object[] { client, baseBoards, baseBoardsForUser, expectedBoards };
         }
     }
 }

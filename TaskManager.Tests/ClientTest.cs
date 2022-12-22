@@ -56,8 +56,6 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(ClientTestCaseSource), nameof(ClientTestCaseSource.GetAllBoardsByNumbersOfBoardTestCaseSource))]
         public void GetAllBoardsByNumbersOfBoardTest(Client client, Dictionary<int, Board> baseBoards, List<int> baseBoardsForUser, List<Board> expectedBoards)
         {
-            //_dataStorage.RewriteFileForBoards();
-            //_dataStorage.RewriteFileForClients();
             _dataStorage.Boards = baseBoards;
             List<Board> actualBoards = client.GetAllBoardsByNumbersOfBoard();
 

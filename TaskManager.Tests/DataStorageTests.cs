@@ -117,20 +117,14 @@ namespace TaskManager.Tests
             actualBoards.Should().BeEquivalentTo(expectedBoards);
         }
 
-        //[TestCaseSource(typeof(DataStorageTestCaseSource), nameof(DataStorageTestCaseSource.GetAllBoardsByNumbersOfBoardTestCaseSource))]
-        //public void GetAllBoardsByNumbersOfBoardTest(List<int> baseBoardsForUser, List<Board> expectedBoards)
-        //{
-        //    List<Board> actualBoards = _dataStorage.GetAllBoardsByNumbersOfBoard(baseBoardsForUser);
+        [TestCaseSource(typeof(DataStorageTestCaseSource), nameof(DataStorageTestCaseSource.GetAllBoardsByNumbersOfBoardTestCaseSource))]
+        public void GetAllBoardsByNumbersOfBoardTest(Dictionary<int, Board> baseBoards, List<int> baseBoardsForUser, List<Board> expectedBoards)
+        {
+            _dataStorage.Boards = baseBoards;
+            List<Board> actualBoards = _dataStorage.GetAllBoardsByNumbersOfBoard(baseBoardsForUser);
 
-        //    actualBoards.Should().BeEquivalentTo(expectedBoards);
-        //}
-
-
-        //public List<Board> GetAllBoardsByNumbersOfBoard(List<int> boardsForUser)
-        //{
-        //    return boardsForUser.Where(currentNumber => Boards.ContainsKey(currentNumber)).Select(currentNumber => Boards[currentNumber]).ToList();
-        //}
-
+            actualBoards.Should().BeEquivalentTo(expectedBoards);
+        }
 
         [TearDown]
         public void TearDown()
