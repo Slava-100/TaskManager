@@ -173,8 +173,8 @@
 
         public List<Issue> GetAllIssuesInBoard(long idUser)
         {
-            List<Issue> allIssues = List<Issue>();
-            if (IDMembers.Contains(idUser) || (IDAdmin.Contains(idUser))
+            List<Issue> allIssues = new List<Issue>();
+            if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
             {
                 foreach (Issue issue in Issues)
                 {
@@ -183,20 +183,22 @@
                 }
                 return allIssues;
             }
+            return new List<Issue>();
         }
 
         public List<Issue> GetIssuesInProgressInBoard(long idUser)
         {
-            List<Issue> allIssues = List<Issue>();
-            if (IDMembers.Contains(idUser) || (IDAdmin.Contains(idUser))
+            List<Issue> allIssues = new List<Issue>();
+            if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
             {
                 foreach (Issue issue in Issues)
                 {
-                    if (issue.IdUser == idUser) && (issue.Status = Enums.IssueStatus.InProgress)
+                    if ((issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.InProgress))
                         allIssues.Add(issue);
                 }
                 return allIssues;
             }
+            return new List<Issue>();
         }
     }
 }
