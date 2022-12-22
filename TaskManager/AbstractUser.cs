@@ -1,4 +1,6 @@
-﻿namespace TaskManager
+﻿using TaskManager;
+
+namespace TaskManager
 {
     public abstract class AbstractUser
     {
@@ -10,5 +12,16 @@
             _dataStorage.RewriteFileForBoards();
             _dataStorage.RewriteFileForClients();
         }
+
+        public List<Issue> GetAllIssuesInBoardByBoard(long idUser, Board board)
+        {
+            return board.GetAllIssuesInBoard(idUser);
+        }
+
+        public List<Issue> GetIssuesInProgressInBoardByBoard(long idUser, Board board)
+        {
+            return board.GetIssuesInProgressInBoard(idUser);
+        }
     }
 }
+

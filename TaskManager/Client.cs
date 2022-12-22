@@ -113,6 +113,16 @@ namespace TaskManager
             }
         }
 
+        public List<Issue> GetAllIssuesInBoardByBoard(Board board)
+        {
+            return _userRole.GetAllIssuesInBoardByBoard(IDUser, board);
+        }
+
+        public List<Issue> GetIssuesInProgressInBoardByBoard(Board board)
+        {
+            return _userRole.GetIssuesInProgressInBoardByBoard(IDUser, board);
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is Client user &&
