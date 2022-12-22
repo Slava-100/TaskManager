@@ -7,16 +7,19 @@ namespace TaskManager
 {
     public class TelegramService
     {
-        private ITelegramBotClient _bot;
+        private static TelegramService _telegramService;
+
+        public ITelegramBotClient Bot { get; set; }
 
         private DataStorage _dataStorage = DataStorage.GetInstance();
 
-        public TelegramService()
+        private TelegramService()
         {
             string token = @"5934008674:AAGx_6xThM933nF22Dxk6VdRUxrBAX03NSk";
-            _bot = new TelegramBotClient(token);
+            //string token = @"5731544843:AAG8oa7weu6AdvGYgK4rByEW-qPvqcm0nYQ";
+            Bot = new TelegramBotClient(token);
 
-            Console.WriteLine("Запущен бот " + _bot.GetMeAsync().Result.FirstName);
+            Console.WriteLine("Запущен бот " + Bot.GetMeAsync().Result.Username);
             var cts = new CancellationTokenSource();
             var cancellationToken = cts.Token;
 
@@ -25,12 +28,21 @@ namespace TaskManager
                 AllowedUpdates = { },
             };
 
-            _bot.StartReceiving(
+            Bot.StartReceiving(
                 HandleUpdateAsync,
                 HandleErrorAsync,
                 receiverOptions,
                 cancellationToken
             );
+        }
+
+        public static TelegramService GetInstance()
+        {
+            if (_telegramService == null)
+            {
+                _telegramService = new TelegramService();
+            }
+            return _telegramService;
         }
 
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
@@ -47,9 +59,10 @@ namespace TaskManager
 
                         if (text == "/start")
                         {
+                            Console.WriteLine($"{ text} {fullNameClient}");
                             if (!_dataStorage.Clients.ContainsKey(chatId))
                             {
-                                _dataStorage.Clients.Add(chatId, new Client(chatId, fullNameClient,_bot));
+                                _dataStorage.Clients.Add(chatId, new Client(chatId, fullNameClient));
                                 _dataStorage.RewriteFileForClients();
                             }
                         }
@@ -58,6 +71,10 @@ namespace TaskManager
                 case UpdateType.CallbackQuery:
                     chatId = update.CallbackQuery.Message.Chat.Id;
                     break;
+            }
+            if (chatId != -1)
+            {
+                _dataStorage.Clients[chatId].HandlerUpdate(update);
             }
 
             //if (chatId == -1)

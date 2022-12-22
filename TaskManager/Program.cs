@@ -10,9 +10,9 @@
 //Console.WriteLine(storage.Boards[1].NumberBoard);
 
 
+TelegramService client = TelegramService.GetInstance();
 DataStorage dataStorage = DataStorage.GetInstance();
 dataStorage.ReturnFromFile();
-TelegramService client = new TelegramService();
 Console.ReadLine();
 
 //TaskManager.User admin = new TaskManager.User(12, "admin");

@@ -1,6 +1,14 @@
 ﻿using System;
-using System.Text.Json;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
+using Telegram.Bot.Types.Enums;
+using Telegram.Bot;
+using System.Text.Json;
+using File = System.IO.File;
 
 namespace TaskManager
 {
@@ -24,7 +32,6 @@ namespace TaskManager
             Clients = new Dictionary<long, Client>();
             PathFileForBoards = @".\PathFileForBoards.txt";
             PathFileForClient = @".\PathFileForClient.txt";
-            ReturnFromFile();
             UpdateNextNumberBoard();
         }
 
@@ -103,7 +110,7 @@ namespace TaskManager
             return board.NumberBoard;
         }
 
-        public bool AddNewUserByKey(int idBoard, int keyBoard, long idUser, string nameUser)
+        public bool AddNewUserByKey(int idBoard, int keyBoard,ITelegramBotClient bot, long idUser, string nameUser)
         {
             bool flag = false;
 

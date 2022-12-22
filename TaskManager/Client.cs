@@ -8,7 +8,7 @@ namespace TaskManager
     {
         private IHandler _handler = new StartHandler();
 
-        public ITelegramBotClient TgmClient { get; private set; }
+        //public TelegramService _telegramService=  TelegramService.GetInstance();
 
         private AbstractUser _userRole;
 
@@ -20,19 +20,17 @@ namespace TaskManager
 
         public string NameUser { get; set; }
 
-        public List<int> BoardsForUser { get; set; }
+        public List<int> BoardsForUser { get; set; } = new List<int>();
 
-        public Client(long idUser, string nameUser,ITelegramBotClient client)
+        public Client(long idUser, string nameUser)
         {
             IDUser = idUser;
             NameUser = nameUser;
             BoardsForUser = new List<int>();
-            TgmClient= client;
         }
 
         public Client()
         {
-            BoardsForUser = new List<int>();
         }
 
         public void SetHendler(IHandler hendler)
@@ -110,9 +108,9 @@ namespace TaskManager
             return false;
         }
 
-        public void AddNewUserByKey(int idBoard, int keyBoard)
+        public void AddNewUserByKey(int idBoard, int keyBoard,ITelegramBotClient bot)
         {
-            DataStorage.GetInstance().AddNewUserByKey(idBoard, keyBoard, IDUser, NameUser);
+            DataStorage.GetInstance().AddNewUserByKey(idBoard, keyBoard, bot,IDUser,NameUser);
         }
 
         public void AttachIssueToClient(int IdIssue)
