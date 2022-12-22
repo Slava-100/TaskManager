@@ -73,5 +73,39 @@ namespace TaskManager.Tests.TestCaseSource
 
             yield return new Object[] { idUser, board, expectedIssues };
         }
+
+        public static IEnumerable GetIssuesInProgressInBoardByIdUserTestCaseSource()
+        {
+            Client admin = new Client(709, "709");
+            Client member = new Client(88, "88");
+            Issue issue1 = new Issue(19, "19");
+            issue1.IdUser = member.IDUser;
+            issue1.IdUser = member.IDUser;
+            issue1.Status = Enums.IssueStatus.Backlog;
+            Issue issue2 = new Issue(29, "29");
+            issue2.IdUser = member.IDUser;
+            issue2.Status = Enums.IssueStatus.InProgress;
+            Board board = new Board(709, 709);
+            board.Issues.Add(issue1);
+            board.Issues.Add(issue2);
+            board.IDMembers.Add(88);
+            long idUser = 88;
+
+            Client expAdmin = new Client(709, "709");
+            Client expMember = new Client(88, "88");
+            Issue expIssue1 = new Issue(19, "19");
+            expIssue1.IdUser = expMember.IDUser;
+            expIssue1.Status = Enums.IssueStatus.Backlog;
+            Issue expIssue2 = new Issue(29, "29");
+            expIssue2.IdUser = expMember.IDUser;
+            expIssue2.Status = Enums.IssueStatus.InProgress;
+            Board expBoard = new Board(709, 709);
+            expBoard.Issues.Add(issue1);
+            expBoard.Issues.Add(issue2);
+            expBoard.IDMembers.Add(88);
+            List<Issue> expectedIssues = new List<Issue> {  expIssue2 };
+
+            yield return new Object[] { idUser, board, expectedIssues };
+        }
     }
 }
