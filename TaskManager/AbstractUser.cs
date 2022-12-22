@@ -18,7 +18,7 @@ namespace TaskManager
             return board.GetAllIssuesInBoard(idUser);
         }
 
-        public List<Issue> GetIssuesInProgressInBoardByBoard(long idUser, Board board)
+        public List<Issue> GetIssuesInProgressInBoardByIdUser(long idUser, Board board)
         {
             return board.GetIssuesInProgressInBoard(idUser);
         }

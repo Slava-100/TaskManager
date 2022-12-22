@@ -61,6 +61,15 @@ namespace TaskManager.Tests
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
 
+        [TestCaseSource(typeof(AdminUserTestCaseSource), nameof(AdminUserTestCaseSource.GetIssuesInProgressInBoardByIdUserTestCaseSource))]
+        public void GetIssuesInProgressInBoardByIdUserTest(long idUser, Board board, List<Issue> expectedIssues)
+        {
+            AdminUser adminUser = new AdminUser();
+            List<Issue> actualIssues = adminUser.GetIssuesInProgressInBoardByIdUser(idUser, board);
+
+            actualIssues.Should().BeEquivalentTo(expectedIssues);
+        }
+
         [TearDown]
         public void Teardown()
         {
@@ -69,4 +78,3 @@ namespace TaskManager.Tests
         }
     }
 }
-

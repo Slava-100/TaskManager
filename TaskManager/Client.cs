@@ -120,7 +120,7 @@ namespace TaskManager
 
         public List<Issue> GetIssuesInProgressInBoardByBoard(Board board)
         {
-            return _userRole.GetIssuesInProgressInBoardByBoard(IDUser, board);
+            return _userRole.GetIssuesInProgressInBoardByIdUser(IDUser, board);
         }
 
         public override bool Equals(object? obj)
