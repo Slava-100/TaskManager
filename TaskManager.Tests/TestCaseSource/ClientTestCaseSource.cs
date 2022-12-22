@@ -397,6 +397,81 @@ namespace TaskManager.Tests.TestCaseSource
             yield return new object[] { baseBoards, board, baseClients, client, expectedBoards, idAttachIssue, expectedClients };
 
         }
+
+        public static IEnumerable GetAllIssuesInBoardByBoardTestCaseSource()
+        {
+            //1. Проверка для Админа, где на него записаны только 1 и 2 задачи, 3 задача на другом участнике
+
+            Client baseClient = new Client(55, "55");
+            Client otherClient = new Client(2, "2");
+            Issue issue1 = new Issue(1, "1");
+            issue1.IdUser = baseClient.IDUser;
+            Issue issue2 = new Issue(2, "2");
+            issue2.IdUser = baseClient.IDUser;
+            Issue issue3 = new Issue(3, "3");
+            issue3.IdUser = otherClient.IDUser;
+            Board baseBoard = new Board(55, 55);
+            baseBoard.Issues.Add(issue1);
+            baseBoard.Issues.Add(issue2);
+            baseBoard.Issues.Add(issue3);
+            baseBoard.IDMembers.Add(2);
+
+            Client expClient = new Client(55, "55");
+            Client expOtherClient = new Client(2, "2");
+            Issue expIssue1 = new Issue(1, "1");
+            expIssue1.IdUser = expClient.IDUser;
+            Issue expIssue2 = new Issue(2, "2");
+            expIssue2.IdUser = expClient.IDUser;
+            Issue expIssue3 = new Issue(3, "3");
+            expIssue3.IdUser = expOtherClient.IDUser;
+            Board expBoard = new Board(55, 55);
+            expBoard.Issues.Add(issue1);
+            expBoard.Issues.Add(issue2);
+            expBoard.Issues.Add(issue3);
+            expClient.BoardsForUser.Add(55);
+            expBoard.IDMembers.Add(2);
+            List<Issue> expectedIssues = new List<Issue> { expIssue1, expIssue2 };
+
+            yield return new Object[] { baseBoard, baseClient, expectedIssues };
+
+            //2. Проверка для Мембера, где на него записаны только 1 и 3 задачи, 2 задача на другом участнике
+
+            Client admin = new Client(999, "999");
+            baseClient = new Client(550, "550");
+            otherClient = new Client(2, "2");
+            issue1 = new Issue(1, "1");
+            issue1.IdUser = baseClient.IDUser;
+            issue2 = new Issue(2, "2");
+            issue2.IdUser = admin.IDUser;
+            issue3 = new Issue(3, "3");
+            issue3.IdUser = baseClient.IDUser;
+            baseBoard = new Board(999, 999);
+            baseBoard.Issues.Add(issue1);
+            baseBoard.Issues.Add(issue2);
+            baseBoard.Issues.Add(issue3);
+            baseBoard.IDMembers.Add(550);
+            baseBoard.IDMembers.Add(2);
+
+            Client expAdmin = new Client(999, "999");
+            expClient = new Client(550, "550");
+            expOtherClient = new Client(2, "2");
+            expIssue1 = new Issue(1, "1");
+            expIssue1.IdUser = expClient.IDUser;
+            expIssue2 = new Issue(2, "2");
+            expIssue2.IdUser = admin.IDUser;
+            expIssue3 = new Issue(3, "3");
+            expIssue3.IdUser = expClient.IDUser;
+            expBoard = new Board(999, 999);
+            expBoard.Issues.Add(issue1);
+            expBoard.Issues.Add(issue2);
+            expBoard.Issues.Add(issue3);
+            expClient.BoardsForUser.Add(55);
+            expBoard.IDMembers.Add(550);
+            expBoard.IDMembers.Add(2);
+            expectedIssues = new List<Issue> { expIssue1, expIssue3 };
+
+            yield return new Object[] { baseBoard, baseClient, expectedIssues };
+        }
     }
 }
-
+// (Board baseBoard, Client baseClient, List<Issue> expectedIssues)

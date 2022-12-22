@@ -4,6 +4,7 @@ using System.Text.Json.Nodes;
 using TaskManager;
 using TaskManager.Tests.TestCaseSource;
 
+
 namespace TaskManager.Tests
 {
     public class ClientTest
@@ -52,6 +53,23 @@ namespace TaskManager.Tests
             actualBoards.Should().BeEquivalentTo(expectedBoards);
             actualClients.Should().BeEquivalentTo(expectedClients);
         }
+
+        [TestCaseSource(typeof(ClientTestCaseSource), nameof(ClientTestCaseSource.GetAllIssuesInBoardByBoardTestCaseSource))]
+        public void GetAllIssuesInBoardByBoardTest(Board baseBoard, Client baseClient, List<Issue> expectedIssues)
+        {
+            _dataStorage.Boards.Add(baseBoard.NumberBoard, baseBoard);
+            _dataStorage.Clients.Add(baseClient.IDUser, baseClient);
+            baseClient.SetActiveBoard(baseBoard.NumberBoard);
+            List <Issue> actualIssues = baseClient.GetAllIssuesInBoardByBoard(baseBoard);
+
+            actualIssues.Should().BeEquivalentTo(expectedIssues);
+        }
+
+        //public List<Issue> GetAllIssuesInBoardByBoard(Board board)
+        //{
+        //    return _userRole.GetAllIssuesInBoardByIdUser(IDUser, board);
+        //}
+
 
         [TearDown]
         public void TearDown()
