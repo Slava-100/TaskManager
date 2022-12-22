@@ -45,6 +45,7 @@ namespace TaskManager.Handl
                                          new InlineKeyboardButton("Nazad") {CallbackData = "Nazad"},
                                     }
                                });
+            DataStorage.GetInstance().AddBoard(userServise.Id);
             userServise.TgClient.SendTextMessageAsync(userServise.Id, "Доска создана - поздравляем! Теперь вы её администратор!", replyMarkup: keyboard);
         }
     }
