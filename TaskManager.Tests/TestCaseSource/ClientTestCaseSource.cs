@@ -475,6 +475,139 @@ namespace TaskManager.Tests.TestCaseSource
             expectedBoards = new List<Board> { expBoard1, expBoard2 };
 
             yield return new Object[] { client, baseBoards, baseBoardsForUser, expectedBoards };
+
+            //3. Проверка, если запрашиваем доски для Админа, где часть досок на другом участнике
+
+            client = new Client(103, "103");
+            board1 = new Board(13, 103);
+            board2 = new Board(23, 103);
+            Board boardOther = new Board(66, 66);
+            baseBoardsForUser = new List<int>
+            {
+            board1.NumberBoard,
+            board2.NumberBoard
+            };
+            baseBoards = new Dictionary<int, Board>
+            {
+                {board1.NumberBoard, board1 },
+                {board2.NumberBoard, board2 },
+                { boardOther.NumberBoard, boardOther}
+            };
+            client.BoardsForUser = baseBoardsForUser;
+
+            expClient = new Client(103, "103");
+            expBoard1 = new Board(13, 103);
+            expBoard2 = new Board(23, 103);
+            Board expBoardOther = new Board(66, 66);
+            expBaseBoards = new Dictionary<int, Board>
+            {
+                {expBoard1.NumberBoard, expBoard1 },
+                {expBoard2.NumberBoard, expBoard2 },
+                { expBoardOther.NumberBoard , expBoardOther}
+            };
+            expBoardsForUser = new List<int>
+            {
+            expBoard1.NumberBoard,
+            expBoard2.NumberBoard
+            };
+            client.BoardsForUser = expBoardsForUser;
+            expectedBoards = new List<Board> { expBoard1, expBoard2 };
+
+            yield return new Object[] { client, baseBoards, baseBoardsForUser, expectedBoards };
+
+            //4. Проверка, если запрашиваем доски для Мембера, где часть досок на другом участнике
+
+            admin = new Client(104, "104");
+            client = new Client(1004, "1004");
+            board1 = new Board(104, 104);
+            board1.IDMembers.Add(1004);
+            board2 = new Board(204, 104);
+            board2.IDMembers.Add(1004);
+            boardOther = new Board(99, 99);
+            baseBoardsForUser = new List<int>
+            {
+            board1.NumberBoard,
+            board2.NumberBoard
+            };
+            baseBoards = new Dictionary<int, Board>
+            {
+                {board1.NumberBoard, board1 },
+                {board2.NumberBoard, board2 },
+                { boardOther.NumberBoard, boardOther}
+                        };
+            client.BoardsForUser = baseBoardsForUser;
+
+            expAdmin = new Client(104, "104");
+            expClient = new Client(1004, "1004");
+            expBoard1 = new Board(104, 104);
+            expBoard1.IDMembers.Add(1004);
+            expBoard2 = new Board(204, 104);
+            expBoard2.IDMembers.Add(1004);
+            Board expboardOther = new Board(99, 99);
+            expBaseBoards = new Dictionary<int, Board>
+            {
+                {expBoard1.NumberBoard, expBoard1 },
+                {expBoard2.NumberBoard, expBoard2 },
+                { expboardOther.NumberBoard, expboardOther}
+            };
+            expBoardsForUser = new List<int>
+            {
+            expBoard1.NumberBoard,
+            expBoard2.NumberBoard
+            };
+            client.BoardsForUser = expBoardsForUser;
+            expectedBoards = new List<Board> { expBoard1, expBoard2 };
+
+            yield return new Object[] { client, baseBoards, baseBoardsForUser, expectedBoards };
+
+            ////5. Показать все доски у участника, в которых он и Админ, и Мембер
+
+            //admin = new Client(1045, "1045");
+            ////client = new Client(10045, "10045");
+            //board1 = new Board(1045, 1045);
+            ////board1.IDMembers.Add(10045);
+            //board2 = new Board(2045, 1045);
+            ////board2.IDMembers.Add(10045);
+            //boardOther = new Board(995, 995);
+            //boardOther.IDMembers.Add(1045);
+            //baseBoardsForUser = new List<int>
+            //{
+            //board1.NumberBoard,
+            //board2.NumberBoard,
+            //boardOther.NumberBoard
+            //};
+            ////baseBoards = new Dictionary<int, Board>
+            ////{
+            ////    {board1.NumberBoard, board1 },
+            ////    {board2.NumberBoard, board2 },
+            ////    { boardOther.NumberBoard, boardOther}
+            ////            };
+            //admin.BoardsForUser = baseBoardsForUser;
+
+            //expAdmin = new Client(1045, "1045");
+            ////expClient = new Client(10045, "10045");
+            //expBoard1 = new Board(1045, 1045);
+            ////expBoard1.IDMembers.Add(10045);
+            //expBoard2 = new Board(2045, 1045);
+            ////expBoard2.IDMembers.Add(10045);
+            //expboardOther = new Board(995, 995);
+            //expboardOther.IDMembers.Add(1045);
+            ////expBaseBoards = new Dictionary<int, Board>
+            ////{
+            ////    {expBoard1.NumberBoard, expBoard1 },
+            ////    {expBoard2.NumberBoard, expBoard2 },
+            ////    { expboardOther.NumberBoard, expboardOther}
+            ////};
+            //expBoardsForUser = new List<int>
+            //{
+            //expBoard1.NumberBoard,
+            //expBoard2.NumberBoard,
+            //expboardOther.NumberBoard
+            //};
+            //expAdmin.BoardsForUser = expBoardsForUser;
+            //expectedBoards = new List<Board> { expBoard1, expBoard2, expboardOther };
+
+            //yield return new Object[] { client, baseBoards, baseBoardsForUser, expectedBoards };
         }
     }
 }
