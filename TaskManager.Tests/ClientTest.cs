@@ -36,7 +36,7 @@ namespace TaskManager.Tests
             _dataStorage.RewriteFileForClients();
 
             client.SetActiveBoard(board.NumberBoard);
-                        client.AttachIssueToClient(idAttachIssue);
+            client.AttachIssueToClient(idAttachIssue);
             Dictionary<int, Board> actualBoards;
             Dictionary<long, Client> actualClients;
             using (StreamReader sr = new StreamReader(_pathBoards))
@@ -51,6 +51,17 @@ namespace TaskManager.Tests
             }
             actualBoards.Should().BeEquivalentTo(expectedBoards);
             actualClients.Should().BeEquivalentTo(expectedClients);
+        }
+
+        [TestCaseSource(typeof(ClientTestCaseSource), nameof(ClientTestCaseSource.GetAllBoardsByNumbersOfBoardTestCaseSource))]
+        public void GetAllBoardsByNumbersOfBoardTest(Client client, Dictionary<int, Board> baseBoards, List<int> baseBoardsForUser, List<Board> expectedBoards)
+        {
+            //_dataStorage.RewriteFileForBoards();
+            //_dataStorage.RewriteFileForClients();
+            _dataStorage.Boards = baseBoards;
+            List<Board> actualBoards = client.GetAllBoardsByNumbersOfBoard();
+
+            actualBoards.Should().BeEquivalentTo(expectedBoards);
         }
 
         [TearDown]

@@ -397,6 +397,42 @@ namespace TaskManager.Tests.TestCaseSource
             yield return new object[] { baseBoards, board, baseClients, client, expectedBoards, idAttachIssue, expectedClients };
 
         }
+
+        public static IEnumerable GetAllBoardsByNumbersOfBoardTestCaseSource()
+        {
+            Client client = new Client(10, "10");
+            Board board1 = new Board(1, 10);
+            Board board2 = new Board(2, 10);
+            List<int> baseBoardsForUser = new List<int>
+            {
+            board1.NumberBoard,
+            board2.NumberBoard
+            };
+            Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
+            {
+                {board1.NumberBoard, board1 },
+                {board2.NumberBoard, board2 }
+            };
+            client.BoardsForUser = baseBoardsForUser;
+
+            Client expClient = new Client(10, "10");
+            Board expBoard1 = new Board(1, 10);
+            Board expBoard2 = new Board(2, 10);
+            Dictionary<int, Board> expBaseBoards = new Dictionary<int, Board>
+            {
+                {expBoard1.NumberBoard, expBoard1 },
+                {expBoard2.NumberBoard, expBoard2 }
+            };
+            List<int> expBoardsForUser = new List<int>
+            {
+            expBoard1.NumberBoard,
+            expBoard2.NumberBoard
+            };
+            client.BoardsForUser = expBoardsForUser;
+            List<Board> expectedBoards = new List<Board> { expBoard1, expBoard2 };
+
+            yield return new Object[] { client ,baseBoards, baseBoardsForUser, expectedBoards };
+        }
     }
 }
 

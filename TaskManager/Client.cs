@@ -115,7 +115,7 @@ namespace TaskManager
 
         public List<Board> GetAllBoardsByNumbersOfBoard()
         {
-            return _userRole.GetAllBoardsByNumbersOfBoard(BoardsForUser);
+            return _dataStorage.GetAllBoardsByNumbersOfBoard(BoardsForUser);
         }
 
         public override bool Equals(object? obj)
