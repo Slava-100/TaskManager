@@ -472,6 +472,94 @@ namespace TaskManager.Tests.TestCaseSource
 
             yield return new Object[] { baseBoard, baseClient, expectedIssues };
         }
+
+        public static IEnumerable GetIssuesInProgressInBoardByBoardTestCaseSource()
+        {
+            //1. Проверка для Админа, где на него записаны только 1 задача с InProgress, 2 задача на него - но с другим статусом, 3 задача на другом участнике
+
+            Client baseClient = new Client(55, "55");
+            Client otherClient = new Client(2, "2");
+            Issue issue1 = new Issue(1, "1");
+            issue1.IdUser = baseClient.IDUser;
+            issue1.Status = Enums.IssueStatus.InProgress;
+            Issue issue2 = new Issue(2, "2");
+            issue2.IdUser = baseClient.IDUser;
+            issue2.Status = Enums.IssueStatus.Review;
+            Issue issue3 = new Issue(3, "3");
+            issue3.IdUser = otherClient.IDUser;
+            issue3.Status = Enums.IssueStatus.InProgress;
+            Board baseBoard = new Board(55, 55);
+            baseBoard.Issues.Add(issue1);
+            baseBoard.Issues.Add(issue2);
+            baseBoard.Issues.Add(issue3);
+            baseBoard.IDMembers.Add(2);
+
+            Client expClient = new Client(55, "55");
+            Client expOtherClient = new Client(2, "2");
+            Issue expIssue1 = new Issue(1, "1");
+            expIssue1.IdUser = expClient.IDUser;
+            expIssue1.Status = Enums.IssueStatus.InProgress;
+            Issue expIssue2 = new Issue(2, "2");
+            expIssue2.IdUser = expClient.IDUser;
+            expIssue2.Status = Enums.IssueStatus.Review;
+            Issue expIssue3 = new Issue(3, "3");
+            expIssue3.IdUser = expOtherClient.IDUser;
+            expIssue3.Status = Enums.IssueStatus.InProgress;
+            Board expBoard = new Board(55, 55);
+            expBoard.Issues.Add(issue1);
+            expBoard.Issues.Add(issue2);
+            expBoard.Issues.Add(issue3);
+            expClient.BoardsForUser.Add(55);
+            expBoard.IDMembers.Add(2);
+            List<Issue> expectedIssues = new List<Issue> { expIssue1 };
+
+            yield return new Object[] { baseBoard, baseClient, expectedIssues };
+
+            //2. Проверка для Мембера, где на него записаны только 3 задача со статусом InProgress, 1 тоже на него - но с дургим статусом, 2 задача на другом участнике
+
+            Client admin = new Client(9992, "9992");
+            baseClient = new Client(5502, "5502");
+            otherClient = new Client(22, "22");
+            issue1 = new Issue(12, "12");
+            issue1.IdUser = baseClient.IDUser;
+            issue1.Status = Enums.IssueStatus.Done;
+            issue2 = new Issue(22, "22");
+            issue2.IdUser = admin.IDUser;
+            issue2.Status = Enums.IssueStatus.InProgress;
+            issue3 = new Issue(32, "32");
+            issue3.IdUser = baseClient.IDUser;
+            issue3.Status = Enums.IssueStatus.InProgress;
+            baseBoard = new Board(9992, 9992);
+            baseBoard.Issues.Add(issue1);
+            baseBoard.Issues.Add(issue2);
+            baseBoard.Issues.Add(issue3);
+            baseBoard.IDMembers.Add(5502);
+            baseBoard.IDMembers.Add(22);
+
+            Client expAdmin = new Client(9992, "9992");
+            expClient = new Client(5502, "5502");
+            expOtherClient = new Client(22, "22");
+            expIssue1 = new Issue(12, "12");
+            expIssue1.IdUser = expClient.IDUser;
+            expIssue1.Status = Enums.IssueStatus.Done;
+            expIssue2 = new Issue(22, "22");
+            expIssue2.IdUser = admin.IDUser;
+            expIssue2.Status = Enums.IssueStatus.InProgress;
+            expIssue3 = new Issue(32, "32");
+            expIssue3.IdUser = expClient.IDUser;
+            expIssue3.Status = Enums.IssueStatus.InProgress;
+            expBoard = new Board(9992, 9992);
+            expBoard.Issues.Add(issue1);
+            expBoard.Issues.Add(issue2);
+            expBoard.Issues.Add(issue3);
+            expClient.BoardsForUser.Add(552);
+            expBoard.IDMembers.Add(5502);
+            expBoard.IDMembers.Add(22);
+            expectedIssues = new List<Issue> { expIssue3 };
+
+            yield return new Object[] { baseBoard, baseClient, expectedIssues };
+        }
     }
 }
-// (Board baseBoard, Client baseClient, List<Issue> expectedIssues)
+
+
