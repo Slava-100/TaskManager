@@ -9,7 +9,7 @@ namespace TaskManager
         public int NextNumberBoard { get; private set; }
 
         public string PathFileForBoards { get; set; }
-        
+
         public string PathFileForClient { get; set; }
 
         public Dictionary<int, Board> Boards { get; set; }
@@ -57,7 +57,7 @@ namespace TaskManager
 
         public void ReturnFromFile()
         {
-            if(File.Exists(PathFileForBoards))
+            if (File.Exists(PathFileForBoards))
             {
                 using (StreamReader file = new StreamReader(PathFileForBoards))
                 {
@@ -71,7 +71,7 @@ namespace TaskManager
                 using (StreamReader file = new StreamReader(PathFileForClient))
                 {
                     string deserialiseFromFile = file.ReadLine();
-                    Clients = JsonSerializer.Deserialize<Dictionary<long,Client>>(deserialiseFromFile);
+                    Clients = JsonSerializer.Deserialize<Dictionary<long, Client>>(deserialiseFromFile);
                 }
             }
         }
@@ -129,8 +129,15 @@ namespace TaskManager
                     }
                 }
             }
-           
+
             return flag;
+        }
+
+        public List<Board> GetAllBoardsByNumbersOfBoard(List<int> boardsForUser)
+        {
+            //  foreach(int board in boardsForUser) { }
+
+            return boardsForUser.Where(currentNumber => Boards.ContainsKey(currentNumber)).Select(currentNumber => Boards[currentNumber]).ToList();
         }
     }
 }

@@ -10,5 +10,10 @@
             _dataStorage.RewriteFileForBoards();
             _dataStorage.RewriteFileForClients();
         }
+
+        public List <Board> GetAllBoardsByNumbersOfBoard(List<int> boardsForUser)
+        {
+          return _dataStorage.GetAllBoardsByNumbersOfBoard(boardsForUser);
+        }
     }
 }

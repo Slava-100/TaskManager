@@ -113,6 +113,11 @@ namespace TaskManager
             }
         }
 
+        public List<Board> GetAllBoardsByNumbersOfBoard()
+        {
+            return _userRole.GetAllBoardsByNumbersOfBoard(BoardsForUser);
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is Client user &&
