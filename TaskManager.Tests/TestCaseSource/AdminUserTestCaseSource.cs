@@ -57,9 +57,9 @@ namespace TaskManager.Tests.TestCaseSource
 
             Client expAdmin = new Client(70, "70");
             Issue expIssue1 = new Issue(1, "1");
-            expIssue1.IdUser = admin.IDUser;
+            expIssue1.IdUser = expAdmin.IDUser;
             Issue expIssue2 = new Issue(2, "2");
-            expIssue2.IdUser = admin.IDUser;
+            expIssue2.IdUser = expAdmin.IDUser;
             Board expBoard = new Board(70, 70);
             expBoard.Issues.Add(issue1);
             expBoard.Issues.Add(issue2);

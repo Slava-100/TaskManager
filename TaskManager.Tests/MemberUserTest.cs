@@ -50,6 +50,15 @@ namespace TaskManager.Tests
             actualClients.Should().BeEquivalentTo(expectedClients);
         }
 
+        [TestCaseSource(typeof(MemberUserTestCaseSource), nameof(MemberUserTestCaseSource.GetAllIssuesInBoardByIdUserTestCaseSource))]
+        public void GetAllIssuesInBoardByIdUserTest(long idUser, Board board, List<Issue> expectedIssues)
+        {
+            MemberUser memeberUser = new MemberUser();
+            List<Issue> actualIssues = memeberUser.GetAllIssuesInBoardByIdUser(idUser, board);
+
+            actualIssues.Should().BeEquivalentTo(expectedIssues);
+        }
+
         [TearDown]
         public void Teardown()
         {
