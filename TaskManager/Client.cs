@@ -113,14 +113,14 @@ namespace TaskManager
             }
         }
 
-        public List<Issue> GetAllIssuesInBoardByBoard(Board board)
+        public List<Issue> GetAllIssuesInBoardByBoard()
         {
-            return _userRole.GetAllIssuesInBoardByIdUser(IDUser, board);
+            return _userRole.GetAllIssuesInBoardByIdUser(IDUser, _activeBoard);
         }
 
-        public List<Issue> GetIssuesInProgressInBoardByBoard(Board board)
+        public List<Issue> GetIssuesInProgressInBoardByBoard()
         {
-            return _userRole.GetIssuesInProgressInBoardByIdUser(IDUser, board);
+            return _userRole.GetIssuesInProgressInBoardByIdUser(IDUser, _activeBoard);
         }
 
         public override bool Equals(object? obj)

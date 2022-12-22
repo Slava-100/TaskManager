@@ -66,8 +66,8 @@ namespace TaskManager.Tests.TestCaseSource
             Issue expIssue2 = new Issue(29, "29");
             expIssue2.IdUser = expMember.IDUser;
             Board expBoard = new Board(709, 709);
-            expBoard.Issues.Add(issue1);
-            expBoard.Issues.Add(issue2);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
             expBoard.IDMembers.Add(88);
             List<Issue> expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
@@ -100,8 +100,8 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue2.IdUser = expMember.IDUser;
             expIssue2.Status = Enums.IssueStatus.InProgress;
             Board expBoard = new Board(709, 709);
-            expBoard.Issues.Add(issue1);
-            expBoard.Issues.Add(issue2);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
             expBoard.IDMembers.Add(88);
             List<Issue> expectedIssues = new List<Issue> {  expIssue2 };
 

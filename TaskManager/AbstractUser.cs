@@ -1,4 +1,5 @@
 ﻿using TaskManager;
+using TaskManager.Enums;
 
 namespace TaskManager
 {
@@ -15,13 +16,18 @@ namespace TaskManager
 
         public List<Issue> GetAllIssuesInBoardByIdUser(long idUser, Board board)
         {
-            return board.GetAllIssuesInBoard(idUser);
+            return board.GetAllIssuesInBoard(idUser).OrderBy(issue =>issue.Status).ToList();
         }
 
         public List<Issue> GetIssuesInProgressInBoardByIdUser(long idUser, Board board)
         {
             return board.GetIssuesInProgressInBoard(idUser);
         }
+
+        //private IssueStatus Get(Issue issue)
+        //{ 
+        //return issue.Status;
+        //}
     }
 }
 

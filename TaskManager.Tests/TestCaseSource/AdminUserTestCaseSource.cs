@@ -61,8 +61,8 @@ namespace TaskManager.Tests.TestCaseSource
             Issue expIssue2 = new Issue(2, "2");
             expIssue2.IdUser = expAdmin.IDUser;
             Board expBoard = new Board(70, 70);
-            expBoard.Issues.Add(issue1);
-            expBoard.Issues.Add(issue2);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
             List<Issue> expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
             yield return new Object[] { idUser, board, expectedIssues };
@@ -90,8 +90,8 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue2.IdUser = expAdmin.IDUser;
             expIssue2.Status = Enums.IssueStatus.UserStory;
             Board expBoard = new Board(70, 70);
-            expBoard.Issues.Add(issue1);
-            expBoard.Issues.Add(issue2);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
             List<Issue> expectedIssues = new List<Issue> { expIssue1 };
 
             yield return new Object[] { idUser, board, expectedIssues };

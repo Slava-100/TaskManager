@@ -33,23 +33,11 @@ namespace TaskManager.Tests
         {
             _dataStorage.Boards = baseBoards;
             _dataStorage.Clients = baseClients;
-            _dataStorage.RewriteFileForBoards();
-            _dataStorage.RewriteFileForClients();
-
             client.SetActiveBoard(board.NumberBoard);
-                        client.AttachIssueToClient(idAttachIssue);
-            Dictionary<int, Board> actualBoards;
-            Dictionary<long, Client> actualClients;
-            using (StreamReader sr = new StreamReader(_pathBoards))
-            {
-                string jsn = sr.ReadLine();
-                actualBoards = JsonSerializer.Deserialize<Dictionary<int, Board>>(jsn);
-            }
-            using (StreamReader sr = new StreamReader(_pathClient))
-            {
-                string jsn = sr.ReadLine();
-                actualClients = JsonSerializer.Deserialize<Dictionary<long, Client>>(jsn);
-            }
+            client.AttachIssueToClient(idAttachIssue);
+            Dictionary<int, Board> actualBoards = _dataStorage.Boards;
+            Dictionary<long, Client> actualClients = _dataStorage.Clients;
+
             actualBoards.Should().BeEquivalentTo(expectedBoards);
             actualClients.Should().BeEquivalentTo(expectedClients);
         }
@@ -60,7 +48,7 @@ namespace TaskManager.Tests
             _dataStorage.Boards.Add(baseBoard.NumberBoard, baseBoard);
             _dataStorage.Clients.Add(baseClient.IDUser, baseClient);
             baseClient.SetActiveBoard(baseBoard.NumberBoard);
-            List <Issue> actualIssues = baseClient.GetAllIssuesInBoardByBoard(baseBoard);
+            List<Issue> actualIssues = baseClient.GetAllIssuesInBoardByBoard();
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
@@ -71,7 +59,7 @@ namespace TaskManager.Tests
             _dataStorage.Boards.Add(baseBoard.NumberBoard, baseBoard);
             _dataStorage.Clients.Add(baseClient.IDUser, baseClient);
             baseClient.SetActiveBoard(baseBoard.NumberBoard);
-            List<Issue> actualIssues = baseClient.GetIssuesInProgressInBoardByBoard(baseBoard);
+            List<Issue> actualIssues = baseClient.GetIssuesInProgressInBoardByBoard();
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }

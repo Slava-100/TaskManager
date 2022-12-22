@@ -425,9 +425,9 @@ namespace TaskManager.Tests.TestCaseSource
             Issue expIssue3 = new Issue(3, "3");
             expIssue3.IdUser = expOtherClient.IDUser;
             Board expBoard = new Board(55, 55);
-            expBoard.Issues.Add(issue1);
-            expBoard.Issues.Add(issue2);
-            expBoard.Issues.Add(issue3);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
+            expBoard.Issues.Add(expIssue3);
             expClient.BoardsForUser.Add(55);
             expBoard.IDMembers.Add(2);
             List<Issue> expectedIssues = new List<Issue> { expIssue1, expIssue2 };
@@ -462,13 +462,69 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue3 = new Issue(3, "3");
             expIssue3.IdUser = expClient.IDUser;
             expBoard = new Board(999, 999);
-            expBoard.Issues.Add(issue1);
-            expBoard.Issues.Add(issue2);
-            expBoard.Issues.Add(issue3);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
+            expBoard.Issues.Add(expIssue3);
             expClient.BoardsForUser.Add(55);
             expBoard.IDMembers.Add(550);
             expBoard.IDMembers.Add(2);
             expectedIssues = new List<Issue> { expIssue1, expIssue3 };
+
+            yield return new Object[] { baseBoard, baseClient, expectedIssues };
+
+            //3. Проверка для Админа, где на него записаны 5 задач, которые должны отсортироваться
+
+            baseClient = new Client(55, "55");
+            //otherClient = new Client(2, "2");
+            issue1 = new Issue(1, "1");
+            issue1.IdUser = baseClient.IDUser;
+            issue1.Status = Enums.IssueStatus.InProgress;
+            issue2 = new Issue(2, "2");
+            issue2.IdUser = baseClient.IDUser;
+            issue2.Status = Enums.IssueStatus.Done;
+            issue3 = new Issue(3, "3");
+            issue3.IdUser = baseClient.IDUser;
+            issue3.Status = Enums.IssueStatus.UserStory;
+            Issue issue4 = new Issue(4, "4");
+            issue4.IdUser = baseClient.IDUser;
+            issue4.Status = Enums.IssueStatus.Backlog;
+            Issue issue5 = new Issue(5, "5");
+            issue5.Status = Enums.IssueStatus.Review;
+            issue5.IdUser = baseClient.IDUser;
+            baseBoard = new Board(55, 55);
+            baseBoard.Issues.Add(issue1);
+            baseBoard.Issues.Add(issue2);
+            baseBoard.Issues.Add(issue3);
+            baseBoard.Issues.Add(issue4);
+            baseBoard.Issues.Add(issue5);
+            baseBoard.IDMembers.Add(2);
+
+            expClient = new Client(55, "55");
+           // expOtherClient = new Client(2, "2");
+            expIssue1 = new Issue(1, "1");
+            expIssue1.IdUser = expClient.IDUser;
+            expIssue2 = new Issue(2, "2");
+            expIssue2.IdUser = expClient.IDUser;
+            expIssue3 = new Issue(3, "3");
+            expIssue3.IdUser = expClient.IDUser;
+            expIssue1.Status = Enums.IssueStatus.InProgress;
+            expIssue2.Status = Enums.IssueStatus.Done;
+            expIssue3.Status = Enums.IssueStatus.UserStory;
+            Issue expIssue4 = new Issue(4, "4");
+            expIssue4.IdUser = expClient.IDUser;
+            expIssue4.Status = Enums.IssueStatus.Backlog;
+            Issue expIssue5 = new Issue(5, "5");
+            expIssue5.Status = Enums.IssueStatus.Review;
+            expIssue5.IdUser = expClient.IDUser;
+            expBoard = new Board(55, 55);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
+            expBoard.Issues.Add(expIssue3);
+            expBoard.Issues.Add(expIssue4);
+            expBoard.Issues.Add(expIssue5);
+            expClient.BoardsForUser.Add(55);
+            expBoard.IDMembers.Add(2);
+            expectedIssues = new List<Issue> { expIssue3, expIssue4, expIssue1, expIssue5, expIssue2 };
 
             yield return new Object[] { baseBoard, baseClient, expectedIssues };
         }
@@ -506,9 +562,9 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue3.IdUser = expOtherClient.IDUser;
             expIssue3.Status = Enums.IssueStatus.InProgress;
             Board expBoard = new Board(55, 55);
-            expBoard.Issues.Add(issue1);
-            expBoard.Issues.Add(issue2);
-            expBoard.Issues.Add(issue3);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
+            expBoard.Issues.Add(expIssue3);
             expClient.BoardsForUser.Add(55);
             expBoard.IDMembers.Add(2);
             List<Issue> expectedIssues = new List<Issue> { expIssue1 };
@@ -549,9 +605,9 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue3.IdUser = expClient.IDUser;
             expIssue3.Status = Enums.IssueStatus.InProgress;
             expBoard = new Board(9992, 9992);
-            expBoard.Issues.Add(issue1);
-            expBoard.Issues.Add(issue2);
-            expBoard.Issues.Add(issue3);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
+            expBoard.Issues.Add(expIssue3);
             expClient.BoardsForUser.Add(552);
             expBoard.IDMembers.Add(5502);
             expBoard.IDMembers.Add(22);

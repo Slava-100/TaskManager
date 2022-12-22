@@ -74,17 +74,4 @@ namespace TaskManager.Tests
     }
 }
 
-//public List<Issue> GetIssuesInProgressInBoard(long idUser)
-//{
-//    List<Issue> allIssues = new List<Issue>();
-//    if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
-//    {
-//        foreach (Issue issue in Issues)
-//        {
-//            if ((issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.InProgress))
-//                allIssues.Add(issue);
-//        }
-//        return allIssues;
-//    }
-//    return new List<Issue>();
-//}
+

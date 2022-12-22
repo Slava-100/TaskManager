@@ -123,7 +123,7 @@ namespace TaskManager.Tests.TestCases
             expIssue1.IdUser = client.IDUser;
             Issue expIssue2 = new Issue(2, "2");
             expIssue2.IdUser = client.IDUser;
-            List<Issue> expectedIssues = new List<Issue> { issue1, issue2 };
+            List<Issue> expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
             yield return new Object[] { baseBoard, idUser, expectedIssues };
 
@@ -147,7 +147,7 @@ namespace TaskManager.Tests.TestCases
             expIssue1.IdUser = expMemeber.IDUser;
             expIssue2 = new Issue(22, "22");
             expIssue2.IdUser = expMemeber.IDUser;
-            expectedIssues = new List<Issue> { issue1, issue2 };
+            expectedIssues = new List<Issue> { expIssue1, expIssue2 };
             Board expBoard = new Board(1002, 102);
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
@@ -202,9 +202,9 @@ namespace TaskManager.Tests.TestCases
             Issue expIssueOther = new Issue(661, "661");
             expIssueOther.IdUser = expOtherClient.IDUser;
             expBoard = new Board(1004, 104);
-            expBoard.Issues.Add(issue1);
-            expBoard.Issues.Add(issue2);
-            expBoard.Issues.Add(issueOther);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
+            expBoard.Issues.Add(expIssueOther);
             expBoard.IDMembers.Add(expOtherClient.IDUser);
             expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
@@ -239,9 +239,9 @@ namespace TaskManager.Tests.TestCases
             expIssueOther = new Issue(6615, "6615");
             expIssueOther.IdUser = expOtherClient.IDUser;
             expBoard = new Board(10045, 50);
-            expBoard.Issues.Add(issue1);
-            expBoard.Issues.Add(issue2);
-            expBoard.Issues.Add(issueOther);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
+            expBoard.Issues.Add(expIssueOther);
             expBoard.IDMembers.Add(expClient.IDUser);
             expBoard.IDMembers.Add(expOtherClient.IDUser);
             expectedIssues = new List<Issue> { expIssue1, expIssue2 };
@@ -270,9 +270,9 @@ namespace TaskManager.Tests.TestCases
             expIssue1.IdUser = client.IDUser;
             expIssue1.Status = Enums.IssueStatus.InProgress;
             Issue expIssue2 = new Issue(2, "2");
-            issue1.Status = Enums.IssueStatus.InProgress;
+            expIssue2.Status = Enums.IssueStatus.InProgress;
             expIssue2.IdUser = client.IDUser;
-            List<Issue> expectedIssues = new List<Issue> { issue1, issue2 };
+            List<Issue> expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
             yield return new Object[] { baseBoard, idUser, expectedIssues };
 
@@ -300,7 +300,7 @@ namespace TaskManager.Tests.TestCases
             expIssue2 = new Issue(22, "22");
             expIssue2.IdUser = expMemeber.IDUser;
             expIssue2.Status = Enums.IssueStatus.InProgress;
-            expectedIssues = new List<Issue> { issue1, issue2 };
+            expectedIssues = new List<Issue> { expIssue1, expIssue2 };
             Board expBoard = new Board(1002, 102);
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
@@ -365,9 +365,9 @@ namespace TaskManager.Tests.TestCases
             expIssueOther.IdUser = expOtherClient.IDUser;
             expIssueOther.Status = Enums.IssueStatus.InProgress;
             expBoard = new Board(1004, 104);
-            expBoard.Issues.Add(issue1);
-            expBoard.Issues.Add(issue2);
-            expBoard.Issues.Add(issueOther);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssueOther);
             expBoard.IDMembers.Add(expOtherClient.IDUser);
             expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
@@ -408,9 +408,9 @@ namespace TaskManager.Tests.TestCases
             expIssueOther.IdUser = expOtherClient.IDUser;
             expIssueOther.Status = Enums.IssueStatus.InProgress;
             expBoard = new Board(10045, 50);
-            expBoard.Issues.Add(issue1);
-            expBoard.Issues.Add(issue2);
-            expBoard.Issues.Add(issueOther);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
+            expBoard.Issues.Add(expIssueOther);
             expBoard.IDMembers.Add(expClient.IDUser);
             expBoard.IDMembers.Add(expOtherClient.IDUser);
             expectedIssues = new List<Issue> { expIssue1, expIssue2 };
@@ -444,7 +444,7 @@ namespace TaskManager.Tests.TestCases
             expIssue1.IdUser = client.IDUser;
             expIssue1.Status = Enums.IssueStatus.InProgress;
             expIssue2 = new Issue(2, "2");
-            issue1.Status = Enums.IssueStatus.InProgress;
+            expIssue2.Status = Enums.IssueStatus.InProgress;
             expIssue2.IdUser = client.IDUser;
             Issue expIssueOtherStatus1 = new Issue(66, "66");
             expIssueOtherStatus1.IdUser = client.IDUser;
@@ -452,7 +452,7 @@ namespace TaskManager.Tests.TestCases
             Issue expIssueOtherStatus2 = new Issue(99, "99");
             expIssueOtherStatus2.IdUser = client.IDUser;
             expIssueOtherStatus2.Status = Enums.IssueStatus.Done;
-            expectedIssues = new List<Issue> { issue1, issue2 };
+            expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
             yield return new Object[] { baseBoard, idUser, expectedIssues };
 
@@ -494,7 +494,7 @@ namespace TaskManager.Tests.TestCases
             expIssueOtherStatus2 = new Issue(997, "997");
             expIssueOtherStatus2.IdUser = client.IDUser;
             expIssueOtherStatus2.Status = Enums.IssueStatus.Done;
-            expectedIssues = new List<Issue> { issue1, issue2 };
+            expectedIssues = new List<Issue> { expIssue1, expIssue2 };
             expBoard = new Board(1002, 102);
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
