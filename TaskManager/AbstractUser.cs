@@ -13,7 +13,7 @@ namespace TaskManager
             _dataStorage.RewriteFileForClients();
         }
 
-        public List<Issue> GetAllIssuesInBoardByBoard(long idUser, Board board)
+        public List<Issue> GetAllIssuesInBoardByIdUser(long idUser, Board board)
         {
             return board.GetAllIssuesInBoard(idUser);
         }

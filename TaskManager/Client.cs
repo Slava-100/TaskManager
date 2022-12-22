@@ -115,7 +115,7 @@ namespace TaskManager
 
         public List<Issue> GetAllIssuesInBoardByBoard(Board board)
         {
-            return _userRole.GetAllIssuesInBoardByBoard(IDUser, board);
+            return _userRole.GetAllIssuesInBoardByIdUser(IDUser, board);
         }
 
         public List<Issue> GetIssuesInProgressInBoardByBoard(Board board)

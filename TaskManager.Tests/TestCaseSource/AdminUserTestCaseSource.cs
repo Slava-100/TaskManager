@@ -42,6 +42,31 @@ namespace TaskManager.Tests.TestCaseSource
 
             yield return new object[] { baseBoards, baseClients, board, attachIssue, idUser, expectedBoards, expectedClients };
         }
+
+        public static IEnumerable GetAllIssuesInBoardByIdUserTestCaseSource()
+        {
+            Client admin = new Client(70, "70");
+            Issue issue1 = new Issue(1, "1");
+            issue1.IdUser = admin.IDUser;
+            Issue issue2 = new Issue(2, "2");
+            issue2.IdUser = admin.IDUser;
+            Board board = new Board(70, 70);
+            board.Issues.Add(issue1);
+            board.Issues.Add(issue2);
+            long idUser = 70;
+
+            Client expAdmin = new Client(70, "70");
+            Issue expIssue1 = new Issue(1, "1");
+            expIssue1.IdUser = admin.IDUser;
+            Issue expIssue2 = new Issue(2, "2");
+            expIssue2.IdUser = admin.IDUser;
+            Board expBoard = new Board(70, 70);
+            expBoard.Issues.Add(issue1);
+            expBoard.Issues.Add(issue2);
+            List<Issue> expectedIssues = new List<Issue> { expIssue1, expIssue2 };
+
+            yield return new Object[] { idUser, board, expectedIssues };
+        }
     }
 }
 
