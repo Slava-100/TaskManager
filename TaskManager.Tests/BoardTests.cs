@@ -63,7 +63,28 @@ namespace TaskManager.Tests
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
+
+        [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetIssuesInProgressInBoardTestCaseSource))]
+        public void GetIssuesInProgressInBoardTest(Board baseBoard, long idUser, List<Issue> expectedIssues)
+        {
+            List<Issue> actualIssues = baseBoard.GetIssuesInProgressInBoard(idUser);
+
+            actualIssues.Should().BeEquivalentTo(expectedIssues);
+        }
     }
 }
 
-
+//public List<Issue> GetIssuesInProgressInBoard(long idUser)
+//{
+//    List<Issue> allIssues = new List<Issue>();
+//    if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
+//    {
+//        foreach (Issue issue in Issues)
+//        {
+//            if ((issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.InProgress))
+//                allIssues.Add(issue);
+//        }
+//        return allIssues;
+//    }
+//    return new List<Issue>();
+//}
