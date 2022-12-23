@@ -603,6 +603,131 @@ namespace TaskManager.Tests.TestCaseSource
 
             yield return new Object[] { client, baseBoards, baseBoardsForUser, expectedBoards };
         }
+
+        public static IEnumerable ChangeRoleFromMemberToAdminTestCaseSource()
+        {
+            //1. Проверяем, когда Админ может поменять роль у Мембера
+
+            Board activeBoard = new Board(1, 1);
+            Client client = new Client(1, "1");
+            Client member = new Client(10, "10");
+            Client member2 = new Client(20, "20");
+            // activeBoard.IDAdmin.Add(1);
+            activeBoard.IDMembers.Add(10);
+            activeBoard.IDMembers.Add(20);
+            long idMemeber = 10;
+            Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
+            {
+                {activeBoard.NumberBoard, activeBoard }
+            };
+
+            Board expActiveBoard = new Board(1, 1);
+            Client expClient = new Client(1, "1");
+            Client expMember = new Client(10, "10");
+            Client expMember2 = new Client(20, "20");
+            //expActiveBoard.IDAdmin.Add(1);
+            expActiveBoard.IDAdmin.Add(10);
+            expActiveBoard.IDMembers.Add(20);
+            Dictionary<int, Board> expectedBoards = new Dictionary<int, Board>
+            {
+                {expActiveBoard.NumberBoard, expActiveBoard }
+            };
+
+            yield return new Object[] { baseBoards, client, activeBoard, idMemeber, expectedBoards };
+
+            //2. Проверяем, что Мембер не может поменять роль у Мембера
+
+            activeBoard = new Board(12, 1);
+            client = new Client(12, "12");
+            member = new Client(102, "102");
+            member2 = new Client(202, "202");
+            activeBoard.IDMembers.Add(12);
+            activeBoard.IDMembers.Add(102);
+            activeBoard.IDMembers.Add(202);
+            idMemeber = 102;
+            baseBoards = new Dictionary<int, Board>
+            {
+                {activeBoard.NumberBoard, activeBoard }
+            };
+
+            expActiveBoard = new Board(12, 1);
+            expClient = new Client(12, "12");
+            expMember = new Client(102, "102");
+            expMember2 = new Client(202, "202");
+            expActiveBoard.IDMembers.Add(12);
+            expActiveBoard.IDMembers.Add(102);
+            expActiveBoard.IDMembers.Add(202);
+            expectedBoards = new Dictionary<int, Board>
+            {
+                {expActiveBoard.NumberBoard, expActiveBoard }
+            };
+
+            yield return new Object[] { baseBoards, client, activeBoard, idMemeber, expectedBoards };
+
+            //3. Проверяем, когда Админ пытается поменять роль у Мембера, которого нет в этой доске
+
+            activeBoard = new Board(13, 13);
+            Board otherBoard = new Board(50, 50);
+            Client otherClient = new Client(49, "49");
+            client = new Client(13, "13");
+            member = new Client(103, "103");
+            member2 = new Client(203, "203");
+            activeBoard.IDMembers.Add(103);
+            activeBoard.IDMembers.Add(203);
+            otherBoard.IDMembers.Add(49);
+            idMemeber = 49;
+            baseBoards = new Dictionary<int, Board>
+            {
+                {activeBoard.NumberBoard, activeBoard },
+                {otherBoard.NumberBoard, otherBoard }
+            };
+
+            expActiveBoard = new Board(13, 13);
+            Board expOtherBoard = new Board(50, 50);
+            Client expOtherClient = new Client(49, "49");
+            expClient = new Client(13, "13");
+            expMember = new Client(103, "103");
+            expMember2 = new Client(203, "203");
+            expActiveBoard.IDMembers.Add(103);
+            expActiveBoard.IDMembers.Add(203);
+            expOtherBoard.IDMembers.Add(49);
+            expectedBoards = new Dictionary<int, Board>
+            {
+                {expActiveBoard.NumberBoard, expActiveBoard },
+                {expOtherBoard.NumberBoard, expOtherBoard }
+            };
+
+            yield return new Object[] { baseBoards, client, activeBoard, idMemeber, expectedBoards };
+
+            //4. Проверяем, когда Админ пытается поменять роль у другого Админа (хотя метод рассчитан на изменение статуса Мембера на Админа)
+
+            activeBoard = new Board(134, 134);
+            client = new Client(134, "134");
+            member = new Client(1034, "1034");
+            member2 = new Client(2034, "2034");
+            activeBoard.IDMembers.Add(1034);
+            activeBoard.IDAdmin.Add(2034);
+            activeBoard.IDMembers.Add(494);
+            idMemeber = 2034;
+            baseBoards = new Dictionary<int, Board>
+            {
+                {activeBoard.NumberBoard, activeBoard }
+            };
+
+            expActiveBoard = new Board(134, 134);
+            expClient = new Client(134, "134");
+            expMember = new Client(1034, "1034");
+            expMember2 = new Client(2034, "2034");
+            expActiveBoard.IDMembers.Add(1034);
+            expActiveBoard.IDAdmin.Add(2034);
+            expActiveBoard.IDMembers.Add(494);
+            expectedBoards = new Dictionary<int, Board>
+            {
+                {expActiveBoard.NumberBoard, expActiveBoard }
+            };
+
+            yield return new Object[] { baseBoards, client, activeBoard, idMemeber, expectedBoards };
+        }
     }
 }
 
