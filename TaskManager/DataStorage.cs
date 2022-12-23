@@ -140,6 +140,22 @@ namespace TaskManager
                 .Select(currentNumber => Boards[currentNumber])
                 .ToList();
         }
+
+        public List<Board> GetAllAdminsBoardsByNumbersOfBoard(List<int> boardsForUser, long idUser)
+        {
+            return boardsForUser
+                .Where(currentNumber => Boards.ContainsKey(currentNumber) && Boards[currentNumber].IDAdmin.Contains(idUser))
+                .Select(currentNumber => Boards[currentNumber])
+                .ToList();
+        }
+
+        public List<Board> GetAllMembersBoardsByNumbersOfBoard(List<int> boardsForUser, long idUser)
+        {
+            return boardsForUser
+                .Where(currentNumber => Boards.ContainsKey(currentNumber) && Boards[currentNumber].IDMembers.Contains(idUser))
+                .Select(currentNumber => Boards[currentNumber])
+                .ToList();
+        }
     }
 }
 

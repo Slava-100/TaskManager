@@ -118,6 +118,16 @@ namespace TaskManager
             return _dataStorage.GetAllBoardsByNumbersOfBoard(BoardsForUser);
         }
 
+        public List<Board> GetAllBoardsAdmins()
+        {
+            return _dataStorage.GetAllAdminsBoardsByNumbersOfBoard(BoardsForUser, IDUser);
+        }
+
+        public List<Board> GetAllBoardsMembers()
+        {
+            return _dataStorage.GetAllMembersBoardsByNumbersOfBoard(BoardsForUser, IDUser);
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is Client user &&
