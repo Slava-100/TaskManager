@@ -53,13 +53,13 @@ namespace TaskManager.Tests
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
 
-        [TestCaseSource(typeof(ClientTestCaseSource), nameof(ClientTestCaseSource.GetIssuesInProgressInBoardByBoardTestCaseSource))]
-        public void GetIssuesInProgressInBoardByBoardTest(Board baseBoard, Client baseClient, List<Issue> expectedIssues)
+        [TestCaseSource(typeof(ClientTestCaseSource), nameof(ClientTestCaseSource.GetIssuesDoneInBoardByBoardTestCaseSource))]
+        public void GetIssuesDoneInBoardByBoardTest(Board baseBoard, Client baseClient, List<Issue> expectedIssues)
         {
             _dataStorage.Boards.Add(baseBoard.NumberBoard, baseBoard);
             _dataStorage.Clients.Add(baseClient.IDUser, baseClient);
             baseClient.SetActiveBoard(baseBoard.NumberBoard);
-            List<Issue> actualIssues = baseClient.GetIssuesInProgressInBoardByBoard();
+            List<Issue> actualIssues = baseClient.GetIssuesDoneInBoardByBoard();
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }

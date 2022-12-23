@@ -74,7 +74,7 @@ namespace TaskManager.Tests.TestCaseSource
             yield return new Object[] { idUser, board, expectedIssues };
         }
 
-        public static IEnumerable GetIssuesInProgressInBoardByIdUserTestCaseSource()
+        public static IEnumerable GetIssuesDoneInBoardByIdUserTestCaseSource()
         {
             Client admin = new Client(709, "709");
             Client member = new Client(88, "88");
@@ -84,7 +84,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue1.Status = Enums.IssueStatus.Backlog;
             Issue issue2 = new Issue(29, "29");
             issue2.IdUser = member.IDUser;
-            issue2.Status = Enums.IssueStatus.InProgress;
+            issue2.Status = Enums.IssueStatus.Done;
             Board board = new Board(709, 709);
             board.Issues.Add(issue1);
             board.Issues.Add(issue2);
@@ -98,7 +98,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue1.Status = Enums.IssueStatus.Backlog;
             Issue expIssue2 = new Issue(29, "29");
             expIssue2.IdUser = expMember.IDUser;
-            expIssue2.Status = Enums.IssueStatus.InProgress;
+            expIssue2.Status = Enums.IssueStatus.Done;
             Board expBoard = new Board(709, 709);
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);

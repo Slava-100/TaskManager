@@ -59,11 +59,11 @@ namespace TaskManager.Tests
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
 
-        [TestCaseSource(typeof(MemberUserTestCaseSource), nameof(MemberUserTestCaseSource.GetIssuesInProgressInBoardByIdUserTestCaseSource))]
-        public void GetIssuesInProgressInBoardByIdUserTest(long idUser, Board board, List<Issue> expectedIssues)
+        [TestCaseSource(typeof(MemberUserTestCaseSource), nameof(MemberUserTestCaseSource.GetIssuesDoneInBoardByIdUserTestCaseSource))]
+        public void GetIssuesDoneInBoardByIdUserTest(long idUser, Board board, List<Issue> expectedIssues)
         {
             MemberUser memeberUser = new MemberUser();
-            List<Issue> actualIssues = memeberUser.GetIssuesInProgressInBoardByIdUser(idUser, board);
+            List<Issue> actualIssues = memeberUser.GetIssuesDoneInBoardByIdUser(idUser, board);
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }

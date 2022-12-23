@@ -186,14 +186,14 @@
             return new List<Issue>();
         }
 
-        public List<Issue> GetIssuesInProgressInBoard(long idUser)
+        public List<Issue> GetIssuesDoneInBoard(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
             if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
             {
                 foreach (Issue issue in Issues)
                 {
-                    if ((issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.InProgress))
+                    if ((issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.Done))
                         allIssues.Add(issue);
                 }
                 return allIssues;

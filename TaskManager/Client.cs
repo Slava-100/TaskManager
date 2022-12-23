@@ -118,9 +118,9 @@ namespace TaskManager
             return _userRole.GetAllIssuesInBoardByIdUser(IDUser, _activeBoard);
         }
 
-        public List<Issue> GetIssuesInProgressInBoardByBoard()
+        public List<Issue> GetIssuesDoneInBoardByBoard()
         {
-            return _userRole.GetIssuesInProgressInBoardByIdUser(IDUser, _activeBoard);
+            return _userRole.GetIssuesDoneInBoardByIdUser(IDUser, _activeBoard);
         }
 
         public override bool Equals(object? obj)
