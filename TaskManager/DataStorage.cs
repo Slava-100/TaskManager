@@ -135,7 +135,10 @@ namespace TaskManager
 
         public List<Board> GetAllBoardsByNumbersOfBoard(List<int> boardsForUser)
         {
-            return boardsForUser.Where(currentNumber => Boards.ContainsKey(currentNumber)).Select(currentNumber => Boards[currentNumber]).ToList();
+            return boardsForUser
+                .Where(currentNumber => Boards.ContainsKey(currentNumber))
+                .Select(currentNumber => Boards[currentNumber])
+                .ToList();
         }
     }
 }
