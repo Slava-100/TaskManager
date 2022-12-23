@@ -603,6 +603,77 @@ namespace TaskManager.Tests.TestCaseSource
 
             yield return new Object[] { client, baseBoards, baseBoardsForUser, expectedBoards };
         }
+
+        public static IEnumerable GetAllBoardsAdminsTestCaseSource()
+        {
+            //1. Проверяем метод, где Админ одной из досок заправшивает список своих админских досок.
+
+            Client client = new Client(10, "10");
+            Board board1 = new Board(10, 10);
+            Board board2 = new Board(20, 20);
+            board2.IDAdmin.Add(10);
+            Board board3 = new Board(30, 30);
+            board3.IDMembers.Add(10);
+            Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
+            {
+                { board1.NumberBoard, board1},
+                { board2.NumberBoard, board2},
+                { board3.NumberBoard, board3 }
+            };
+            List<int> baseListBoards = new List<int>
+            {
+            board1.NumberBoard,
+            board2.NumberBoard,
+            board3.NumberBoard
+            };
+
+            Client expClient = new Client(10, "10");
+            Board expBoard1 = new Board(10, 10);
+            Board expBoard2 = new Board(20, 20);
+            expBoard2.IDAdmin.Add(10);
+            Board expBoard3 = new Board(30, 30);
+            expBoard3.IDMembers.Add(10);
+            List<Board> expectedBoards = new List<Board>
+            {
+            expBoard1,
+            expBoard2
+            };
+
+            yield return new Object[] { baseBoards, client, baseListBoards, expectedBoards };
+
+            //2. Проверяем метод, где Мембер одной из досок заправшивает список своих админских досок(которых нет).
+
+            client = new Client(102, "102");
+            board1 = new Board(2, 2);
+            board1.IDMembers.Add(102);
+            board2 = new Board(202, 202);
+            board2.IDMembers.Add(102);
+            board3 = new Board(302, 302);
+            board3.IDMembers.Add(102);
+            baseBoards = new Dictionary<int, Board>
+            {
+                { board1.NumberBoard, board1},
+                { board2.NumberBoard, board2},
+                { board3.NumberBoard, board3 }
+            };
+            baseListBoards = new List<int>
+            {
+            board1.NumberBoard,
+            board2.NumberBoard,
+            board3.NumberBoard
+            };
+
+            expClient = new Client(102, "102");
+            expBoard1 = new Board(2, 2);
+            expBoard1.IDMembers.Add(102);
+            expBoard2 = new Board(202, 202);
+            expBoard2.IDMembers.Add(102);
+            expBoard3 = new Board(302, 302);
+            expBoard3.IDMembers.Add(102);
+            expectedBoards = new List<Board>();
+
+            yield return new Object[] { baseBoards, client, baseListBoards, expectedBoards };
+        }
     }
 }
 

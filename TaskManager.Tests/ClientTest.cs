@@ -62,7 +62,25 @@ namespace TaskManager.Tests
             actualBoards.Should().BeEquivalentTo(expectedBoards);
         }
 
-        [TearDown]
+        [TestCaseSource(typeof(ClientTestCaseSource), nameof(ClientTestCaseSource.GetAllBoardsAdminsTestCaseSource))]
+        public void GetAllBoardsAdminsTest(Dictionary<int, Board> baseBoards, Client client, List<int> baseListBoards, List<Board> expectedBoards)
+        {
+            _dataStorage.Boards = baseBoards;
+            client.BoardsForUser = baseListBoards;
+
+            List<Board> actualBoards = client.GetAllBoardsAdmins();
+
+            actualBoards.Should().BeEquivalentTo(expectedBoards);
+        }
+
+
+
+//public List<Board> GetAllBoardsAdmins()
+//{
+//    return _dataStorage.GetAllAdminsBoardsByNumbersOfBoard(BoardsForUser, IDUser);
+//}
+
+[TearDown]
         public void TearDown()
         {
             File.Delete(_pathClient);
