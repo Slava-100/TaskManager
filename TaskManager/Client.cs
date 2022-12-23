@@ -125,5 +125,21 @@ namespace TaskManager
                    NameUser == user.NameUser &&
                    BoardsForUser.SequenceEqual(user.BoardsForUser);
         }
+
+        public void ChangeRoleFromMemberToAdmin(long idMemeber)
+        {
+            if (_userRole is AdminUser adminUser)
+            {
+                adminUser.ChangeRoleFromMemberToAdmin(idMemeber, _activeBoard);
+            }
+        }
+
+        public void ChangeRoleFromAdminToMember(long idAdmin)
+        {
+            if (_userRole is AdminUser)
+            {
+               ((AdminUser)_userRole).ChangeRoleFromAdminToMember(idAdmin, _activeBoard);
+            }
+        }
     }
 }

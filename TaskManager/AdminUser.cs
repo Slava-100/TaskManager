@@ -24,5 +24,15 @@
             dataStorage.RewriteFileForBoards();
             return tmp;
         }
+
+        public void ChangeRoleFromMemberToAdmin(long idMemeber, Board board)
+        {
+            board.ChangeRoleFromMemberToAdmin(idMemeber);
+        }
+
+        public void ChangeRoleFromAdminToMember(long idAdmin, Board board)
+        {
+            board.ChangeRoleFromAdminToMember(idAdmin);
+        }
     }
 }
