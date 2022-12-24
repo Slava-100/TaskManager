@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace TaskManager.Tests.TestCases
+namespace TaskManager.Tests.TestCaseSource
 {
     public static class BoardTestCaseSource
     {
@@ -14,12 +14,12 @@ namespace TaskManager.Tests.TestCases
             board.Issues.Add(issue2);
             int expectedNumberIssue = 3;
 
-            yield return new Object[] { board, expectedNumberIssue };
+            yield return new object[] { board, expectedNumberIssue };
 
             board = new Board(11, 11);
             expectedNumberIssue = 1;
 
-            yield return new Object[] { board, expectedNumberIssue };
+            yield return new object[] { board, expectedNumberIssue };
         }
 
         public static IEnumerable AddBlokingAndBlockedByIssueTestSource()
@@ -29,7 +29,7 @@ namespace TaskManager.Tests.TestCases
             List<int> expectedBlockedByCurrentIssue = new List<int> { 1 };
             List<int> expectedBlockingIssues = new List<int> { 10 };
 
-            yield return new Object[] { blockedByCurrentIssue, blockingCurrentIssue, expectedBlockedByCurrentIssue, expectedBlockingIssues };
+            yield return new object[] { blockedByCurrentIssue, blockingCurrentIssue, expectedBlockedByCurrentIssue, expectedBlockingIssues };
 
             blockingCurrentIssue = new Issue(8, "8");
             blockingCurrentIssue.BlockedByCurrentIssue = new List<int> { 1 };
@@ -37,7 +37,7 @@ namespace TaskManager.Tests.TestCases
             expectedBlockedByCurrentIssue = new List<int> { 1, 3 };
             expectedBlockingIssues = new List<int> { 8 };
 
-            yield return new Object[] { blockedByCurrentIssue, blockingCurrentIssue, expectedBlockedByCurrentIssue, expectedBlockingIssues };
+            yield return new object[] { blockedByCurrentIssue, blockingCurrentIssue, expectedBlockedByCurrentIssue, expectedBlockingIssues };
 
             blockingCurrentIssue = new Issue(12, "12");
             blockedByCurrentIssue = new Issue(4, "4");
@@ -45,7 +45,7 @@ namespace TaskManager.Tests.TestCases
             expectedBlockedByCurrentIssue = new List<int> { 4 };
             expectedBlockingIssues = new List<int> { 7, 12 };
 
-            yield return new Object[] { blockedByCurrentIssue, blockingCurrentIssue, expectedBlockedByCurrentIssue, expectedBlockingIssues };
+            yield return new object[] { blockedByCurrentIssue, blockingCurrentIssue, expectedBlockedByCurrentIssue, expectedBlockingIssues };
 
             blockingCurrentIssue = new Issue(20, "20");
             blockingCurrentIssue.BlockedByCurrentIssue = new List<int> { 1, 3, 5 };
@@ -54,7 +54,7 @@ namespace TaskManager.Tests.TestCases
             expectedBlockedByCurrentIssue = new List<int> { 1, 3, 5, 11 };
             expectedBlockingIssues = new List<int> { 30, 19, 20 };
 
-            yield return new Object[] { blockedByCurrentIssue, blockingCurrentIssue, expectedBlockedByCurrentIssue, expectedBlockingIssues };
+            yield return new object[] { blockedByCurrentIssue, blockingCurrentIssue, expectedBlockedByCurrentIssue, expectedBlockingIssues };
         }
 
         public class TestCaseForAddNewIssueTest : IEnumerable
@@ -125,7 +125,7 @@ namespace TaskManager.Tests.TestCases
             expIssue2.IdUser = client.IDUser;
             List<Issue> expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
-            yield return new Object[] { baseBoard, idUser, expectedIssues };
+            yield return new object[] { baseBoard, idUser, expectedIssues };
 
             //2. Получаем все задания доски для Мембера
 
@@ -153,7 +153,7 @@ namespace TaskManager.Tests.TestCases
             expBoard.Issues.Add(expIssue2);
             expBoard.IDMembers.Add(2);
 
-            yield return new Object[] { baseBoard, idUser, expectedIssues };
+            yield return new object[] { baseBoard, idUser, expectedIssues };
 
             //3. Проверяем, что должен прийти пустой лист, если обращается не Админ, и не Мембер
 
@@ -174,7 +174,7 @@ namespace TaskManager.Tests.TestCases
             expIssue2.IdUser = client.IDUser;
             expectedIssues = new List<Issue>();
 
-            yield return new Object[] { baseBoard, idUser, expectedIssues };
+            yield return new object[] { baseBoard, idUser, expectedIssues };
 
             //4. Получаем все задания доски для Админа, при этом в доске есть задания, которые закреплены за другим участником
 
@@ -208,7 +208,7 @@ namespace TaskManager.Tests.TestCases
             expBoard.IDMembers.Add(expOtherClient.IDUser);
             expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
-            yield return new Object[] { baseBoard, idUser, expectedIssues };
+            yield return new object[] { baseBoard, idUser, expectedIssues };
 
             //5. Получаем все задания доски для Мембера, при этом в доске есть задания, которые закреплены за другим участником
 
@@ -246,7 +246,7 @@ namespace TaskManager.Tests.TestCases
             expBoard.IDMembers.Add(expOtherClient.IDUser);
             expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
-            yield return new Object[] { baseBoard, idUser, expectedIssues };
+            yield return new object[] { baseBoard, idUser, expectedIssues };
         }
 
         public static IEnumerable GetIssuesDoneInBoardTestCaseSource()
@@ -274,7 +274,7 @@ namespace TaskManager.Tests.TestCases
             expIssue2.IdUser = client.IDUser;
             List<Issue> expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
-            yield return new Object[] { baseBoard, idUser, expectedIssues };
+            yield return new object[] { baseBoard, idUser, expectedIssues };
 
             //2. Получаем все задания доски для Мембера
 
@@ -296,7 +296,7 @@ namespace TaskManager.Tests.TestCases
             Client expMemeber = new Client(2, "2");
             expIssue1 = new Issue(12, "12");
             expIssue1.IdUser = expMemeber.IDUser;
-            expIssue1.Status = Enums.IssueStatus.Done   ;
+            expIssue1.Status = Enums.IssueStatus.Done;
             expIssue2 = new Issue(22, "22");
             expIssue2.IdUser = expMemeber.IDUser;
             expIssue2.Status = Enums.IssueStatus.Done;
@@ -306,7 +306,7 @@ namespace TaskManager.Tests.TestCases
             expBoard.Issues.Add(expIssue2);
             expBoard.IDMembers.Add(2);
 
-            yield return new Object[] { baseBoard, idUser, expectedIssues };
+            yield return new object[] { baseBoard, idUser, expectedIssues };
 
             //3. Проверяем, что должен прийти пустой лист, если обращается не Админ, и не Мембер
 
@@ -331,7 +331,7 @@ namespace TaskManager.Tests.TestCases
             expIssue2.Status = Enums.IssueStatus.Done;
             expectedIssues = new List<Issue>();
 
-            yield return new Object[] { baseBoard, idUser, expectedIssues };
+            yield return new object[] { baseBoard, idUser, expectedIssues };
 
             //4. Получаем все задания доски для Админа, при этом в доске есть задания, которые закреплены за другим участником
 
@@ -371,7 +371,7 @@ namespace TaskManager.Tests.TestCases
             expBoard.IDMembers.Add(expOtherClient.IDUser);
             expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
-            yield return new Object[] { baseBoard, idUser, expectedIssues };
+            yield return new object[] { baseBoard, idUser, expectedIssues };
 
             //5. Получаем все задания доски для Мембера, при этом в доске есть задания, которые закреплены за другим участником
 
@@ -415,7 +415,7 @@ namespace TaskManager.Tests.TestCases
             expBoard.IDMembers.Add(expOtherClient.IDUser);
             expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
-            yield return new Object[] { baseBoard, idUser, expectedIssues };
+            yield return new object[] { baseBoard, idUser, expectedIssues };
 
             //6. Получаем только те задания доски для Админа, у которых статус Done, хотя в доске есть и другие задания Админа с другим статусом
 
@@ -454,7 +454,7 @@ namespace TaskManager.Tests.TestCases
             expIssueOtherStatus2.Status = Enums.IssueStatus.Backlog;
             expectedIssues = new List<Issue> { expIssue1, expIssue2 };
 
-            yield return new Object[] { baseBoard, idUser, expectedIssues };
+            yield return new object[] { baseBoard, idUser, expectedIssues };
 
             //7. Получаем только те задания доски для Мембера, у которых статус InProgress, хотя в доске есть и другие задания Мембера с другим статусом
 
@@ -500,7 +500,7 @@ namespace TaskManager.Tests.TestCases
             expBoard.Issues.Add(expIssue2);
             expBoard.IDMembers.Add(2);
 
-            yield return new Object[] { baseBoard, idUser, expectedIssues };
+            yield return new object[] { baseBoard, idUser, expectedIssues };
         }
     }
 

@@ -1,8 +1,6 @@
 using FluentAssertions;
-using FluentAssertions.Equivalency;
-using TaskManager;
-using TaskManager.Tests.TestCases;
-using static TaskManager.Tests.TestCases.BoardTestCaseSource;
+using TaskManager.Tests.TestCaseSource;
+using static TaskManager.Tests.TestCaseSource.BoardTestCaseSource;
 
 namespace TaskManager.Tests
 {
