@@ -23,11 +23,6 @@ namespace TaskManager
         {
             return board.GetIssuesDoneInBoard(idUser);
         }
-
-        //private IssueStatus Get(Issue issue)
-        //{ 
-        //return issue.Status;
-        //}
     }
 }
 

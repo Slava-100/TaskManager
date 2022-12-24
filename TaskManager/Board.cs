@@ -200,5 +200,23 @@
             }
             return new List<Issue>();
         }
+
+        public void ChangeRoleFromMemberToAdmin(long idMemeber)
+        {
+            if (IDMembers.Contains(idMemeber))
+            {
+                IDMembers.Remove(idMemeber);
+                IDAdmin.Add(idMemeber);
+            }
+        }
+
+        public void ChangeRoleFromAdminToMember(long idAdmin)
+        {
+            if (IDAdmin.Contains(idAdmin))
+            {
+                IDAdmin.Remove(idAdmin);
+                IDMembers.Add(idAdmin);
+            }
+        }
     }
 }

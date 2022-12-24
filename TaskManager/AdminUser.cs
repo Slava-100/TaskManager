@@ -2,6 +2,8 @@
 {
     public class AdminUser : AbstractUser
     {
+        private DataStorage _dataStorage = DataStorage.GetInstance();
+
         public bool AddNewIssue(Board board, string description)
         {
             return board.AddNewIssue(description);
@@ -19,10 +21,22 @@
 
         public bool RemoveBoard(int numberBoard)
         {
-            DataStorage dataStorage = DataStorage.GetInstance();
-            bool tmp = dataStorage.RemoveBoard(numberBoard);
-            dataStorage.RewriteFileForBoards();
+            //DataStorage dataStorage = DataStorage.GetInstance();
+            bool tmp = _dataStorage.RemoveBoard(numberBoard);
+            _dataStorage.RewriteFileForBoards();
             return tmp;
+        }
+
+        public void ChangeRoleFromMemberToAdmin(long idMemeber, Board board)
+        {
+            board.ChangeRoleFromMemberToAdmin(idMemeber);
+            _dataStorage.RewriteFileForBoards();
+        }
+
+        public void ChangeRoleFromAdminToMember(long idAdmin, Board board)
+        {
+            board.ChangeRoleFromAdminToMember(idAdmin);
+            _dataStorage.RewriteFileForBoards();
         }
     }
 }
