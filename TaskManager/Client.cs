@@ -113,6 +113,11 @@ namespace TaskManager
             }
         }
 
+        public List<Board> GetAllBoardsByNumbersOfBoard()
+        {
+            return _dataStorage.GetAllBoardsByNumbersOfBoard(BoardsForUser);
+        }
+
         public List<Issue> GetAllIssuesInBoardByBoard()
         {
             return _userRole.GetAllIssuesInBoardByIdUser(IDUser, _activeBoard);

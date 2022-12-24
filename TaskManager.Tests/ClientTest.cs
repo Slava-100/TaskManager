@@ -38,6 +38,16 @@ namespace TaskManager.Tests
             Dictionary<int, Board> actualBoards = _dataStorage.Boards;
             Dictionary<long, Client> actualClients = _dataStorage.Clients;
 
+            using (StreamReader sr = new StreamReader(_pathBoards))
+            {
+                string jsn = sr.ReadLine();
+                actualBoards = JsonSerializer.Deserialize<Dictionary<int, Board>>(jsn);
+            }
+            using (StreamReader sr = new StreamReader(_pathClient))
+            {
+                string jsn = sr.ReadLine();
+                actualClients = JsonSerializer.Deserialize<Dictionary<long, Client>>(jsn);
+            }
             actualBoards.Should().BeEquivalentTo(expectedBoards);
             actualClients.Should().BeEquivalentTo(expectedClients);
         }
@@ -62,6 +72,15 @@ namespace TaskManager.Tests
             List<Issue> actualIssues = baseClient.GetIssuesDoneInBoardByBoard();
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
+        }
+
+        [TestCaseSource(typeof(ClientTestCaseSource), nameof(ClientTestCaseSource.GetAllBoardsByNumbersOfBoardTestCaseSource))]
+        public void GetAllBoardsByNumbersOfBoardTest(Client client, Dictionary<int, Board> baseBoards, List<int> baseBoardsForUser, List<Board> expectedBoards)
+        {
+            _dataStorage.Boards = baseBoards;
+            List<Board> actualBoards = client.GetAllBoardsByNumbersOfBoard();
+
+            actualBoards.Should().BeEquivalentTo(expectedBoards);
         }
 
         [TearDown]
