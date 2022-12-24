@@ -174,6 +174,7 @@
         public List<Issue> GetAllIssuesInBoard(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
+
             if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
             {
                 foreach (Issue issue in Issues)
@@ -181,9 +182,8 @@
                     if (issue.IdUser == idUser)
                         allIssues.Add(issue);
                 }
-                return allIssues;
             }
-            return new List<Issue>();
+            return allIssues;
         }
 
         public List<Issue> GetIssuesDoneInBoard(long idUser)
