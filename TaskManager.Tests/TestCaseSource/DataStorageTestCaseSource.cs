@@ -145,6 +145,69 @@ namespace TaskManager.Tests.TestCaseSource
                 yield return new object[] { boards, users };
             }
         }
+
+        public static IEnumerable GetAllBoardsByNumbersOfBoardTestCaseSource()
+        {
+            //1. Проверка, если запрашиваем доски для Админа
+
+            Client client = new Client(11, "11");
+            Board board1 = new Board(1, 11);
+            board1.IDAdmin.Add(11);
+            Board board2 = new Board(2, 11);
+            board2.IDAdmin.Add(11);
+            Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
+            {
+                { board1.NumberBoard, board1},
+                { board2.NumberBoard, board2},
+            };
+            List<int> baseBoardsForUser = new List<int> { board1.NumberBoard, board2.NumberBoard };
+
+            Client expClient = new Client(11, "11");
+            Board expBoard1 = new Board(1, 11);
+            expBoard1.IDAdmin.Add(11);
+            Board expBoard2 = new Board(2, 11);
+            expBoard2.IDAdmin.Add(11);
+            Dictionary<int, Board> expBoards = new Dictionary<int, Board>
+            {
+                { expBoard1.NumberBoard, expBoard1},
+                { expBoard2.NumberBoard, expBoard2},
+            };
+            List<int> expBoardsForUser = new List<int> { expBoard1.NumberBoard, expBoard2.NumberBoard };
+            List<Board> expectedBoards = new List<Board> { expBoard1, expBoard2 };
+
+            yield return new Object[] { baseBoards, baseBoardsForUser, expectedBoards };
+
+            //2. Проверка, если запрашиваем доски для Мембера
+
+            Client admin = new Client(112, "112");
+            client = new Client(2, "2");
+            board1 = new Board(12, 112);
+            board1.IDAdmin.Add(2);
+            board2 = new Board(22, 112);
+            board2.IDAdmin.Add(2);
+            baseBoards = new Dictionary<int, Board>
+            {
+                { board1.NumberBoard, board1},
+                { board2.NumberBoard, board2},
+            };
+            baseBoardsForUser = new List<int> { board1.NumberBoard, board2.NumberBoard };
+
+            Client expAdmin = new Client(112, "112");
+            expClient = new Client(2, "2");
+            expBoard1 = new Board(12, 112);
+            expBoard1.IDAdmin.Add(2);
+            expBoard2 = new Board(22, 112);
+            expBoard2.IDAdmin.Add(2);
+            expBoards = new Dictionary<int, Board>
+            {
+                { expBoard1.NumberBoard, expBoard1},
+                { expBoard2.NumberBoard, expBoard2},
+            };
+            expBoardsForUser = new List<int> { expBoard1.NumberBoard, expBoard2.NumberBoard };
+            expectedBoards = new List<Board> { expBoard1, expBoard2 };
+
+            yield return new Object[] { baseBoards, baseBoardsForUser, expectedBoards };
+        }
     }
 }
 
