@@ -12,7 +12,6 @@ using Client = TaskManager.Client;
 //Console.WriteLine(storage.Boards[1].NumberBoard);
 
 
-
 TelegramService client = new TelegramService();
 Console.ReadLine();
 
