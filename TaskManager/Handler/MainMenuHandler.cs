@@ -16,19 +16,21 @@ namespace TaskManager.Handl
                     switch (update.CallbackQuery.Data)
                     {
                         case "AddBoard":
+                            userServise.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
                             userServise.SetHandler(new StartHandler());
                             userServise.HandleUpdate(update);
                             break;
                         case "JoinTheBoard":
+                            userServise.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
                             userServise.SetHandler(new StartHandler());
                             userServise.HandleUpdate(update);
                             break;
                         case "WorkWithBoard":
+                            userServise.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
                             userServise.SetHandler(new StartHandler());
                             userServise.HandleUpdate(update);
                             break;
                         default:
-                            userServise.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
                             SendBaseMenu(userServise);
                             break;
                     }
@@ -44,11 +46,9 @@ namespace TaskManager.Handl
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup(
                                 new[]
                                     {
-                                    new[]{
-                                        new InlineKeyboardButton("Создать новую доску") {CallbackData = "AddBoard"},
-                                        new InlineKeyboardButton("Присоединиться к доске") {CallbackData="JoinTheBoard"},
-                                        new InlineKeyboardButton("Работать с доской") {CallbackData="WorkWithBoard"}
-                                    }
+                                    new[]{new InlineKeyboardButton("Создать новую доску") {CallbackData = "AddBoard"} },
+                                    new[]{new InlineKeyboardButton("Присоединиться к доске") {CallbackData="JoinTheBoard"}},
+                                    new[]{new InlineKeyboardButton("Работать с доской") {CallbackData="WorkWithBoard"}},
                                 });
 
             userServise.TgClient.SendTextMessageAsync(userServise.Id, "Главное меню", replyMarkup: keyboard);
