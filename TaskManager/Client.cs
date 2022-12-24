@@ -128,9 +128,9 @@ namespace TaskManager
 
         public void ChangeRoleFromMemberToAdmin(long idMemeber)
         {
-            if (_userRole is AdminUser adminUser)
+            if (_userRole is AdminUser)
             {
-                adminUser.ChangeRoleFromMemberToAdmin(idMemeber, _activeBoard);
+                ((AdminUser)_userRole).ChangeRoleFromMemberToAdmin(idMemeber, _activeBoard);
             }
         }
 
