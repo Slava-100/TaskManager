@@ -118,6 +118,16 @@ namespace TaskManager
             return _dataStorage.GetAllBoardsByNumbersOfBoard(BoardsForUser);
         }
 
+        public List<Issue> GetAllIssuesInBoardByBoard()
+        {
+            return _userRole.GetAllIssuesInBoardByIdUser(IDUser, _activeBoard);
+        }
+
+        public List<Issue> GetIssuesDoneInBoardByBoard()
+        {
+            return _userRole.GetIssuesDoneInBoardByIdUser(IDUser, _activeBoard);
+        }
+
         public List<Board> GetAllBoardsAdmins()
         {
             return _dataStorage.GetAllAdminsBoardsByNumbersOfBoard(BoardsForUser, IDUser);
@@ -134,6 +144,22 @@ namespace TaskManager
                    IDUser == user.IDUser &&
                    NameUser == user.NameUser &&
                    BoardsForUser.SequenceEqual(user.BoardsForUser);
+        }
+
+        public void ChangeRoleFromMemberToAdmin(long idMemeber)
+        {
+            if (_userRole is AdminUser)
+            {
+                ((AdminUser)_userRole).ChangeRoleFromMemberToAdmin(idMemeber, _activeBoard);
+            }
+        }
+
+        public void ChangeRoleFromAdminToMember(long idAdmin)
+        {
+            if (_userRole is AdminUser)
+            {
+               ((AdminUser)_userRole).ChangeRoleFromAdminToMember(idAdmin, _activeBoard);
+            }
         }
     }
 }

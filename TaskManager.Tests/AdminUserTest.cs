@@ -52,6 +52,23 @@ namespace TaskManager.Tests
             actualClients.Should().BeEquivalentTo(expectedClients);
         }
 
+        [TestCaseSource(typeof(AdminUserTestCaseSource), nameof(AdminUserTestCaseSource.GetAllIssuesInBoardByIdUserTestCaseSource))]
+        public void GetAllIssuesInBoardByIdUserTest(long idUser, Board board, List<Issue> expectedIssues)
+        {
+            AdminUser adminUser= new AdminUser();
+            List<Issue> actualIssues = adminUser.GetAllIssuesInBoardByIdUser(idUser, board);
+
+            actualIssues.Should().BeEquivalentTo(expectedIssues);
+        }
+
+        [TestCaseSource(typeof(AdminUserTestCaseSource), nameof(AdminUserTestCaseSource.GetIssuessDoneInBoardByIdUserTestCaseSource))]
+        public void GetIssuesDoneInBoardByIdUserTest(long idUser, Board board, List<Issue> expectedIssues)
+        {
+            AdminUser adminUser = new AdminUser();
+            List<Issue> actualIssues = adminUser.GetIssuesDoneInBoardByIdUser(idUser, board);
+
+            actualIssues.Should().BeEquivalentTo(expectedIssues);
+        }
 
         [TearDown]
         public void Teardown()
@@ -61,4 +78,3 @@ namespace TaskManager.Tests
         }
     }
 }
-

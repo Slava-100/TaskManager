@@ -4,13 +4,13 @@
     {
         private int _numberNextIssue = 1;
 
-        public int NumberBoard { get;  set; }
+        public int NumberBoard { get; set; }
 
         public List<long> IDMembers { get; set; }
 
         public List<long> IDAdmin { get; set; }
 
-        public List<Issue> Issues { get;  set; }
+        public List<Issue> Issues { get; set; }
 
         public int Key { get; set; }
 
@@ -130,11 +130,11 @@
             {
                 _numberNextIssue += 1;
             }
-            
+
             Issues.Add(new Issue(_numberNextIssue, description));
             _numberNextIssue += 1;
             _dataStorage.RewriteFileForBoards();
-            
+
             return true;
         }
 
@@ -168,6 +168,54 @@
                 {
                     currentIssue.BlockingIssues.Add(blockingCurrentIssue);
                 }
+            }
+        }
+
+        public List<Issue> GetAllIssuesInBoard(long idUser)
+        {
+            List<Issue> allIssues = new List<Issue>();
+
+            if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
+            {
+                foreach (Issue issue in Issues)
+                {
+                    if (issue.IdUser == idUser)
+                        allIssues.Add(issue);
+                }
+            }
+            return allIssues;
+        }
+
+        public List<Issue> GetIssuesDoneInBoard(long idUser)
+        {
+            List<Issue> allIssues = new List<Issue>();
+            if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
+            {
+                foreach (Issue issue in Issues)
+                {
+                    if ((issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.Done))
+                        allIssues.Add(issue);
+                }
+                return allIssues;
+            }
+            return new List<Issue>();
+        }
+
+        public void ChangeRoleFromMemberToAdmin(long idMemeber)
+        {
+            if (IDMembers.Contains(idMemeber))
+            {
+                IDMembers.Remove(idMemeber);
+                IDAdmin.Add(idMemeber);
+            }
+        }
+
+        public void ChangeRoleFromAdminToMember(long idAdmin)
+        {
+            if (IDAdmin.Contains(idAdmin))
+            {
+                IDAdmin.Remove(idAdmin);
+                IDMembers.Add(idAdmin);
             }
         }
     }

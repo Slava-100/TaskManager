@@ -44,5 +44,68 @@ namespace TaskManager.Tests.TestCaseSource
 
             yield return new object[] { baseBoards, baseClients, board, attachIssue, idUser, expectedBoards, expectedClients };
         }
+
+        public static IEnumerable GetAllIssuesInBoardByIdUserTestCaseSource()
+        {
+            Client admin = new Client(709, "709");
+            Client member = new Client(88, "88");
+            Issue issue1 = new Issue(19, "19");
+            issue1.IdUser = member.IDUser;
+            Issue issue2 = new Issue(29, "29");
+            issue2.IdUser = member.IDUser;
+            Board board = new Board(709, 709);
+            board.Issues.Add(issue1);
+            board.Issues.Add(issue2);
+            board.IDMembers.Add(88);
+            long idUser = 88;
+
+            Client expAdmin = new Client(709, "709");
+            Client expMember = new Client(88, "88");
+            Issue expIssue1 = new Issue(19, "19");
+            expIssue1.IdUser = expMember.IDUser;
+            Issue expIssue2 = new Issue(29, "29");
+            expIssue2.IdUser = expMember.IDUser;
+            Board expBoard = new Board(709, 709);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
+            expBoard.IDMembers.Add(88);
+            List<Issue> expectedIssues = new List<Issue> { expIssue1, expIssue2 };
+
+            yield return new Object[] { idUser, board, expectedIssues };
+        }
+
+        public static IEnumerable GetIssuesDoneInBoardByIdUserTestCaseSource()
+        {
+            Client admin = new Client(709, "709");
+            Client member = new Client(88, "88");
+            Issue issue1 = new Issue(19, "19");
+            issue1.IdUser = member.IDUser;
+            issue1.IdUser = member.IDUser;
+            issue1.Status = Enums.IssueStatus.Backlog;
+            Issue issue2 = new Issue(29, "29");
+            issue2.IdUser = member.IDUser;
+            issue2.Status = Enums.IssueStatus.Done;
+            Board board = new Board(709, 709);
+            board.Issues.Add(issue1);
+            board.Issues.Add(issue2);
+            board.IDMembers.Add(88);
+            long idUser = 88;
+
+            Client expAdmin = new Client(709, "709");
+            Client expMember = new Client(88, "88");
+            Issue expIssue1 = new Issue(19, "19");
+            expIssue1.IdUser = expMember.IDUser;
+            expIssue1.Status = Enums.IssueStatus.Backlog;
+            Issue expIssue2 = new Issue(29, "29");
+            expIssue2.IdUser = expMember.IDUser;
+            expIssue2.Status = Enums.IssueStatus.Done;
+            Board expBoard = new Board(709, 709);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
+            expBoard.IDMembers.Add(88);
+            List<Issue> expectedIssues = new List<Issue> {  expIssue2 };
+
+            yield return new Object[] { idUser, board, expectedIssues };
+        }
     }
 }

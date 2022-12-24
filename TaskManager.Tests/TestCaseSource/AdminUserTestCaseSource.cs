@@ -42,6 +42,60 @@ namespace TaskManager.Tests.TestCaseSource
 
             yield return new object[] { baseBoards, baseClients, board, attachIssue, idUser, expectedBoards, expectedClients };
         }
+
+        public static IEnumerable GetAllIssuesInBoardByIdUserTestCaseSource()
+        {
+            Client admin = new Client(70, "70");
+            Issue issue1 = new Issue(1, "1");
+            issue1.IdUser = admin.IDUser;
+            Issue issue2 = new Issue(2, "2");
+            issue2.IdUser = admin.IDUser;
+            Board board = new Board(70, 70);
+            board.Issues.Add(issue1);
+            board.Issues.Add(issue2);
+            long idUser = 70;
+
+            Client expAdmin = new Client(70, "70");
+            Issue expIssue1 = new Issue(1, "1");
+            expIssue1.IdUser = expAdmin.IDUser;
+            Issue expIssue2 = new Issue(2, "2");
+            expIssue2.IdUser = expAdmin.IDUser;
+            Board expBoard = new Board(70, 70);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
+            List<Issue> expectedIssues = new List<Issue> { expIssue1, expIssue2 };
+
+            yield return new Object[] { idUser, board, expectedIssues };
+        }
+
+        public static IEnumerable GetIssuessDoneInBoardByIdUserTestCaseSource()
+        {
+            Client admin = new Client(70, "70");
+            Issue issue1 = new Issue(1, "1");
+            issue1.IdUser = admin.IDUser;
+            issue1.Status = Enums.IssueStatus.Done;
+            Issue issue2 = new Issue(2, "2");
+            issue2.IdUser = admin.IDUser;
+            issue2.Status = Enums.IssueStatus.UserStory;
+            Board board = new Board(70, 70);
+            board.Issues.Add(issue1);
+            board.Issues.Add(issue2);
+            long idUser = 70;
+
+            Client expAdmin = new Client(70, "70");
+            Issue expIssue1 = new Issue(1, "1");
+            expIssue1.IdUser = expAdmin.IDUser;
+            expIssue1.Status = Enums.IssueStatus.Done;
+            Issue expIssue2 = new Issue(2, "2");
+            expIssue2.IdUser = expAdmin.IDUser;
+            expIssue2.Status = Enums.IssueStatus.UserStory;
+            Board expBoard = new Board(70, 70);
+            expBoard.Issues.Add(expIssue1);
+            expBoard.Issues.Add(expIssue2);
+            List<Issue> expectedIssues = new List<Issue> { expIssue1 };
+
+            yield return new Object[] { idUser, board, expectedIssues };
+        }
     }
 }
 
