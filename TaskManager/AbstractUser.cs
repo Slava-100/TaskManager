@@ -1,4 +1,7 @@
-﻿namespace TaskManager
+﻿using TaskManager;
+using TaskManager.Enums;
+
+namespace TaskManager
 {
     public abstract class AbstractUser
     {
@@ -10,5 +13,21 @@
             _dataStorage.RewriteFileForBoards();
             _dataStorage.RewriteFileForClients();
         }
+
+        public List<Issue> GetAllIssuesInBoardByIdUser(long idUser, Board board)
+        {
+            return board.GetAllIssuesInBoard(idUser).OrderBy(issue =>issue.Status).ToList();
+        }
+
+        public List<Issue> GetIssuesDoneInBoardByIdUser(long idUser, Board board)
+        {
+            return board.GetIssuesDoneInBoard(idUser);
+        }
+
+        //private IssueStatus Get(Issue issue)
+        //{ 
+        //return issue.Status;
+        //}
     }
 }
+

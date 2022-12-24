@@ -1,3 +1,6 @@
+using FluentAssertions;
+using FluentAssertions.Equivalency;
+using TaskManager;
 using TaskManager.Tests.TestCases;
 using static TaskManager.Tests.TestCases.BoardTestCaseSource;
 
@@ -52,6 +55,23 @@ namespace TaskManager.Tests
 
             Assert.AreEqual(exceptionResult, actualResult);
         }
+
+        [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetAllIssuesInBoardTestCaseSource))]
+        public void GetAllIssuesInBoardTest(Board baseBoard, long idUser, List<Issue> expectedIssues)
+        {
+            List<Issue> actualIssues = baseBoard.GetAllIssuesInBoard(idUser);
+
+            actualIssues.Should().BeEquivalentTo(expectedIssues);
+        }
+
+        [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetIssuesDoneInBoardTestCaseSource))]
+        public void GetIssuesDoneInBoardTest(Board baseBoard, long idUser, List<Issue> expectedIssues)
+        {
+            List<Issue> actualIssues = baseBoard.GetIssuesDoneInBoard(idUser);
+
+            actualIssues.Should().BeEquivalentTo(expectedIssues);
+        }
     }
 }
+
 

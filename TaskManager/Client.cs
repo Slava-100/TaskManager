@@ -118,6 +118,16 @@ namespace TaskManager
             return _dataStorage.GetAllBoardsByNumbersOfBoard(BoardsForUser);
         }
 
+        public List<Issue> GetAllIssuesInBoardByBoard()
+        {
+            return _userRole.GetAllIssuesInBoardByIdUser(IDUser, _activeBoard);
+        }
+
+        public List<Issue> GetIssuesDoneInBoardByBoard()
+        {
+            return _userRole.GetIssuesDoneInBoardByIdUser(IDUser, _activeBoard);
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is Client user &&
