@@ -83,6 +83,28 @@ namespace TaskManager.Tests
             actualBoards.Should().BeEquivalentTo(expectedBoards);
         }
 
+        [TestCaseSource(typeof(ClientTestCaseSource), nameof(ClientTestCaseSource.GetAllBoardsAdminsTestCaseSource))]
+        public void GetAllBoardsAdminsTest(Dictionary<int, Board> baseBoards, Client client, List<int> baseListBoards, List<Board> expectedBoards)
+        {
+            _dataStorage.Boards = baseBoards;
+            client.BoardsForUser = baseListBoards;
+
+            List<Board> actualBoards = client.GetAllBoardsAdmins();
+
+            actualBoards.Should().BeEquivalentTo(expectedBoards);
+        }
+
+        [TestCaseSource(typeof(ClientTestCaseSource), nameof(ClientTestCaseSource.GetAllBoardsMembersTestCaseSource))]
+        public void GetAllBoardsMembersTest(Dictionary<int, Board> baseBoards, Client client, List<int> baseListBoards, List<Board> expectedBoards)
+        {
+            _dataStorage.Boards = baseBoards;
+            client.BoardsForUser = baseListBoards;
+
+            List<Board> actualBoards = client.GetAllBoardsMembers();
+
+            actualBoards.Should().BeEquivalentTo(expectedBoards);
+        }
+
         [TestCaseSource(typeof(ClientTestCaseSource), nameof(ClientTestCaseSource.ChangeRoleFromMemberToAdminTestCaseSource))]
         public void ChangeRoleFromMemberToAdminTest(Dictionary<int, Board>  baseBoards, Client client, Board activeBoard, long idMemeber, Dictionary<int, Board> expectedBoards)
         {
