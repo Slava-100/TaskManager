@@ -6,8 +6,6 @@ namespace TaskManager
     {
         private AbstractUser _userRole;
 
-        private DataStorage _dataStorage = DataStorage.GetInstance();
-
         private Board _activeBoard;
 
         public long IDUser { get; set; }
@@ -30,7 +28,7 @@ namespace TaskManager
 
         public void SetActiveBoard(int numberBoard)
         {
-            _activeBoard = _dataStorage.Boards[numberBoard];
+            _activeBoard = DataStorage.GetInstance().Boards[numberBoard];
             SelectRole();
         }
 
@@ -80,7 +78,7 @@ namespace TaskManager
 
         public int AddBoard()
         {
-            return _dataStorage.AddBoard(IDUser);
+            return DataStorage.GetInstance().AddBoard(IDUser);
         }
 
         public bool RemoveBoard(int numberBoard)
@@ -115,7 +113,7 @@ namespace TaskManager
 
         public List<Board> GetAllBoardsByNumbersOfBoard()
         {
-            return _dataStorage.GetAllBoardsByNumbersOfBoard(BoardsForUser);
+            return DataStorage.GetInstance().GetAllBoardsByNumbersOfBoard(BoardsForUser);
         }
 
         public List<Issue> GetAllIssuesInBoardByBoard()
@@ -130,12 +128,12 @@ namespace TaskManager
 
         public List<Board> GetAllBoardsAdmins()
         {
-            return _dataStorage.GetAllAdminsBoardsByNumbersOfBoard(BoardsForUser, IDUser);
+            return DataStorage.GetInstance().GetAllAdminsBoardsByNumbersOfBoard(BoardsForUser, IDUser);
         }
 
         public List<Board> GetAllBoardsMembers()
         {
-            return _dataStorage.GetAllMembersBoardsByNumbersOfBoard(BoardsForUser, IDUser);
+            return DataStorage.GetInstance().GetAllMembersBoardsByNumbersOfBoard(BoardsForUser, IDUser);
         }
 
         public override bool Equals(object? obj)
