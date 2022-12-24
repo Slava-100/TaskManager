@@ -171,6 +171,36 @@
             }
         }
 
+        public List<Issue> GetAllIssuesInBoard(long idUser)
+        {
+            List<Issue> allIssues = new List<Issue>();
+
+            if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
+            {
+                foreach (Issue issue in Issues)
+                {
+                    if (issue.IdUser == idUser)
+                        allIssues.Add(issue);
+                }
+            }
+            return allIssues;
+        }
+
+        public List<Issue> GetIssuesDoneInBoard(long idUser)
+        {
+            List<Issue> allIssues = new List<Issue>();
+            if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
+            {
+                foreach (Issue issue in Issues)
+                {
+                    if ((issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.Done))
+                        allIssues.Add(issue);
+                }
+                return allIssues;
+            }
+            return new List<Issue>();
+        }
+
         public void ChangeRoleFromMemberToAdmin(long idMemeber)
         {
             if (IDMembers.Contains(idMemeber))
