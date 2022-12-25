@@ -6,20 +6,22 @@
 
         public int NumberBoard { get; set; }
 
+        public string NameBoard { get; set; }
+
         public List<long> IDMembers { get; set; }
 
         public List<long> IDAdmin { get; set; }
 
         public List<Issue> Issues { get; set; }
 
-        public int Key { get; set; }
+        public long Key { get; set; }
 
-        public Board(int numberBoard, long idAdmin)
+        public Board(int numberBoard, long idAdmin,string nameBoard)
         {
             IDMembers = new List<long>();
             IDAdmin = new List<long>();
             Issues = new List<Issue>();
-            Key = 0;
+            NameBoard = nameBoard;
             NumberBoard = numberBoard;
             IDAdmin.Add(idAdmin);
         }
@@ -31,19 +33,9 @@
             Issues = new List<Issue>();
         }
 
-        public Board(int numberNextIssue, int numberBoard, List<long> iDMembers, List<long> iDAdmin, List<Issue> issues, int key)
-        {
-            _numberNextIssue = numberNextIssue;
-            NumberBoard = numberBoard;
-            IDMembers = iDMembers;
-            IDAdmin = iDAdmin;
-            Issues = issues;
-            Key = key;
-        }
-
         public override string ToString()
         {
-            return $"{NumberBoard},{IDAdmin}";
+            return $"Номер доски: {NumberBoard} | Название доски: {NameBoard} ";
         }
 
         public override bool Equals(object? obj)
@@ -95,6 +87,7 @@
             //}
             #endregion
             return obj is Board board &&
+                   NameBoard == board.NameBoard &&
                    _numberNextIssue == board._numberNextIssue &&
                    NumberBoard == board.NumberBoard &&
                    IDMembers.SequenceEqual(board.IDMembers) &&
