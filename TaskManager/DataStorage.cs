@@ -156,6 +156,14 @@ namespace TaskManager
                 .Select(currentNumber => Boards[currentNumber])
                 .ToList();
         }
+
+        public List<Board> GetAllBoardsToWhichYouCanJoin(List<int> boardsForUser)
+        {
+            return Boards
+                .Where(crnBoard => !boardsForUser.Contains(crnBoard.Key))
+                .Select(crnBoard => crnBoard.Value)
+                .ToList();
+        }
     }
 }
 

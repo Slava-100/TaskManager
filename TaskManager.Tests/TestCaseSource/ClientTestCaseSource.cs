@@ -541,7 +541,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue2.Status = Enums.IssueStatus.UserStory;
             issue3.Status = Enums.IssueStatus.InProgress;
             issue4 = new Issue(4, "4");
-            issue4.IdUser = baseClient.IDUser; 
+            issue4.IdUser = baseClient.IDUser;
             issue5 = new Issue(5, "5");
             issue5.IdUser = baseClient.IDUser;
             issue4.Status = Enums.IssueStatus.Done;
@@ -582,12 +582,10 @@ namespace TaskManager.Tests.TestCaseSource
             expClient.BoardsForUser.Add(55);
             expBoard.IDMembers.Add(550);
             //expBoard.IDMembers.Add(2);
-            expectedIssues = new List<Issue> { expIssue2, expIssue1 , expIssue3 , expIssue5, expIssue4 };
+            expectedIssues = new List<Issue> { expIssue2, expIssue1, expIssue3, expIssue5, expIssue4 };
 
             yield return new Object[] { baseBoard, baseClient, expectedIssues };
         }
-
-
 
         public static IEnumerable GetIssuesDoneInBoardByBoardTestCaseSource()
         {
@@ -1319,7 +1317,55 @@ namespace TaskManager.Tests.TestCaseSource
 
             yield return new Object[] { baseBoards, client, activeBoard, idAdmin, expectedBoards };
         }
+
+        public static IEnumerable GetAllBoardsToWhichYouCanJoinTestCaseSource()
+        {
+            //1. Получаем 3 и 4 доски, в которых наш клиент не состоит
+
+            Client client = new Client(1, "1");
+            Board boardA = new Board(1, 1);
+            Board boardB = new Board(2, 2);
+            boardB.IDMembers.Add(1);
+            Board boardC = new Board(3, 3);
+            Board boardD = new Board(4, 4);
+            List<int> baseNumberBoardsForUser = new List<int> { 1, 2 };
+            Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
+            {
+                {boardA.NumberBoard, boardA },
+                {boardB.NumberBoard, boardB },
+                {boardC.NumberBoard, boardC },
+                {boardD.NumberBoard, boardD },
+            };
+
+            Board expBoardC = new Board(3, 3);
+            Board expBoardD = new Board(4, 4);
+            List<Board> expectedBoards = new List<Board> { expBoardC, expBoardD };
+
+            yield return new Object[] { baseNumberBoardsForUser, baseBoards, client, expectedBoards };
+
+            //2. Получаем пустой лист, т.к. клиент состоит во всех имеющихся досках
+
+            client = new Client(12, "12");
+            boardA = new Board(12, 12);
+            boardB = new Board(22, 22);
+            boardB.IDMembers.Add(11);
+            boardC = new Board(33, 33);
+            boardC.IDMembers.Add(11);
+            boardD = new Board(44, 44);
+            boardD.IDAdmin.Add(11);
+            baseNumberBoardsForUser = new List<int> { 12, 22, 33, 44 };
+            baseBoards = new Dictionary<int, Board>
+            {
+                {boardA.NumberBoard, boardA },
+                {boardB.NumberBoard, boardB },
+                {boardC.NumberBoard, boardC },
+                {boardD.NumberBoard, boardD },
+            };
+
+            expectedBoards = new List<Board>();
+
+            yield return new Object[] { baseNumberBoardsForUser, baseBoards, client, expectedBoards };
+        }
     }
 }
-
 

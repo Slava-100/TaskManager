@@ -123,6 +123,16 @@ namespace TaskManager.Tests
             actualBoards.Should().BeEquivalentTo(expectedBoards);
         }
 
+        [TestCaseSource(typeof(ClientTestCaseSource), nameof(ClientTestCaseSource.GetAllBoardsToWhichYouCanJoinTestCaseSource))]
+        public void GetAllBoardsToWhichYouCanJoinTest(List<int> baseNumberBoardsForUser, Dictionary<int, Board> baseBoards, Client client, List<Board> expectedBoards )
+        {
+            _dataStorage.Boards = baseBoards;
+            client.BoardsForUser = baseNumberBoardsForUser;
+            List<Board> actualBoards = client.GetAllBoardsToWhichYouCanJoin();
+
+            actualBoards.Should().BeEquivalentTo(expectedBoards);
+        }
+
         [TearDown]
         public void TearDown()
         {

@@ -11,6 +11,7 @@ namespace TaskManager
         private IHandler _handler;
 
         public long Id { get; set; }
+
         public string Name { get; set; }
 
         public Client ClientUserService { get; set; }
