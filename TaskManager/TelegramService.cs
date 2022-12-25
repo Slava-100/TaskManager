@@ -15,10 +15,10 @@ namespace TaskManager
 
         public TelegramService()
         {
-            //string token = @"5934008674:AAGx_6xThM933nF22Dxk6VdRUxrBAX03NSk";
+            string token = @"5934008674:AAGx_6xThM933nF22Dxk6VdRUxrBAX03NSk";
 
             //токен моего бота
-            string token = @"5905776080:AAE7pRFaZciLV6t7F0CqYf84hsfWV8SCY-A";
+            //string token = @"5905776080:AAE7pRFaZciLV6t7F0CqYf84hsfWV8SCY-A";
 
             _bot = new TelegramBotClient(token);
             Console.WriteLine("Запущен бот " + _bot.GetMeAsync().Result.FirstName);
