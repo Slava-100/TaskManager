@@ -76,9 +76,9 @@ namespace TaskManager
             }
         }
 
-        public int AddBoard()
+        public int AddBoard(string nameBoard)
         {
-            return DataStorage.GetInstance().AddBoard(IDUser);
+            return DataStorage.GetInstance().AddBoard(IDUser,nameBoard);
         }
 
         public bool RemoveBoard(int numberBoard)
