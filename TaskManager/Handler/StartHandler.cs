@@ -33,13 +33,15 @@ namespace TaskManager.Handler
 
         private void SendStart(UserService userServise)
         {
-            InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup(
-                                new[]
-                                    {
-                                    new[]{
-                                        new InlineKeyboardButton("Начать работу") {CallbackData = "StartWork"},
-                                    }
-                                });
+            //InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup(
+            //                    new[]
+            //                        {
+            //                        new[]{
+            //                            new InlineKeyboardButton("Начать работу") {CallbackData = "StartWork"},
+            //                        }
+            //                    });
+
+            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Начать работу") { CallbackData = "StartWork" };
 
             if (userServise.ClientUserService == null)
             {
