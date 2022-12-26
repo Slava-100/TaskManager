@@ -12,22 +12,21 @@ namespace TaskManager.Handl
         {
             switch (update.Type)
             {
+                
                 case UpdateType.CallbackQuery:
+                    ClearButtons(userService,update);
                     switch (update.CallbackQuery.Data)
                     {
                         case "AddBoard":
-                            userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
-                            userService.SetHandler(new StartHandler());
+                            userService.SetHandler(new AddNewBoardHandler());
                             userService.HandleUpdate(update);
                             break;
                         case "JoinTheBoard":
-                            userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
                             userService.SetHandler(new JoinTheBoardHandler());
                             userService.HandleUpdate(update);
                             break;
                         case "WorkWithBoard":
-                            userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
-                            userService.SetHandler(new StartHandler());
+                            userService.SetHandler(new WorkWithBoardHandler());
                             userService.HandleUpdate(update);
                             break;
                         default:
@@ -41,16 +40,20 @@ namespace TaskManager.Handl
             }
         }
 
+        private void ClearButtons(UserService userService,Update update)
+        {
+            userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
+        }
+
         private void SendBaseMenu(UserService userService)
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup(
-                                new[]
-                                    {
-                                    new[]{new InlineKeyboardButton("Создать новую доску") {CallbackData = "AddBoard"} },
-                                    new[]{new InlineKeyboardButton("Присоединиться к доске") {CallbackData="JoinTheBoard"}},
-                                    new[]{new InlineKeyboardButton("Работать с доской") {CallbackData="WorkWithBoard"}},
-                                });
-
+            new[]
+            {
+                 new[]{new InlineKeyboardButton("Создать новую доску") {CallbackData = "AddBoard"} },
+                 new[]{new InlineKeyboardButton("Присоединиться к доске") {CallbackData="JoinTheBoard"}},
+                 new[]{new InlineKeyboardButton("Работать с доской") {CallbackData="WorkWithBoard"}},
+            });
             userService.TgClient.SendTextMessageAsync(userService.Id, "Главное меню", replyMarkup: keyboard);
         }
     }

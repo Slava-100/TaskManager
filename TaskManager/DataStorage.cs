@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -16,12 +17,15 @@ namespace TaskManager
 
         public Dictionary<long, Client> Clients { get; set; }
 
+        public List <long> KeysForBoards { get; set; }
+
         private static DataStorage _instance;
 
         public DataStorage()
         {
             Boards = new Dictionary<int, Board>();
             Clients = new Dictionary<long, Client>();
+            KeysForBoards = new List<long>();
             PathFileForBoards = @".\PathFileForBoards.txt";
             PathFileForClient = @".\PathFileForClient.txt";
             ReturnFromFile();
@@ -43,6 +47,8 @@ namespace TaskManager
             {
                 string serialiseForFile = JsonSerializer.Serialize(Boards);
                 file.WriteLine(serialiseForFile);
+                serialiseForFile = JsonSerializer.Serialize(KeysForBoards);
+                file.WriteLine(serialiseForFile);
             }
         }
 
@@ -63,6 +69,8 @@ namespace TaskManager
                 {
                     string deserialiseFromFile = file.ReadLine();
                     Boards = JsonSerializer.Deserialize<Dictionary<int, Board>>(deserialiseFromFile);
+                    deserialiseFromFile = file.ReadLine();
+                    KeysForBoards = JsonSerializer.Deserialize<List<long>>(deserialiseFromFile);
                 }
             }
 
@@ -74,6 +82,8 @@ namespace TaskManager
                     Clients = JsonSerializer.Deserialize<Dictionary<long, Client>>(deserialiseFromFile);
                 }
             }
+
+
         }
 
         public void UpdateNextNumberBoard()
@@ -94,13 +104,41 @@ namespace TaskManager
             return Boards.Remove(numberBoard);
         }
 
-        public int AddBoard(long idAdmin)
+        public int AddBoard(long idAdmin, string nameboard)
         {
-            Board board = new Board(NextNumberBoard, idAdmin);
+            Board board = new Board(NextNumberBoard, idAdmin,nameboard);
+            board.Key = GenerateKeyForBoards();
             Boards.Add(board.NumberBoard, board);
+            DataStorage.GetInstance().Clients[idAdmin].BoardsForUser.Add(NextNumberBoard);
             NextNumberBoard = NextNumberBoard + 1;
+            
             RewriteFileForBoards();
+            RewriteFileForClients();
+            
             return board.NumberBoard;
+        }
+
+        public void DeleteActiveBoard(Board activeBoard, long activeIdClient)
+        {
+            Boards.Remove(activeBoard.NumberBoard);
+            Clients[activeIdClient].BoardsForUser.Remove(activeBoard.NumberBoard);
+
+            RewriteFileForBoards();
+            RewriteFileForClients();
+        } 
+
+        private long GenerateKeyForBoards()
+        {
+            Random random = new Random();
+            long key;
+
+            do
+            {
+                key = random.Next(10000000, 99999999);
+            }
+            while (KeysForBoards.Contains(key));
+
+            return key;
         }
 
         public bool AddNewUserByKey(int idBoard, int keyBoard, long idUser, string nameUser)

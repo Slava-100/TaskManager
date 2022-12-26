@@ -15,7 +15,6 @@ namespace TaskManager
 
         public TelegramService()
         {
-            // токен Кр
             //string token = @"5919984451:AAHv_KcJuWKeNTdrxXY1P80y31Cbu2PqSl8";
 
             //это наш рабочий токен
@@ -24,6 +23,7 @@ namespace TaskManager
             //токен юриного бота
             //            string token = @"5731544843:AAG8oa7weu6AdvGYgK4rByEW-qPvqcm0nYQ";
 
+            // токен Кр
             _bot = new TelegramBotClient(token);
             Console.WriteLine("Запущен бот " + _bot.GetMeAsync().Result.FirstName);
             var cts = new CancellationTokenSource();
@@ -77,7 +77,7 @@ namespace TaskManager
 
         public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
-
+            _bot.SendTextMessageAsync(866736781, "Я упал");
         }
     }
 }
