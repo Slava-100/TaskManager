@@ -11,7 +11,6 @@ namespace TaskManager.Handler
     {
         public void HandleUpdateHandler(Update update, UserService userService)
         {
-            DataStorage dataStorage = DataStorage.GetInstance();
             switch (update.Type)
             {
                 case UpdateType.Message:

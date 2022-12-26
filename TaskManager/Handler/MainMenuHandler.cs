@@ -26,7 +26,7 @@ namespace TaskManager.Handl
                             userService.HandleUpdate(update);
                             break;
                         case "WorkWithBoard":
-                            userService.SetHandler(new StartHandler());
+                            userService.SetHandler(new WorkWithBoardHandler());
                             userService.HandleUpdate(update);
                             break;
                         default:

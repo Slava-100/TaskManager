@@ -1,4 +1,5 @@
-﻿using Telegram.Bot.Types;
+﻿using System.Data;
+using Telegram.Bot.Types;
 
 namespace TaskManager
 {
@@ -31,6 +32,27 @@ namespace TaskManager
             _activeBoard = DataStorage.GetInstance().Boards[numberBoard];
             SelectRole();
         }
+
+        public Board GetActiveBoard()
+        {
+            return _activeBoard;
+        }
+        
+        public string GetRole()
+        {
+            string s = "";
+            if(_userRole is AdminUser)
+            {
+                s = "Админ";
+            }
+            else
+            {
+                s = "Участник";
+            }
+
+            return s;
+        }
+
 
         public bool SelectRole()
         {

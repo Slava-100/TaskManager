@@ -109,8 +109,11 @@ namespace TaskManager
             Board board = new Board(NextNumberBoard, idAdmin,nameboard);
             board.Key = GenerateKeyForBoards();
             Boards.Add(board.NumberBoard, board);
+            DataStorage.GetInstance().Clients[idAdmin].BoardsForUser.Add(NextNumberBoard);
             NextNumberBoard = NextNumberBoard + 1;
+            
             RewriteFileForBoards();
+            RewriteFileForClients();
             
             return board.NumberBoard;
         }
