@@ -32,18 +32,18 @@ namespace TaskManager.Handler
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup(
                 new[]
-                   {
-                        new[]
-                        {
-                            new InlineKeyboardButton("Показать задачи") {CallbackData = "ShowTasks"},
-                            new InlineKeyboardButton("Показать участников") {CallbackData="ShowMembers"},
-                            new InlineKeyboardButton("Удалить доску") {CallbackData="DeleteBoard"}
-                        },
-                        new[]
-                        {
-                            new InlineKeyboardButton("Назад") {CallbackData = "Back"},
-                        }
-                   });
+                {
+                    new[]
+                    {
+                        new InlineKeyboardButton("Показать задачи") {CallbackData = "ShowTasks"},
+                        new InlineKeyboardButton("Показать участников") {CallbackData="ShowMembers"},
+                        new InlineKeyboardButton("Удалить доску") {CallbackData="DeleteBoard"}
+                    },
+                    new[]
+                    {
+                        new InlineKeyboardButton("Назад") {CallbackData = "Back"},
+                    }
+                });
 
             return keyboard;
         }
