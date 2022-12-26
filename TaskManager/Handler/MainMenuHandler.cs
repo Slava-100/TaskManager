@@ -22,7 +22,7 @@ namespace TaskManager.Handl
                             userService.HandleUpdate(update);
                             break;
                         case "JoinTheBoard":
-                            userService.SetHandler(new StartHandler());
+                            userService.SetHandler(new JoinTheBoard());
                             userService.HandleUpdate(update);
                             break;
                         case "WorkWithBoard":
