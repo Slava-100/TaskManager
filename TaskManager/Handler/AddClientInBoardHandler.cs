@@ -29,10 +29,7 @@ namespace TaskManager.Handler
                     {
                         if (keyBoard == _boards[_numberBoard].Key)
                         {
-                            _boards[_numberBoard].IDMembers.Add(userService.Id);
-                            _dataStorage.Clients[userService.Id].BoardsForUser.Add(_numberBoard);
-                            _dataStorage.RewriteFileForClients();
-                            _dataStorage.RewriteFileForBoards();
+                            userService.ClientUserService.AddNewUserByKey(_numberBoard, keyBoard);
                             await userService.TgClient.SendTextMessageAsync(userService.Id, $"Поздравляем! Вы присоеденились к доске  с номером {_numberBoard}");
                             userService.SetHandler(new MainMenuHandler());
                             userService.HandleUpdate(update);

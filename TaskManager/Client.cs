@@ -113,7 +113,7 @@ namespace TaskManager
             return false;
         }
 
-        public void AddNewUserByKey(int idBoard, int keyBoard)
+        public void AddNewUserByKey(int idBoard, long keyBoard)
         {
             DataStorage.GetInstance().AddNewUserByKey(idBoard, keyBoard, IDUser, NameUser);
         }

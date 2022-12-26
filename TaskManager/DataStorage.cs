@@ -141,7 +141,7 @@ namespace TaskManager
             return key;
         }
 
-        public bool AddNewUserByKey(int idBoard, int keyBoard, long idUser, string nameUser)
+        public bool AddNewUserByKey(int idBoard, long keyBoard, long idUser, string nameUser)
         {
             bool flag = false;
 
@@ -157,6 +157,8 @@ namespace TaskManager
                         Clients.Add(idUser, user);
 
                         flag = true;
+                        RewriteFileForClients();
+                        RewriteFileForBoards();
                     }
                     else if (Boards[idBoard].IDMembers.Contains(idUser) == false)
                     {
@@ -164,6 +166,8 @@ namespace TaskManager
                         Clients[idUser].BoardsForUser.Add(idBoard);
 
                         flag = true;
+                        RewriteFileForClients();
+                        RewriteFileForBoards();
                     }
                 }
             }
