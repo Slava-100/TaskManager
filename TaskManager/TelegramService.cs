@@ -77,7 +77,10 @@ namespace TaskManager
 
         public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
-            _bot.SendTextMessageAsync(866736781, "Я упал");
+            foreach (var userService in _userService)
+            {
+                _bot.SendTextMessageAsync(userService.Key, "Я упал");
+            }
         }
     }
 }
