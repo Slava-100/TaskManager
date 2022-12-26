@@ -62,7 +62,7 @@ namespace TaskManager.Handler
                         },
                         new[]
                         {
-                            new InlineKeyboardButton("Назад") {CallbackData = "Back1"},
+                            new InlineKeyboardButton("Назад") {CallbackData = "Back1"}
                         }
                     });
             }

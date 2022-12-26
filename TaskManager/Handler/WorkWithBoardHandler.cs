@@ -21,7 +21,7 @@ namespace TaskManager.Handler
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
-                        case "Back":
+                        case "Back0":
                             userService.SetHandler(new MainMenuHandler());
                             userService.HandleUpdate(update);
                             break;
@@ -33,7 +33,7 @@ namespace TaskManager.Handler
                 case UpdateType.Message:
                     if (update.Message.Text is null)
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вы не ввели номер доски, попробуйте ещё раз", replyMarkup: ButtonBack());
+                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вы не ввели номер доски, попробуйте ещё раз", replyMarkup: DefaultButton());
                     }
                     else
                     {
@@ -49,12 +49,12 @@ namespace TaskManager.Handler
                             }
                             else
                             {
-                                userService.TgClient.SendTextMessageAsync(userService.Id, "Ты не являешься участником данной доски!", replyMarkup: ButtonBack());
+                                userService.TgClient.SendTextMessageAsync(userService.Id, "Ты не являешься участником данной доски!", replyMarkup: DefaultButton());
                             }
                         }
                         else
                         {
-                            userService.TgClient.SendTextMessageAsync(userService.Id, "Такой доски не существует!", replyMarkup: ButtonBack());
+                            userService.TgClient.SendTextMessageAsync(userService.Id, "Такой доски не существует!", replyMarkup: DefaultButton());
                         }
                     }
                     break;
@@ -88,9 +88,15 @@ namespace TaskManager.Handler
             return s;
         }
 
+        private InlineKeyboardMarkup DefaultButton()
+        {
+            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "default" };
+            return keyboard;
+        }
+
         private InlineKeyboardMarkup ButtonBack()
         {
-            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back" };
+            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back0" };
             return keyboard;
         }
     }
