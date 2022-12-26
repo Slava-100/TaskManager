@@ -1,4 +1,5 @@
-﻿using TaskManager.Handl;
+﻿using System.Linq;
+using TaskManager.Handl;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -9,53 +10,64 @@ namespace TaskManager.Handler
 {
     public class JoinTheBoardHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, UserService userServise)
         {
-            //DataStorage dataStorage = DataStorage.GetInstance();
+                       List<Board> boards = userServise.ClientUserService.GetAllBoardsToWhichYouCanJoin();
+
             switch (update.Type)
             {
                 case UpdateType.Message:
-                    if (update.Message.Text is String)
+                    if (update.Message.Text != null
+                        && int.TryParse(update.Message.Text, out var numberBoard)
+                        && boards.Any(crntBoard => crntBoard.NumberBoard == numberBoard))
                     {
-                        //ShowsAllBoards(userService);
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вы не ввели номер доски, попробуйте ещё раз");
-                        AsksToEnterBoardNumber(userService);
+                        userServise.SetHandler(new AddClientInBoardHandler(numberBoard));
+                        AsksToEnterKeyOfBoard(userServise);
                     }
-                    else
+                    else if (!int.TryParse(update.Message.Text, out numberBoard))
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "3");
-                        //ShowsAllBoards(userService);
-                        //AsksToEnterBoardNumber(userService);
+                        userServise.TgClient.SendTextMessageAsync(userServise.Id, "Вам необходимо ввести числовое значение номера доски");
+                    }
+                    else if (!boards.Any(crntBoard => crntBoard.NumberBoard == numberBoard))
+                    {
+                        userServise.TgClient.SendTextMessageAsync(userServise.Id, "Вы ввели номер доски, к которой не можете присоединиться");
+                        ShowsAllBoards(userServise);
+                        AsksToEnterBoardNumber(userServise);
+                    }
+                    else if (update.Message.Text == null)
+                    {
+                        userServise.TgClient.SendTextMessageAsync(userServise.Id, "Вы не ввели номер доски, попробуйте ещё раз");
+                        AsksToEnterBoardNumber(userServise);
                     }
                     break;
                 case UpdateType.CallbackQuery:
                     if (update.CallbackQuery.Data == "Back")
                     {
-                        userService.SetHandler(new MainMenuHandler());
-                        userService.HandleUpdate(update);
+                        userServise.SetHandler(new MainMenuHandler());
+                        userServise.HandleUpdate(update);
                     }
                     else
                     {
-                        ShowsAllBoards(userService);
-                        AsksToEnterBoardNumber(userService);
+                        ShowsAllBoards(userServise);
+                        AsksToEnterBoardNumber(userServise);
                     }
                     break;
                 default:
-                    AsksToEnterBoardNumber(userService);
+                    AsksToEnterBoardNumber(userServise);
                     break;
             }
         }
 
-        private void ShowsAllBoards(UserService userService)
+        private async void ShowsAllBoards(UserService userService)
         {
-            userService.TgClient.SendTextMessageAsync
+            await userService.TgClient.SendTextMessageAsync
                 (userService.Id, $"Перед вами список досок, к которым вы можете присоединиться: \n" +
                 $" {GetAllBoardsToWhichYouCanJoin(userService)}");
         }
 
-        public string GetAllBoardsToWhichYouCanJoin(UserService userService)
+        public string GetAllBoardsToWhichYouCanJoin(UserService userServise)
         {
-            List<Board> boards = userService.ClientUserService.GetAllBoardsToWhichYouCanJoin();
+            List<Board> boards = userServise.ClientUserService.GetAllBoardsToWhichYouCanJoin();
             if (boards.Count > 0)
             {
                 string result = $"{boards[0].NumberBoard}";
@@ -71,18 +83,23 @@ namespace TaskManager.Handler
             }
         }
 
-
-        private void AsksToEnterBoardNumber(UserService userService)
+        private async void AsksToEnterBoardNumber(UserService userServise)
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back" };
-            userService.TgClient.SendTextMessageAsync(userService.Id, $"Введите номер доски, к которой хотите присоединиться.\n" +
-                $"Если хотите отменить присоединение, нажмите кнопку", replyMarkup: keyboard);
+            await userServise.TgClient.SendTextMessageAsync(userServise.Id, $"Введите номер доски, к которой хотите присоединиться.\n" +
+                $"Если хотите отменить присоединение, нажмите кнопку \"Назад\".", replyMarkup: keyboard);
         }
 
-
-        private void ClearButtons(UserService userService, Update update)
+        private async void ClearButtons(UserService userServise, Update update)
         {
-            userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
+            await userServise.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
+        }
+
+        private async void AsksToEnterKeyOfBoard(UserService userServise)
+        {
+            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back" };
+            await userServise.TgClient.SendTextMessageAsync(userServise.Id, $"Введите ключ от доски, к которой хотите присоединиться.\n" +
+                $"Если хотите отменить присоединение, нажмите кнопку \"Назад\".", replyMarkup: keyboard);
         }
     }
 }
