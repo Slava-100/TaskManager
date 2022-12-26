@@ -43,14 +43,17 @@ namespace TaskManager.Handler
 
         private void SubmitsQuestion(UserService userService)
         {
-            userService.TgClient.SendTextMessageAsync(userService.Id, $"Доска №{userService.ClientUserService.GetActiveBoard().NumberBoard} (Твоя роль: {userService.ClientUserService.GetRole()})", replyMarkup: Button());
+            userService.TgClient.SendTextMessageAsync(userService.Id, $"Доска №{userService.ClientUserService.GetActiveBoard().NumberBoard} (Твоя роль: {userService.ClientUserService.GetRole()})", replyMarkup: Button(userService));
         }
 
-        private InlineKeyboardMarkup Button()
+        private InlineKeyboardMarkup Button(UserService userService)
         {
-            InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup(
-                new[]
-                {
+            InlineKeyboardMarkup keyboard;
+            if (userService.ClientUserService.GetRole() == "Админ")
+            {
+                keyboard = new InlineKeyboardMarkup(
+                    new[]
+                    {
                     new[]
                     {
                         new InlineKeyboardButton("Показать задачи") {CallbackData = "ShowTasks"},
@@ -61,8 +64,24 @@ namespace TaskManager.Handler
                     {
                         new InlineKeyboardButton("Назад") {CallbackData = "Back"},
                     }
-                });
-
+                    });
+            }
+            else
+            {
+                keyboard = new InlineKeyboardMarkup(
+                    new[]
+                    {
+                        new[]
+                        {
+                            new InlineKeyboardButton("Показать задачи") {CallbackData = "ShowTasks"},
+                            new InlineKeyboardButton("Показать участников") {CallbackData="ShowMembers"},
+                        },
+                        new[]
+                        {
+                            new InlineKeyboardButton("Назад") {CallbackData = "Back"},
+                        }
+                    });
+                }
             return keyboard;
         }
     }
