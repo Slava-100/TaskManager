@@ -181,5 +181,10 @@ namespace TaskManager
                ((AdminUser)_userRole).ChangeRoleFromAdminToMember(idAdmin, _activeBoard);
             }
         }
+
+        public List<Board> GetAllBoardsToWhichYouCanJoin()
+        {
+            return DataStorage.GetInstance().GetAllBoardsToWhichYouCanJoin(BoardsForUser);
+        }
     }
 }
