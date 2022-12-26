@@ -2,6 +2,29 @@
 using Telegram.Bot.Types;
 using Client = TaskManager.Client;
 
+//Client cl = new Client(1, "1");
+Board boardA = new Board(1, 1);
+Board boardB = new Board(2, 2);
+//boardB.IDMembers.Add(1);
+Board boardC = new Board(3, 3);
+Board boardD = new Board(4, 4);
+
+
+//List<int> baseNumberBoardsForUser = new List<int> { 1, 2 };
+Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
+            {
+                {boardA.NumberBoard, boardA },
+                {boardB.NumberBoard, boardB },
+                {boardC.NumberBoard, boardC },
+                {boardD.NumberBoard, boardD },
+            };
+DataStorage.GetInstance().Boards = baseBoards;
+DataStorage.GetInstance().RewriteFileForBoards();
+
+//DataStorage.GetInstance().Boards = baseBoards;
+//client.BoardsForUser = baseNumberBoardsForUser;
+//c.GetAllBoardsToWhichYouCanJoin();
+
 //Console.WriteLine("Hy");
 
 //DataStorage storage = DataStorage.GetInstance();

@@ -15,11 +15,14 @@ namespace TaskManager
 
         public TelegramService()
         {
-            string token = @"5934008674:AAGx_6xThM933nF22Dxk6VdRUxrBAX03NSk";
-            
-            //токен моего бота
-            //string token = @"5731544843:AAG8oa7weu6AdvGYgK4rByEW-qPvqcm0nYQ";
-            
+            string token = @"5919984451:AAHv_KcJuWKeNTdrxXY1P80y31Cbu2PqSl8";
+
+            //это наш рабочий токен
+            //string token = @"5934008674:AAGx_6xThM933nF22Dxk6VdRUxrBAX03NSk";
+
+            //токен юриного бота
+            //            string token = @"5731544843:AAG8oa7weu6AdvGYgK4rByEW-qPvqcm0nYQ";
+
             _bot = new TelegramBotClient(token);
             Console.WriteLine("Запущен бот " + _bot.GetMeAsync().Result.FirstName);
             var cts = new CancellationTokenSource();
@@ -28,6 +31,7 @@ namespace TaskManager
             var receiverOptions = new ReceiverOptions
             {
                 AllowedUpdates = { },
+                ThrowPendingUpdates = true
             };
 
             _bot.StartReceiving(

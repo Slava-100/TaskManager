@@ -22,7 +22,7 @@ namespace TaskManager.Handl
                             break;
                         case "JoinTheBoard":
                             userServise.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
-                            userServise.SetHandler(new StartHandler());
+                            userServise.SetHandler(new JoinTheBoardHandler());
                             userServise.HandleUpdate(update);
                             break;
                         case "WorkWithBoard":
