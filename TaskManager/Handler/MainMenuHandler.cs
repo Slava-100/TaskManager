@@ -45,7 +45,7 @@ namespace TaskManager.Handl
             userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
         }
 
-        private void SendBaseMenu(UserService userServise)
+        private void SendBaseMenu(UserService userService)
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup(
             new[]
@@ -54,7 +54,7 @@ namespace TaskManager.Handl
                  new[]{new InlineKeyboardButton("Присоединиться к доске") {CallbackData="JoinTheBoard"}},
                  new[]{new InlineKeyboardButton("Работать с доской") {CallbackData="WorkWithBoard"}},
             });
-            userServise.TgClient.SendTextMessageAsync(userServise.Id, "Главное меню", replyMarkup: keyboard);
+            userService.TgClient.SendTextMessageAsync(userService.Id, "Главное меню", replyMarkup: keyboard);
         }
     }
 }
