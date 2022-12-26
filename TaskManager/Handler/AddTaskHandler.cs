@@ -9,7 +9,7 @@ namespace TaskManager.Handler
 {
     public class AddTaskHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userServise)
+        public void HandleUpdateHandler(Update update, UserService userService)
         {
             throw new NotImplementedException();
         }

@@ -4,6 +4,6 @@ namespace TaskManager.Handler
 {
     public interface IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userServise);
+        public void HandleUpdateHandler(Update update, UserService userService);
     }
 }

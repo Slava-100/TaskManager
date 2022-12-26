@@ -20,7 +20,7 @@ namespace TaskManager.Handler
                     switch (update.CallbackQuery.Data)
                     {
                         case "AddTask":
-                            userService.SetHandler(new ShowTasksHandler());
+                            userService.SetHandler(new AddTaskHandler());
                             userService.HandleUpdate(update);
                             break;
                         case "SelectTask":
