@@ -7,7 +7,7 @@ using Telegram.Bot.Types;
 
 namespace TaskManager.Handler
 {
-    internal class DeleteClientHandler : IHandler
+    public class DeleteClientHandler : IHandler
     {
         public void HandleUpdateHandler(Update update, UserService userService)
         {

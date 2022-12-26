@@ -7,11 +7,11 @@ using Telegram.Bot.Types;
 
 namespace TaskManager.Handler
 {
-    internal class AddClientHandler : IHandler
+    public class AddClientHandler : IHandler
     {
         public void HandleUpdateHandler(Update update, UserService userService)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

@@ -20,15 +20,15 @@ namespace TaskManager.Handler
                     switch (update.CallbackQuery.Data)
                     {
                         case "AddClient":
-                            userService.SetHandler(new AddTaskHandler());
+                            userService.SetHandler(new AddClientHandler());
                             userService.HandleUpdate(update);
                             break;
                         case "DeleteClient":
-                            userService.SetHandler(new ShowMembersHandler());
+                            userService.SetHandler(new DeleteClientHandler());
                             userService.HandleUpdate(update);
                             break;
                         case "IncreaseLevelRights":
-                            userService.SetHandler(new DeleteBoardHandler());
+                            userService.SetHandler(new IncreaseLevelRightsHandler());
                             userService.HandleUpdate(update);
                             break;
                         case "Back4":
