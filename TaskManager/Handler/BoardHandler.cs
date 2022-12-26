@@ -54,16 +54,16 @@ namespace TaskManager.Handler
                 keyboard = new InlineKeyboardMarkup(
                     new[]
                     {
-                    new[]
-                    {
-                        new InlineKeyboardButton("Показать задачи") {CallbackData = "ShowTasks"},
-                        new InlineKeyboardButton("Показать участников") {CallbackData="ShowMembers"},
-                        new InlineKeyboardButton("Удалить доску") {CallbackData="DeleteBoard"}
-                    },
-                    new[]
-                    {
-                        new InlineKeyboardButton("Назад") {CallbackData = "Back1"},
-                    }
+                        new[]
+                        {
+                            new InlineKeyboardButton("Показать задачи") {CallbackData = "ShowTasks"},
+                            new InlineKeyboardButton("Показать участников") {CallbackData="ShowMembers"},
+                            new InlineKeyboardButton("Удалить доску") {CallbackData="DeleteBoard"}
+                        },
+                        new[]
+                        {
+                            new InlineKeyboardButton("Назад") {CallbackData = "Back1"},
+                        }
                     });
             }
             else
@@ -74,11 +74,11 @@ namespace TaskManager.Handler
                         new[]
                         {
                             new InlineKeyboardButton("Показать задачи") {CallbackData = "ShowTasks"},
-                            new InlineKeyboardButton("Показать участников") {CallbackData="ShowMembers"},
+                            new InlineKeyboardButton("Показать участников") {CallbackData="ShowMembers"}
                         },
                         new[]
                         {
-                            new InlineKeyboardButton("Назад") {CallbackData = "Back1"},
+                            new InlineKeyboardButton("Назад") {CallbackData = "Back1"}
                         }
                     });
                 }
