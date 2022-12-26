@@ -14,7 +14,25 @@ namespace TaskManager.Handler
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
-
+                        case "ShowTasks":
+                            userService.SetHandler(new ShowTasksHandler());
+                            userService.HandleUpdate(update);
+                            break;
+                        case "ShowMembers":
+                            userService.SetHandler(new ShowMembersHandler());
+                            userService.HandleUpdate(update);
+                            break;
+                        case "DeleteBoard":
+                            userService.SetHandler(new DeleteBoardHandler());
+                            userService.HandleUpdate(update);
+                            break;
+                        case "Back":
+                            userService.SetHandler(new WorkWithBoardHandler());
+                            userService.HandleUpdate(update);
+                            break;
+                        default:
+                            SubmitsQuestion(userService);
+                            break;
                     }
                     break;
                 default:
