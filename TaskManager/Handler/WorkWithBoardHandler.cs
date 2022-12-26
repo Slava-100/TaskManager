@@ -55,7 +55,6 @@ namespace TaskManager.Handler
                         else
                         {
                             userService.TgClient.SendTextMessageAsync(userService.Id, "Такой доски не существует!", replyMarkup: ButtonBack());
-                            SubmitsQuestion(userService);
                         }
                     }
                     break;

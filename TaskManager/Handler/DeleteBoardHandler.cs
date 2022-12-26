@@ -21,7 +21,7 @@ namespace TaskManager.Handler
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
-                        case "Back1":
+                        case "Back2":
                             userService.SetHandler(new BoardHandler());
                             userService.HandleUpdate(update);
                             break;
@@ -62,11 +62,11 @@ namespace TaskManager.Handler
                     new[]
                     {
                         new InlineKeyboardButton("Да") {CallbackData = "Yes"},
-                        new InlineKeyboardButton("нет") {CallbackData="Back1"},
+                        new InlineKeyboardButton("нет") {CallbackData="Back2"},
                     },
                     new[]
                     {
-                        new InlineKeyboardButton("Назад") {CallbackData = "Back1"},
+                        new InlineKeyboardButton("Назад") {CallbackData = "Back2"},
                     }
                 });
 

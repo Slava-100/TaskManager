@@ -26,7 +26,7 @@ namespace TaskManager.Handler
                             userService.SetHandler(new DeleteBoardHandler());
                             userService.HandleUpdate(update);
                             break;
-                        case "Back":
+                        case "Back1":
                             userService.SetHandler(new WorkWithBoardHandler());
                             userService.HandleUpdate(update);
                             break;
@@ -62,7 +62,7 @@ namespace TaskManager.Handler
                     },
                     new[]
                     {
-                        new InlineKeyboardButton("Назад") {CallbackData = "Back"},
+                        new InlineKeyboardButton("Назад") {CallbackData = "Back1"},
                     }
                     });
             }
@@ -78,7 +78,7 @@ namespace TaskManager.Handler
                         },
                         new[]
                         {
-                            new InlineKeyboardButton("Назад") {CallbackData = "Back"},
+                            new InlineKeyboardButton("Назад") {CallbackData = "Back1"},
                         }
                     });
                 }
