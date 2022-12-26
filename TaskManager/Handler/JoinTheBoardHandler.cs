@@ -12,7 +12,7 @@ namespace TaskManager.Handler
     {
         public void HandleUpdateHandler(Update update, UserService userService)
         {
-                       List<Board> boards = userService.ClientUserService.GetAllBoardsToWhichYouCanJoin();
+            List<Board> boards = userService.ClientUserService.GetAllBoardsToWhichYouCanJoin();
 
             switch (update.Type)
             {
@@ -26,18 +26,17 @@ namespace TaskManager.Handler
                     }
                     else if (!int.TryParse(update.Message.Text, out numberBoard))
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вам необходимо ввести числовое значение номера доски");
+                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вам необходимо ввести числовое значение номера доски", replyMarkup: GetBackButton());
                     }
                     else if (!boards.Any(crntBoard => crntBoard.NumberBoard == numberBoard))
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вы ввели номер доски, к которой не можете присоединиться");
+                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вы ввели номер доски, к которой не можете присоединиться", replyMarkup: GetBackButton());
                         ShowsAllBoards(userService);
                         AsksToEnterBoardNumber(userService);
                     }
                     else if (update.Message.Text == null)
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вы не ввели номер доски, попробуйте ещё раз");
-                        AsksToEnterBoardNumber(userService);
+                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вы не ввели номер доски, попробуйте ещё раз", replyMarkup: GetBackButton());
                     }
                     break;
                 case UpdateType.CallbackQuery:
@@ -49,6 +48,7 @@ namespace TaskManager.Handler
                     else
                     {
                         ShowsAllBoards(userService);
+                        AsksToEnterBoardNumber(userService);
                     }
                     break;
                 default:
@@ -61,7 +61,7 @@ namespace TaskManager.Handler
         {
             await userService.TgClient.SendTextMessageAsync
                 (userService.Id, $"Перед вами список досок, к которым вы можете присоединиться: \n" +
-                $" {GetAllBoardsToWhichYouCanJoin(userService)}", replyMarkup: GetBackButton());
+                $" {GetAllBoardsToWhichYouCanJoin(userService)}", replyMarkup: null);
         }
 
         public string GetAllBoardsToWhichYouCanJoin(UserService userService)
@@ -69,10 +69,10 @@ namespace TaskManager.Handler
             List<Board> boards = userService.ClientUserService.GetAllBoardsToWhichYouCanJoin();
             if (boards.Count > 0)
             {
-                string result = $"{boards[0].NumberBoard}";
+                string result = $"{boards[0]}";
                 for (int i = 1; i < boards.Count; i++)
                 {
-                    result = $"{result}, {boards[i].NumberBoard}";
+                    result = $"{result}\n{boards[i]}";
                 }
                 return result;
             }
