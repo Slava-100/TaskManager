@@ -17,7 +17,7 @@ namespace TaskManager.Handler
             _numberBoard = numberBoard;
         }
 
-        public async void HandleUpdateHandler(Update update, UserService userServise)
+        public async void HandleUpdateHandler(Update update, UserService userService)
         {
 
             Dictionary<int, Board> _boards = _dataStorage.Boards;
@@ -29,30 +29,30 @@ namespace TaskManager.Handler
                     {
                         if (keyBoard == _boards[_numberBoard].Key)
                         {
-                            userServise.SetHandler(new MainMenuHandler());
-                            _boards[_numberBoard].IDMembers.Add(userServise.Id);
-                            _dataStorage.Clients[userServise.Id].BoardsForUser.Add(_numberBoard);
-                            await userServise.TgClient.SendTextMessageAsync(userServise.Id, $"Поздравляем! Вы присоеденились к доске  с номером {_numberBoard}");
+                            userService.SetHandler(new MainMenuHandler());
+                            _boards[_numberBoard].IDMembers.Add(userService.Id);
+                            _dataStorage.Clients[userService.Id].BoardsForUser.Add(_numberBoard);
+                            await userService.TgClient.SendTextMessageAsync(userService.Id, $"Поздравляем! Вы присоеденились к доске  с номером {_numberBoard}");
                         }
                         else
                         {
-                            await userServise.TgClient.SendTextMessageAsync(userServise.Id, "Вы ввели неверный ключ", replyMarkup: GetBackButton());
+                            await userService.TgClient.SendTextMessageAsync(userService.Id, "Вы ввели неверный ключ", replyMarkup: GetBackButton());
                         }
                     }
                     else
                     {
-                        userServise.TgClient.SendTextMessageAsync(userServise.Id, "Вам необходимо ввести числовое значение ключа", replyMarkup: GetBackButton());
+                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вам необходимо ввести числовое значение ключа", replyMarkup: GetBackButton());
                     }
                     break;
                 case UpdateType.CallbackQuery:
                     if (update.CallbackQuery.Data == "Back")
                     {
-                        userServise.SetHandler(new JoinTheBoardHandler());
-                        userServise.HandleUpdate(update);
+                        userService.SetHandler(new JoinTheBoardHandler());
+                        userService.HandleUpdate(update);
                     }
                     break;
                 default:
-                    userServise.SetHandler(new MainMenuHandler());
+                    userService.SetHandler(new MainMenuHandler());
                     break;
             }
         }

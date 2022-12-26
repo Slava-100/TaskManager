@@ -8,7 +8,7 @@ namespace TaskManager.Handl
 {
     public class MainMenuHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userServise)
+        public void HandleUpdateHandler(Update update, UserService userService)
         {
             switch (update.Type)
             {
@@ -16,32 +16,32 @@ namespace TaskManager.Handl
                     switch (update.CallbackQuery.Data)
                     {
                         case "AddBoard":
-                            userServise.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
-                            userServise.SetHandler(new StartHandler());
-                            userServise.HandleUpdate(update);
+                            userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
+                            userService.SetHandler(new StartHandler());
+                            userService.HandleUpdate(update);
                             break;
                         case "JoinTheBoard":
-                            userServise.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
-                            userServise.SetHandler(new JoinTheBoardHandler());
-                            userServise.HandleUpdate(update);
+                            userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
+                            userService.SetHandler(new JoinTheBoardHandler());
+                            userService.HandleUpdate(update);
                             break;
                         case "WorkWithBoard":
-                            userServise.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
-                            userServise.SetHandler(new StartHandler());
-                            userServise.HandleUpdate(update);
+                            userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
+                            userService.SetHandler(new StartHandler());
+                            userService.HandleUpdate(update);
                             break;
                         default:
-                            SendBaseMenu(userServise);
+                            SendBaseMenu(userService);
                             break;
                     }
                     break;
                 default:
-                    SendBaseMenu(userServise);
+                    SendBaseMenu(userService);
                     break;
             }
         }
 
-        private void SendBaseMenu(UserService userServise)
+        private void SendBaseMenu(UserService userService)
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup(
                                 new[]
@@ -51,7 +51,7 @@ namespace TaskManager.Handl
                                     new[]{new InlineKeyboardButton("Работать с доской") {CallbackData="WorkWithBoard"}},
                                 });
 
-            userServise.TgClient.SendTextMessageAsync(userServise.Id, "Главное меню", replyMarkup: keyboard);
+            userService.TgClient.SendTextMessageAsync(userService.Id, "Главное меню", replyMarkup: keyboard);
         }
     }
 }
