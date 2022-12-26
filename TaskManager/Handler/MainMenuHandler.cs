@@ -18,6 +18,8 @@ namespace TaskManager.Handl
                     switch (update.CallbackQuery.Data)
                     {
                         case "AddBoard":
+                            userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
+                            userService.HandleUpdate(update);
                             userService.SetHandler(new AddNewBoardHandler());
                             userService.HandleUpdate(update);
                             break;
