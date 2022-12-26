@@ -118,6 +118,15 @@ namespace TaskManager
             return board.NumberBoard;
         }
 
+        public void DeleteActiveBoard(Board activeBoard, long activeIdClient)
+        {
+            Boards.Remove(activeBoard.NumberBoard);
+            Clients[activeIdClient].BoardsForUser.Remove(activeBoard.NumberBoard);
+
+            RewriteFileForBoards();
+            RewriteFileForClients();
+        } 
+
         private long GenerateKeyForBoards()
         {
             Random random = new Random();

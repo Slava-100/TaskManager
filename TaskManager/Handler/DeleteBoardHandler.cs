@@ -21,12 +21,12 @@ namespace TaskManager.Handler
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
-                        case "Back":
-                            userService.SetHandler(new MainMenuHandler());
+                        case "Back1":
+                            userService.SetHandler(new BoardHandler());
                             userService.HandleUpdate(update);
                             break;
-                        case "Да":
-                            //DeleteBoard();
+                        case "Yes":
+                            DeleteBoard(userService);
                             userService.SetHandler(new WorkWithBoardHandler());
                             break;
                         default:
@@ -48,6 +48,12 @@ namespace TaskManager.Handler
             userService.TgClient.SendTextMessageAsync(userService.Id,"Ты точно хочешь удалить эту доску?", replyMarkup: Button());
         }
 
+        private void DeleteBoard(UserService userService)
+        {
+            DataStorage dataStorage = DataStorage.GetInstance();
+            dataStorage.DeleteActiveBoard(userService.ClientUserService.GetActiveBoard(), userService.Id);
+        }
+
         private InlineKeyboardMarkup Button()
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup(
@@ -55,12 +61,12 @@ namespace TaskManager.Handler
                 {
                     new[]
                     {
-                        new InlineKeyboardButton("Да") {CallbackData = "ShowTasks"},
-                        new InlineKeyboardButton("нет") {CallbackData="Back"},
+                        new InlineKeyboardButton("Да") {CallbackData = "Yes"},
+                        new InlineKeyboardButton("нет") {CallbackData="Back1"},
                     },
                     new[]
                     {
-                        new InlineKeyboardButton("Назад") {CallbackData = "Back"},
+                        new InlineKeyboardButton("Назад") {CallbackData = "Back1"},
                     }
                 });
 
