@@ -41,7 +41,7 @@ namespace TaskManager.Handler
                     }
                     else
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вам необходимо ввести числовое значение ключа", replyMarkup: GetBackButton());
+                        await userService.TgClient.SendTextMessageAsync(userService.Id, "Вам необходимо ввести числовое значение ключа", replyMarkup: GetBackButton());
                     }
                     break;
                 case UpdateType.CallbackQuery:

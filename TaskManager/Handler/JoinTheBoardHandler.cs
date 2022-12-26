@@ -49,7 +49,6 @@ namespace TaskManager.Handler
                     else
                     {
                         ShowsAllBoards(userService);
-                        AsksToEnterBoardNumber(userService);
                     }
                     break;
                 default:
@@ -62,7 +61,7 @@ namespace TaskManager.Handler
         {
             await userService.TgClient.SendTextMessageAsync
                 (userService.Id, $"Перед вами список досок, к которым вы можете присоединиться: \n" +
-                $" {GetAllBoardsToWhichYouCanJoin(userService)}");
+                $" {GetAllBoardsToWhichYouCanJoin(userService)}", replyMarkup: GetBackButton());
         }
 
         public string GetAllBoardsToWhichYouCanJoin(UserService userService)
@@ -85,9 +84,8 @@ namespace TaskManager.Handler
 
         private async void AsksToEnterBoardNumber(UserService userService)
         {
-            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back" };
             await userService.TgClient.SendTextMessageAsync(userService.Id, $"Введите номер доски, к которой хотите присоединиться.\n" +
-                $"Если хотите отменить присоединение, нажмите кнопку \"Назад\".", replyMarkup: keyboard);
+                $"Если хотите отменить присоединение, нажмите кнопку \"Назад\".", replyMarkup: GetBackButton());
         }
 
         private async void ClearButtons(UserService userService, Update update)
@@ -97,9 +95,13 @@ namespace TaskManager.Handler
 
         private async void AsksToEnterKeyOfBoard(UserService userService)
         {
-            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back" };
             await userService.TgClient.SendTextMessageAsync(userService.Id, $"Введите ключ от доски, к которой хотите присоединиться.\n" +
-                $"Если хотите отменить присоединение, нажмите кнопку \"Назад\".", replyMarkup: keyboard);
+                $"Если хотите отменить присоединение, нажмите кнопку \"Назад\".", replyMarkup: GetBackButton());
+        }
+
+        private InlineKeyboardMarkup GetBackButton()
+        {
+            return new InlineKeyboardButton("Назад") { CallbackData = "Back" };
         }
     }
 }
