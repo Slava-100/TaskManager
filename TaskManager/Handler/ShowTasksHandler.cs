@@ -24,7 +24,7 @@ namespace TaskManager.Handler
                             userService.HandleUpdate(update);
                             break;
                         case "SelectTask":
-                            userService.SetHandler(new ShowMembersHandler());
+                            userService.SetHandler(new SelectTaskHandler());
                             userService.HandleUpdate(update);
                             break;
                         case "DeleteTask":
