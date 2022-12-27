@@ -31,7 +31,7 @@ namespace TaskManager
 
             var receiverOptions = new ReceiverOptions
             {
-                AllowedUpdates = { },
+                AllowedUpdates = new UpdateType[] { UpdateType.Message, UpdateType.CallbackQuery },
                 ThrowPendingUpdates = true
             };
 
