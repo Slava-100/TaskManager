@@ -79,7 +79,6 @@ namespace TaskManager.Handler
                 userService.SetHandler(new ShowMembersHandler());
                 userService.HandleUpdate(update);
             }
-
         }
     }
 }
