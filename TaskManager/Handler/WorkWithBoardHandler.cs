@@ -68,7 +68,8 @@ namespace TaskManager.Handler
         {
             if (GetAllBoards(userService) != "Список всех досок:\n")
             {
-                userService.TgClient.SendTextMessageAsync(userService.Id, $"{GetAllBoards(userService)} \nВведите номер доски для работы с ней!", replyMarkup: ButtonBack());
+                //userService.TgClient.SendTextMessageAsync(userService.Id, $"{GetAllBoards(userService)} \nВведите номер доски для работы с ней!", replyMarkup: ButtonBack());
+                userService.TgClient.SendTextMessageAsync(userService.Id, $"{GetBoardsClient(userService)} \nВведите номер доски для работы с ней!", replyMarkup: ButtonBack());
             }
             else
             {
@@ -86,6 +87,49 @@ namespace TaskManager.Handler
             }
 
             return s;
+        }
+
+        private string WhriteBoardsAdmin(UserService userService)
+        {
+            List<Board> boardsForAdmin = userService.ClientUserService.GetAllBoardsAdmins();
+            string s = "Список всех досок c правами Администратора:\n";
+            if (boardsForAdmin.Count > 0)
+            {
+                foreach (var board in boardsForAdmin)
+                {
+                    s += board.ToString() + "\n";
+                }
+            }
+            else
+            {
+                s += "Досок c правами Администратора у Вас нет(";
+            }
+
+            return s;
+        }
+
+        private string WhriteBoardsMember(UserService userService)
+        {
+            List<Board> boardsForAdmin = userService.ClientUserService.GetAllBoardsMembers();
+            string s = "Список всех досок c правами обычного пользователя:\n";
+            if (boardsForAdmin.Count > 0)
+            {
+                foreach (var board in boardsForAdmin)
+                {
+                    s += board.ToString() + "\n";
+                }
+            }
+            else
+            {
+                s += "Досок c правами пользователя у Вас нет(\n";
+            }
+
+            return s;
+        }
+
+        private string GetBoardsClient(UserService userService)
+        {
+            return $"{WhriteBoardsAdmin(userService)}\n{WhriteBoardsMember(userService)}";
         }
 
         private InlineKeyboardMarkup DefaultButton()

@@ -7,7 +7,7 @@ namespace TaskManager
     {
         private AbstractUser _userRole;
 
-        private Board _activeBoard;
+        public Board _activeBoard { get; set; }
 
         public long IDUser { get; set; }
 

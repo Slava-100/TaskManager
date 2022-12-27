@@ -18,10 +18,10 @@ namespace TaskManager
             //string token = @"5919984451:AAHv_KcJuWKeNTdrxXY1P80y31Cbu2PqSl8";
 
             //это наш рабочий токен
-           //string token = @"5934008674:AAGx_6xThM933nF22Dxk6VdRUxrBAX03NSk";
+           string token = @"5934008674:AAGx_6xThM933nF22Dxk6VdRUxrBAX03NSk";
 
             //токен юриного бота
-            string token = @"5905776080:AAE7pRFaZciLV6t7F0CqYf84hsfWV8SCY-A";
+                        //string token = @"5905776080:AAE7pRFaZciLV6t7F0CqYf84hsfWV8SCY-A";
 
             // токен Кр
             _bot = new TelegramBotClient(token);
@@ -77,7 +77,10 @@ namespace TaskManager
 
         public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
-            _bot.SendTextMessageAsync(866736781, "Я упал");
+            foreach (var userService in _userService)
+            {
+                _bot.SendTextMessageAsync(userService.Key, "Я упал");
+            }
         }
     }
 }
