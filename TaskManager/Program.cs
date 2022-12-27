@@ -35,6 +35,13 @@ using Client = TaskManager.Client;
 //Console.WriteLine(storage.Boards[1].NumberBoard);
 
 
+//DataStorage _dataStorage = DataStorage.GetInstance();
+
+//_dataStorage.Boards[1].AddNewIssue("задача1");
+//_dataStorage.Boards[1].AddNewIssue("задача2");
+//_dataStorage.Boards[1].AddNewIssue("задача3");
+//_dataStorage.Boards[1].AddNewIssue("задача4");
+
 TelegramService client = new TelegramService();
 Console.ReadLine();
 

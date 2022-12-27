@@ -10,6 +10,7 @@ namespace TaskManager
         public void AttachIssueToClient(Board board, Issue issue, long IDUser)
         {
             issue.IdUser = IDUser;
+            issue.Status = IssueStatus.InProgress;
             _dataStorage.RewriteFileForBoards();
             _dataStorage.RewriteFileForClients();
         }
@@ -22,6 +23,11 @@ namespace TaskManager
         public List<Issue> GetIssuesDoneInBoardByIdUser(long idUser, Board board)
         {
             return board.GetIssuesDoneInBoard(idUser);
+        }
+
+        public List<Issue> GetIssuesFreeInBoardByIdUser(long idUser, Board board)
+        {
+            return board.GetIssuesFreeInBoard(idUser);
         }
     }
 }

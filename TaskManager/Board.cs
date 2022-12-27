@@ -194,6 +194,21 @@
             return new List<Issue>();
         }
 
+        public List<Issue> GetIssuesFreeInBoard(long idUser)
+        {
+            List<Issue> allIssues = new List<Issue>();
+            if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
+            {
+                foreach (Issue issue in Issues)
+                {
+                    if ((issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.UserStory) || (issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.Backlog))
+                        allIssues.Add(issue);
+                }
+                return allIssues;
+            }
+            return new List<Issue>();
+        }
+
         public void ChangeRoleFromMemberToAdmin(long idMemeber)
         {
             if (IDMembers.Contains(idMemeber))

@@ -108,7 +108,7 @@ namespace TaskManager.Handler
                         new[]
                         {
                             new InlineKeyboardButton("Добавить задачу") {CallbackData = "AddTask"},
-                            new InlineKeyboardButton("ВЫбрать задачу") {CallbackData="SelectTask"},
+                            new InlineKeyboardButton("Выбрать задачу") {CallbackData="SelectTask"},
                             new InlineKeyboardButton("Удалить задачу") {CallbackData="DeleteTask"}
                         },
                         new[]
