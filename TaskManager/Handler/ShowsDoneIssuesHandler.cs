@@ -21,7 +21,7 @@ namespace TaskManager.Handler
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
-                        case "Back":
+                        case "BackToAllTask":
                             userService.SetHandler(new ShowAllTasksHandler());
                             userService.HandleUpdate(update);
                             break;

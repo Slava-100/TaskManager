@@ -166,7 +166,7 @@ namespace TaskManager.Handler
 
         private InlineKeyboardMarkup GetBackButton()
         {
-            return new InlineKeyboardButton("Назад") { CallbackData = "Back" };
+            return new InlineKeyboardButton("Назад") { CallbackData = "BackToAllTask" };
         }
     }
 }
