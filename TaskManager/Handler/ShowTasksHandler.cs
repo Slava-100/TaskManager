@@ -23,16 +23,16 @@ namespace TaskManager.Handler
                             userService.SetHandler(new AddTaskHandler());
                             userService.HandleUpdate(update);
                             break;
-                        case "SelectTask":
-                            userService.SetHandler(new SelectTaskHandler());
-                            userService.HandleUpdate(update);
-                            break;
+                        //case "SelectTask":
+                        //    userService.SetHandler(new SelectTaskHandler());
+                        //    userService.HandleUpdate(update);
+                        //    break;
                         case "DeleteTask":
                             userService.SetHandler(new DeleteBoardHandler());
                             userService.HandleUpdate(update);
                             break;
                         case "Back3":
-                            userService.SetHandler(new BoardHandler());
+                            userService.SetHandler(new ShowAllTasksHandler());
                             userService.HandleUpdate(update);
                             break;
                         default:

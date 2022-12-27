@@ -14,10 +14,19 @@ namespace TaskManager.Handler
     {
         public void HandleUpdateHandler(Update update, UserService userService)
         {
-            List<Issue> issues = userService.ClientUserService. 
+            List<Issue> issues = userService.ClientUserService.GetAllIssuesInBoardByBoard();
 
             switch (update.Type)
             {
+                case UpdateType.CallbackQuery:
+                    switch (update.CallbackQuery.Data)
+                    {
+                        case "Back":
+                            userService.SetHandler(new ShowAllTasksHandler());
+                            userService.HandleUpdate(update);
+                            break;
+                    }
+                    break;
                 case UpdateType.Message:
                     if (update.Message.Text != null
                                             && int.TryParse(update.Message.Text, out var numberIssue)
@@ -51,54 +60,54 @@ namespace TaskManager.Handler
 }
 
 
-    //        switch (update.Type)
-    //        {
-    //            case UpdateType.CallbackQuery:
-    //                switch (update.CallbackQuery.Data)
-    //                {
-    //                    case "DeleteIssue":
-    //                        userService.SetHandler(new DeleteIssueHandler());
-    //                        userService.HandleUpdate(update);
-    //                        break;
-    //                    case "Back":
-    //                        userService.SetHandler(new SelectTaskHandler());
-    //                        userService.HandleUpdate(update);
-    //                        break;
-    //                    default:
-    //                        //SubmitsQuestion(userService);
-    //                        break;
-    //                }
-    //                break;
-    //            default:
-    //                //SubmitsQuestion(userService);
-    //                break;
-    //        }
-    //    }
+//        switch (update.Type)
+//        {
+//            case UpdateType.CallbackQuery:
+//                switch (update.CallbackQuery.Data)
+//                {
+//                    case "DeleteIssue":
+//                        userService.SetHandler(new DeleteIssueHandler());
+//                        userService.HandleUpdate(update);
+//                        break;
+//                    case "Back":
+//                        userService.SetHandler(new SelectTaskHandler());
+//                        userService.HandleUpdate(update);
+//                        break;
+//                    default:
+//                        //SubmitsQuestion(userService);
+//                        break;
+//                }
+//                break;
+//            default:
+//                //SubmitsQuestion(userService);
+//                break;
+//        }
+//    }
 
-    //    private InlineKeyboardMarkup ButtonList(UserService userService)
-    //    {
-    //        InlineKeyboardMarkup keyboard;
-    //        if (userService.ClientUserService.GetRole() == "Участник")
-    //        {
-    //            keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back" };
-    //        }
-    //        else
-    //        {
-    //            keyboard = new InlineKeyboardMarkup(
-    //                new[]
-    //                    {
-    //                    new[]
-    //                    {
-    //                        new InlineKeyboardButton("Удалить задачу") {CallbackData = "DeleteIssue"},
-    //                    },
-    //                    new[]
-    //                    {
-    //                        new InlineKeyboardButton("Назад") {CallbackData = "Back"},
-    //                    }
-    //                });
-    //        }
+//    private InlineKeyboardMarkup ButtonList(UserService userService)
+//    {
+//        InlineKeyboardMarkup keyboard;
+//        if (userService.ClientUserService.GetRole() == "Участник")
+//        {
+//            keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back" };
+//        }
+//        else
+//        {
+//            keyboard = new InlineKeyboardMarkup(
+//                new[]
+//                    {
+//                    new[]
+//                    {
+//                        new InlineKeyboardButton("Удалить задачу") {CallbackData = "DeleteIssue"},
+//                    },
+//                    new[]
+//                    {
+//                        new InlineKeyboardButton("Назад") {CallbackData = "Back"},
+//                    }
+//                });
+//        }
 
-    //        return keyboard;
-    //    }
-    //}
+//        return keyboard;
+//    }
+//}
 

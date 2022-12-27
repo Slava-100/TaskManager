@@ -201,7 +201,7 @@
             {
                 foreach (Issue issue in Issues)
                 {
-                    if ((issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.UserStory) || (issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.Backlog))
+                    if ((issue.IdUser != idUser) && (issue.Status == Enums.IssueStatus.UserStory) || (issue.IdUser != idUser) && (issue.Status == Enums.IssueStatus.Backlog))
                         allIssues.Add(issue);
                 }
                 return allIssues;

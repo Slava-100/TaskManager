@@ -22,15 +22,26 @@ namespace TaskManager.Handler
             switch (update.Type)
             {
                 case UpdateType.CallbackQuery:
-                    await userService.TgClient.SendTextMessageAsync(userService.Id, "Введите номер задачи, которую вы хотите взять к исполнению.");
-
+                    switch (update.CallbackQuery.Data)
+                    {
+                        case "Back":
+                            userService.SetHandler(new ShowAllTasksHandler());
+                            userService.HandleUpdate(update);
+                            break;
+                        case "ShowFreeIssues":
+                            await userService.TgClient.SendTextMessageAsync(userService.Id, "Введите номер задачи, которую вы хотите взять к исполнению.");
+                            break;
+                    }
                     break;
+                   
                 case UpdateType.Message:
                     if (update.Message.Text != null
                         && int.TryParse(update.Message.Text, out var numberIssue)
                         && freeIssues.Any(crntIssue => crntIssue.NumberIssue == numberIssue))
                     {
                         userService.ClientUserService.AttachIssueToClient(numberIssue);
+                        userService.TgClient.SendTextMessageAsync(userService.Id, $"Теперь задача с номером {numberIssue} находится в вашем исполнении.", replyMarkup: GetBackButton());
+
                     }
                     else if (!int.TryParse(update.Message.Text, out numberIssue))
                     {
