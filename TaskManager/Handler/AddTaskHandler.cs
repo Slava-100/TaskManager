@@ -24,12 +24,20 @@ namespace TaskManager.Handler
             switch (update.Type)
             {
                 case UpdateType.Message:
-                    userService.ClientUserService.AddNewIssue(update.Message.Text);
-                    Issue newIssue = userService.ClientUserService._activeBoard.Issues.Last();
-                    userService.TgClient.SendTextMessageAsync(userService.Id, "Задача создана:\n\n" + newIssue.ToString());
-                    userService.SetHandler(new ShowTasksHandler());
-                    userService.HandleUpdate(update);
-                    break;
+                    bool result = userService.ClientUserService.AddNewIssue(update.Message.Text);
+                    if (result)
+                    {
+                        Issue newIssue = userService.ClientUserService._activeBoard.Issues.Last();
+                        userService.TgClient.SendTextMessageAsync(userService.Id, "Задача создана:\n\n" + newIssue.ToString());
+                        userService.SetHandler(new ShowTasksHandler());
+                        userService.HandleUpdate(update);
+                    }
+                    else
+                    {
+                        userService.TgClient.SendTextMessageAsync(userService.Id, "Задача не создана, попробуйте ещё раз!");
+                        AskWhriteIssueDescription(userService);
+                    }
+                    break; 
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
