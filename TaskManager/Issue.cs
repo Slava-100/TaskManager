@@ -100,7 +100,20 @@ namespace TaskManager
 
         public override string ToString()
         {
-            return $"Номер Задачи {NumberIssue} ";
+            return $"Номер Задачи:\t {NumberIssue} " +
+                   $"\nОписание задачи:\t {Description} " +
+                   $"\nСтатус задачи:\t {Status}";
+                   //$"\nИсполнитель задачи: {GetNameActiveUser}";
         }
+
+        //private string GetNameActiveUser()
+        //{
+        //    if (DataStorage.GetInstance().Clients.ContainsKey(IdUser))
+        //    {
+        //        return DataStorage.GetInstance().Clients[IdUser].NameUser;
+        //    }
+
+        //    return "Задача свободна";
+        //}
     }
 }

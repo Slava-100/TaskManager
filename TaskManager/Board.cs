@@ -1,4 +1,6 @@
-﻿namespace TaskManager
+﻿using TaskManager.Enums;
+
+namespace TaskManager
 {
     public class Board
     {
@@ -125,6 +127,7 @@
             }
 
             Issues.Add(new Issue(_numberNextIssue, description));
+            Issues.Last().Status = IssueStatus.Backlog;
             _numberNextIssue += 1;
             _dataStorage.RewriteFileForBoards();
 
