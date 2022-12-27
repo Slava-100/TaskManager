@@ -78,7 +78,8 @@ namespace TaskManager.Handler
                         {
                             new InlineKeyboardButton("Добавить участника") {CallbackData = "AddClient"},
                             new InlineKeyboardButton("Удалить участника") {CallbackData = "DeleteClient"},
-                            new InlineKeyboardButton("Повысить уровень прав участника") {CallbackData = "IncreaseLevelRights"}
+                            new InlineKeyboardButton("Повысить уровень прав участника") {CallbackData = "IncreaseLevelRights"},
+                            new InlineKeyboardButton("Выйти из доски") {CallbackData = "ExitFromBoard"}
                         },
                         new[]
                         {
