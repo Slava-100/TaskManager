@@ -108,7 +108,7 @@ namespace TaskManager.Handler
                 }
                 else
                 {
-                    userService.TgClient.SendTextMessageAsync(userService.Id, $"В этой доске этого пользователя не существует!");
+                    userService.TgClient.SendTextMessageAsync(userService.Id, $"В этой доске такого пользователя не существует!");
                     userService.SetHandler(new ShowMembersHandler());
                     userService.HandleUpdate(update);
                 }
