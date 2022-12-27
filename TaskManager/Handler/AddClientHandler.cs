@@ -64,7 +64,7 @@ namespace TaskManager.Handler
                 else
                 {
                     userService.ClientUserService.GetActiveBoard().IDMembers.Add(numberClient);
-                    userService.ClientUserService.BoardsForUser.Add(userService.ClientUserService.GetActiveBoard().NumberBoard);
+                    DataStorage.GetInstance().Clients[numberClient].BoardsForUser.Add(userService.ClientUserService.GetActiveBoard().NumberBoard);
                     DataStorage.GetInstance().RewriteFileForClients();
                     DataStorage.GetInstance().RewriteFileForBoards();
 
