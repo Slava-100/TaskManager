@@ -31,6 +31,10 @@ namespace TaskManager.Handler
                             userService.SetHandler(new IncreaseLevelRightsHandler());
                             userService.HandleUpdate(update);
                             break;
+                        case "ExitFromBoard":
+                            userService.SetHandler(new ExitFromBoardHandler());
+                            userService.HandleUpdate(update);
+                            break;
                         case "Back4":
                             userService.SetHandler(new BoardHandler());
                             userService.HandleUpdate(update);
@@ -83,7 +87,7 @@ namespace TaskManager.Handler
                         },
                         new[]
                         {
-                            new InlineKeyboardButton("Назад") {CallbackData = "Back4"},
+                            new InlineKeyboardButton("Назад") {CallbackData = "Back4"}
                         }
                     });
             }
@@ -94,7 +98,11 @@ namespace TaskManager.Handler
                     {
                         new[]
                         {
-                            new InlineKeyboardButton("Назад") {CallbackData = "Back4"},
+                            new InlineKeyboardButton("Выйти из доски") {CallbackData = "ExitFromBoard"}
+                        },
+                        new[]
+                        {
+                            new InlineKeyboardButton("Назад") {CallbackData = "Back4"}
                         }
                     });
             }

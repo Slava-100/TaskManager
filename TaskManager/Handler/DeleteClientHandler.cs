@@ -34,7 +34,7 @@ namespace TaskManager.Handler
                                 userService.ClientUserService.GetActiveBoard().IDMembers.Remove(userService.Id);
                             }
 
-                            DataStorage.GetInstance().Clients[userService.Id].BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
+                            userService.ClientUserService.BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
                             userService.SetHandler(new MainMenuHandler());
                             userService.HandleUpdate(update);
                             break;
