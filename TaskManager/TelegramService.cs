@@ -21,7 +21,7 @@ namespace TaskManager
            //string token = @"5934008674:AAGx_6xThM933nF22Dxk6VdRUxrBAX03NSk";
 
             //токен юриного бота
-                        string token = @"5905776080:AAE7pRFaZciLV6t7F0CqYf84hsfWV8SCY-A";
+            string token = @"5905776080:AAE7pRFaZciLV6t7F0CqYf84hsfWV8SCY-A";
 
             // токен Кр
             _bot = new TelegramBotClient(token);
@@ -31,7 +31,7 @@ namespace TaskManager
 
             var receiverOptions = new ReceiverOptions
             {
-                AllowedUpdates = { },
+                AllowedUpdates = new UpdateType[] { UpdateType.Message, UpdateType.CallbackQuery },
                 ThrowPendingUpdates = true
             };
 
