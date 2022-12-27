@@ -113,24 +113,26 @@ namespace TaskManager
             return false;
         }
 
-        public void AddNewUserByKey(int idBoard, int keyBoard)
+        public void AddNewUserByKey(int idBoard, long keyBoard)
         {
             DataStorage.GetInstance().AddNewUserByKey(idBoard, keyBoard, IDUser, NameUser);
         }
 
-        public void AttachIssueToClient(int IdIssue)
+        public bool AttachIssueToClient(int IdIssue)
         {
             var issue = _activeBoard.Issues.FirstOrDefault(currentIssue => IdIssue == currentIssue.NumberIssue);
 
-            if (issue != null)
+            if ((issue != null && issue.Status == Enums.IssueStatus.UserStory) || (issue != null && issue.Status == Enums.IssueStatus.Backlog))
             {
                 var issueInWork = _activeBoard.Issues.FirstOrDefault(crntIssue => crntIssue.Status == Enums.IssueStatus.InProgress && crntIssue.IdUser == IDUser);
 
                 if (issueInWork == null && issue.IsAssignable && SelectRole())
                 {
                     _userRole.AttachIssueToClient(_activeBoard, issue, IDUser);
+                    return true;
                 }
             }
+            return false;
         }
 
         public List<Board> GetAllBoardsByNumbersOfBoard()
@@ -146,6 +148,11 @@ namespace TaskManager
         public List<Issue> GetIssuesDoneInBoardByBoard()
         {
             return _userRole.GetIssuesDoneInBoardByIdUser(IDUser, _activeBoard);
+        }
+
+        public List<Issue> GetIssuesFreeInBoardByBoard()
+        {
+            return _userRole.GetIssuesFreeInBoardByIdUser(IDUser, _activeBoard);
         }
 
         public List<Board> GetAllBoardsAdmins()

@@ -90,6 +90,14 @@ namespace TaskManager
                    Status == issue.Status;
         }
 
+        //public override string ToString()
+        //{
+        //    return $"Номер Задачи {NumberIssue} " +
+        //        $"\nОписание задачи {Description} " +
+        //        $"\nСтатус задачи{Status}" +
+        //        $"\nИсполнитель задачи:{DataStorage.GetInstance().Clients[IdUser].NameUser}";
+        //}
+
         public override string ToString()
         {
             return $"Номер Задачи:\t {NumberIssue} " +

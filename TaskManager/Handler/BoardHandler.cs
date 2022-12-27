@@ -14,8 +14,8 @@ namespace TaskManager.Handler
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
-                        case "ShowTasks":
-                            userService.SetHandler(new ShowTasksHandler());
+                        case "ShowAllTasks":
+                            userService.SetHandler(new ShowAllTasksHandler());
                             userService.HandleUpdate(update);
                             break;
                         case "ShowMembers":
@@ -56,7 +56,7 @@ namespace TaskManager.Handler
                     {
                         new[]
                         {
-                            new InlineKeyboardButton("Показать задачи") {CallbackData = "ShowTasks"},
+                            new InlineKeyboardButton("Показать задачи доски") {CallbackData = "ShowAllTasks"},
                             new InlineKeyboardButton("Показать участников") {CallbackData="ShowMembers"},
                             new InlineKeyboardButton("Удалить доску") {CallbackData="DeleteBoard"}
                         },
@@ -73,7 +73,7 @@ namespace TaskManager.Handler
                     {
                         new[]
                         {
-                            new InlineKeyboardButton("Показать задачи") {CallbackData = "ShowTasks"},
+                            new InlineKeyboardButton("Показать задачи доски") {CallbackData = "ShowAllTasks"},
                             new InlineKeyboardButton("Показать участников") {CallbackData="ShowMembers"}
                         },
                         new[]
