@@ -62,8 +62,8 @@ namespace TaskManager.Handler
                 }
                 else if(userService.ClientUserService.GetActiveBoard().IDMembers.Contains(numberClient) == true)
                 {
-                    DataStorage.GetInstance().Clients[numberClient].GetActiveBoard().IDAdmin.Add(numberClient);
-                    DataStorage.GetInstance().Clients[numberClient].GetActiveBoard().IDMembers.Remove(numberClient);
+                    userService.ClientUserService.GetActiveBoard().IDAdmin.Add(numberClient);
+                    userService.ClientUserService.GetActiveBoard().IDMembers.Remove(numberClient);
 
                     userService.TgClient.SendTextMessageAsync(userService.Id, $"Права участника (имя: {DataStorage.GetInstance().Clients[numberClient].NameUser}) повышены!");
                 }else if (numberClient == userService.Id)
