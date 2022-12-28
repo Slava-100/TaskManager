@@ -37,11 +37,11 @@ namespace TaskManager
         {
             return _activeBoard;
         }
-        
+
         public string GetRole()
         {
             string s = "";
-            if(_userRole is AdminUser)
+            if (_userRole is AdminUser)
             {
                 s = "Админ";
             }
@@ -100,7 +100,7 @@ namespace TaskManager
 
         public int AddBoard(string nameBoard)
         {
-            return DataStorage.GetInstance().AddBoard(IDUser,nameBoard);
+            return DataStorage.GetInstance().AddBoard(IDUser, nameBoard);
         }
 
         public bool RemoveBoard(int numberBoard)
@@ -135,25 +135,83 @@ namespace TaskManager
             return false;
         }
 
+        public void MoveIssueFromInProgressToBacklog(int idIssue)
+        {
+            _userRole.MoveIssueFromInProgressToBacklog(_activeBoard, idIssue, IDUser);
+        }
+
+        public void MoveIssueFromInProgressToReview(int idIssue)
+        {
+            _userRole.MoveIssueFromInProgressToReview(_activeBoard, idIssue, IDUser);
+        }
+
+        public bool MoveIssueFromReviewToDone(int idIssue)
+        {
+            var issue = _activeBoard.Issues.FirstOrDefault(currentIssue => idIssue == currentIssue.NumberIssue);
+            if (issue != null && _userRole is AdminUser)
+            {
+                ((AdminUser)_userRole).MoveIssueFromReviewToDone(_activeBoard, issue);
+                return true;
+            }
+            return false;
+        }
+
+
         public List<Board> GetAllBoardsByNumbersOfBoard()
         {
             return DataStorage.GetInstance().GetAllBoardsByNumbersOfBoard(BoardsForUser);
         }
 
-        public List<Issue> GetAllIssuesInBoardByBoard()
+        public List<Issue> GetAllIssuesInBoardForClientByBoard()
         {
             return _userRole.GetAllIssuesInBoardByIdUser(IDUser, _activeBoard);
         }
 
-        public List<Issue> GetIssuesDoneInBoardByBoard()
+        public List<Issue> GetIssuesInProgressForClientInBoard()
+        {
+            return _userRole.GetIssuesInProfressForClientInBoard(IDUser, _activeBoard);
+        }
+               
+
+        public List<Issue> GetIssuesDoneInBoardForClientByBoard()
         {
             return _userRole.GetIssuesDoneInBoardByIdUser(IDUser, _activeBoard);
         }
 
-        public List<Issue> GetIssuesFreeInBoardByBoard()
+        public List<Issue> GetIssuesReviewAndDoneForClientInBoard()
+        {
+            return _userRole.GetIssuesReviewAndDoneInBoard(IDUser, _activeBoard);
+        }
+
+
+        public List<Issue> GetIssuesReviewForClientInBoard()
+        {
+            return _userRole.GetIssuesReviewInBoard(IDUser, _activeBoard);
+        }
+
+        public List<Issue> GetIssuesFreeInBoardForClientByBoard()
         {
             return _userRole.GetIssuesFreeInBoardByIdUser(IDUser, _activeBoard);
         }
+
+        public List<Issue> GetAllIssuesInBoard()
+        {
+            if (_userRole is AdminUser)
+            {
+                return ((AdminUser)_userRole).GetAllIssuesInBoard(_activeBoard);
+            }
+            return new List < Issue >();
+        }
+
+        public List<Issue> GetAllIssuesReviewForAllClientsInBoard()
+        {
+            if (_userRole is AdminUser)
+            {
+                return ((AdminUser)_userRole).GetAllIssuesReviewForAllClientsInBoard(_activeBoard);
+            }
+            return new List<Issue>();
+        }
+        
 
         public List<Board> GetAllBoardsAdmins()
         {
@@ -185,7 +243,7 @@ namespace TaskManager
         {
             if (_userRole is AdminUser)
             {
-               ((AdminUser)_userRole).ChangeRoleFromAdminToMember(idAdmin, _activeBoard);
+                ((AdminUser)_userRole).ChangeRoleFromAdminToMember(idAdmin, _activeBoard);
             }
         }
 
@@ -193,5 +251,7 @@ namespace TaskManager
         {
             return DataStorage.GetInstance().GetAllBoardsToWhichYouCanJoin(BoardsForUser);
         }
+
+
     }
 }

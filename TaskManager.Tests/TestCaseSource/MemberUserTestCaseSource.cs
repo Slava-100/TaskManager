@@ -9,7 +9,7 @@ namespace TaskManager.Tests.TestCaseSource
             Issue issue10 = new Issue(10, "10");
             Issue attachIssue = new Issue(20, "20");
             Client admin = new Client(50, "50");
-            Board board = new Board(100, 50);
+            Board board = new Board(100, 50, "boardMy");
             board.Issues.Add(issue10);
             board.Issues.Add(attachIssue);
             Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
@@ -25,10 +25,11 @@ namespace TaskManager.Tests.TestCaseSource
 
             Issue expIssue10 = new Issue(10, "10");
             Issue expIttachIssue = new Issue(20, "20");
-            Board expBoard = new Board(100, 50);
+            Board expBoard = new Board(100, 50, "boardMy");
             Client expAdmin = new Client(50, "50");
             Client expClient = new Client(40, "40");
             expIttachIssue.IdUser = expClient.IDUser;
+            expIttachIssue.Status = Enums.IssueStatus.InProgress;
             expBoard.Issues.Add(expIssue10);
             expBoard.Issues.Add(expIttachIssue);
             Dictionary<int, Board> expectedBoards = new Dictionary<int, Board>
@@ -53,7 +54,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue1.IdUser = member.IDUser;
             Issue issue2 = new Issue(29, "29");
             issue2.IdUser = member.IDUser;
-            Board board = new Board(709, 709);
+            Board board = new Board(709, 709, "boardName");
             board.Issues.Add(issue1);
             board.Issues.Add(issue2);
             board.IDMembers.Add(88);
@@ -65,7 +66,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue1.IdUser = expMember.IDUser;
             Issue expIssue2 = new Issue(29, "29");
             expIssue2.IdUser = expMember.IDUser;
-            Board expBoard = new Board(709, 709);
+            Board expBoard = new Board(709, 709, "boardName");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.IDMembers.Add(88);
@@ -85,7 +86,7 @@ namespace TaskManager.Tests.TestCaseSource
             Issue issue2 = new Issue(29, "29");
             issue2.IdUser = member.IDUser;
             issue2.Status = Enums.IssueStatus.Done;
-            Board board = new Board(709, 709);
+            Board board = new Board(709, 709, "boardName");
             board.Issues.Add(issue1);
             board.Issues.Add(issue2);
             board.IDMembers.Add(88);
@@ -99,7 +100,7 @@ namespace TaskManager.Tests.TestCaseSource
             Issue expIssue2 = new Issue(29, "29");
             expIssue2.IdUser = expMember.IDUser;
             expIssue2.Status = Enums.IssueStatus.Done;
-            Board expBoard = new Board(709, 709);
+            Board expBoard = new Board(709, 709, "boardName");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.IDMembers.Add(88);
