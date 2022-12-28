@@ -25,7 +25,7 @@ namespace TaskManager.Handler
                     }
                     break;
                 case UpdateType.CallbackQuery:
-                    if (update.CallbackQuery.Data == "Back")
+                    if (update.CallbackQuery.Data == "BackToMainMenu")
                     {
                         userService.SetHandler(new MainMenuHandler());
                         userService.HandleUpdate(update);
@@ -42,7 +42,7 @@ namespace TaskManager.Handler
         }
         private void SubmitsQuestion(UserService userService)
         {
-            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back" };
+            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "BackToMainMenu" };
             userService.TgClient.SendTextMessageAsync(userService.Id, "Введите название новой доски!" +
                 "(чтобы отменить создание, нажмите кнопку \"Назад\"", replyMarkup:keyboard);
         }

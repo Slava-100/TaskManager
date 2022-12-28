@@ -47,8 +47,8 @@ namespace TaskManager.Handler
                             userService.HandleUpdate(update);
                             break;
 
-                        case "Back":
-                            userService.SetHandler(new WorkWithBoardHandler());
+                        case "BackToBoard":
+                            userService.SetHandler(new BoardHandler());
                             userService.HandleUpdate(update);
                             break;
                         default:
@@ -71,20 +71,20 @@ namespace TaskManager.Handler
         {
             InlineKeyboardMarkup keyboard;
             keyboard = new InlineKeyboardMarkup(
-    new[]
-    {
-                        new[]
-                        {
-                            new InlineKeyboardButton("Задачи доски") {CallbackData = "ShowTasks"},
-                            new InlineKeyboardButton("Мои задачи") {CallbackData="ShowAllMyIssues"},
-                            new InlineKeyboardButton("Мои выполненные задачи") {CallbackData="ShowDoneMyIssues"},
-                            new InlineKeyboardButton("Свободные задачи") {CallbackData="ShowFreeIssues"}
-                        },
-                        new[]
-                        {
-                            new InlineKeyboardButton("Назад") {CallbackData = "Back"}
-                        }
-    });
+                new[]
+                {
+                    new[]
+                    {
+                        new InlineKeyboardButton("Задачи доски") {CallbackData = "ShowTasks"},
+                        new InlineKeyboardButton("Мои задачи") {CallbackData="ShowAllMyIssues"},
+                        new InlineKeyboardButton("Мои выполненные задачи") {CallbackData="ShowDoneMyIssues"},
+                        new InlineKeyboardButton("Свободные задачи") {CallbackData="ShowFreeIssues"}
+                    },
+                    new[]
+                     {
+                        new InlineKeyboardButton("Назад") {CallbackData = "BackToBoard"}
+                     }
+                });
 
             return keyboard;
         }

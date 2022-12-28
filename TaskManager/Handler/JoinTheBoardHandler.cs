@@ -40,7 +40,7 @@ namespace TaskManager.Handler
                     }
                     break;
                 case UpdateType.CallbackQuery:
-                    if (update.CallbackQuery.Data == "Back")
+                    if (update.CallbackQuery.Data == "BackToMainMenu")
                     {
                         userService.SetHandler(new MainMenuHandler());
                         userService.HandleUpdate(update);
@@ -101,7 +101,7 @@ namespace TaskManager.Handler
 
         private InlineKeyboardMarkup GetBackButton()
         {
-            return new InlineKeyboardButton("Назад") { CallbackData = "Back" };
+            return new InlineKeyboardButton("Назад") { CallbackData = "BackToMainMenu" };
         }
     }
 }

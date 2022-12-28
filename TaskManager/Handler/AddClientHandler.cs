@@ -19,7 +19,7 @@ namespace TaskManager.Handler
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
-                        case "Back6":
+                        case "BackToShowMembers":
                             userService.SetHandler(new ShowMembersHandler());
                             userService.HandleUpdate(update);
                             break;
@@ -44,40 +44,48 @@ namespace TaskManager.Handler
 
         private InlineKeyboardMarkup ButtonBack()
         {
-            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back6" };
+            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "BackToShowMembers" };
             return keyboard;
         }
 
         private void AddClient(Update update, UserService userService)
         {
-            string textMessage = update.Message.Text;
-            long numberClient = Convert.ToInt64(textMessage);
+            string text = update.Message.Text;
+            long numberClient;
 
-            if (DataStorage.GetInstance().Clients.ContainsKey(numberClient))
+            if (long.TryParse(text, out numberClient))
             {
-                if (userService.ClientUserService.GetActiveBoard().IDAdmin.Contains(numberClient) == true || userService.ClientUserService.GetActiveBoard().IDMembers.Contains(numberClient) == true)
+                if (DataStorage.GetInstance().Clients.ContainsKey(numberClient))
                 {
-                    userService.TgClient.SendTextMessageAsync(userService.Id, "Данный участник уже является пользователем данной доски");
-                    userService.SetHandler(new ShowMembersHandler());
-                    userService.HandleUpdate(update);
+                    if (userService.ClientUserService.GetActiveBoard().IDAdmin.Contains(numberClient) == true || userService.ClientUserService.GetActiveBoard().IDMembers.Contains(numberClient) == true)
+                    {
+                        userService.TgClient.SendTextMessageAsync(userService.Id, "Данный участник уже является пользователем данной доски");
+                        userService.SetHandler(new ShowMembersHandler());
+                        userService.HandleUpdate(update);
+                    }
+                    else
+                    {
+                        userService.ClientUserService.GetActiveBoard().IDMembers.Add(numberClient);
+                        DataStorage.GetInstance().Clients[numberClient].BoardsForUser.Add(userService.ClientUserService.GetActiveBoard().NumberBoard);
+                        DataStorage.GetInstance().RewriteFileForClients();
+                        DataStorage.GetInstance().RewriteFileForBoards();
+
+                        userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник (Имя: {DataStorage.GetInstance().Clients[numberClient].NameUser}) добавлен!");
+                        userService.SetHandler(new ShowMembersHandler());
+                        userService.HandleUpdate(update);
+                    }
                 }
                 else
                 {
-                    userService.ClientUserService.GetActiveBoard().IDMembers.Add(numberClient);
-                    DataStorage.GetInstance().Clients[numberClient].BoardsForUser.Add(userService.ClientUserService.GetActiveBoard().NumberBoard);
-                    DataStorage.GetInstance().RewriteFileForClients();
-                    DataStorage.GetInstance().RewriteFileForBoards();
-
-                    userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник (Имя: {DataStorage.GetInstance().Clients[numberClient].NameUser}) добавлен!");
+                    userService.TgClient.SendTextMessageAsync(userService.Id, "Пользователя с таким Id в хранилище не существует!");
                     userService.SetHandler(new ShowMembersHandler());
                     userService.HandleUpdate(update);
                 }
             }
             else
             {
-                userService.TgClient.SendTextMessageAsync(userService.Id, "Пользователя с таким Id в хранилище не существует!");
-                userService.SetHandler(new ShowMembersHandler());
-                userService.HandleUpdate(update);
+                userService.TgClient.SendTextMessageAsync(userService.Id, "значение id участника - число!");
+                SubmitsQuestion(userService);
             }
         }
     }

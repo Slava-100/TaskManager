@@ -20,7 +20,7 @@ namespace TaskManager.Handler
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
-                        case "Back7":
+                        case "BackToShowMembers":
                             userService.SetHandler(new ShowMembersHandler());
                             userService.HandleUpdate(update);
                             break;
@@ -59,7 +59,7 @@ namespace TaskManager.Handler
 
         private InlineKeyboardMarkup ButtonBack()
         {
-            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back7" };
+            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "BackToShowMembers" };
             return keyboard;
         }
 
@@ -72,7 +72,7 @@ namespace TaskManager.Handler
                         new[]
                         {
                             new InlineKeyboardButton("Да") {CallbackData = "Yes"},
-                            new InlineKeyboardButton("Нет") {CallbackData = "Back7"},
+                            new InlineKeyboardButton("Нет") {CallbackData = "BackToShowMembers"},
                         },
                     });
            
@@ -81,45 +81,53 @@ namespace TaskManager.Handler
 
         private void DeleteClient(Update update, UserService userService)
         {
-            string textMessage = update.Message.Text;
-            long numberClient = Convert.ToInt64(textMessage);
+            string text = update.Message.Text;
+            long numberClient;
 
-            if (DataStorage.GetInstance().Clients.ContainsKey(numberClient))
+            if (long.TryParse(text, out numberClient))
             {
-                if (userService.ClientUserService.GetActiveBoard().IDAdmin.Contains(numberClient) == true && numberClient != userService.Id)
+                if (DataStorage.GetInstance().Clients.ContainsKey(numberClient))
                 {
-                    userService.ClientUserService.GetActiveBoard().IDAdmin.Remove(numberClient);
-                    userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник удален");
-                    DataStorage.GetInstance().Clients[numberClient].BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
-                    userService.SetHandler(new ShowMembersHandler());
-                    userService.HandleUpdate(update);
-                }
-                else if (userService.ClientUserService.GetActiveBoard().IDMembers.Contains(numberClient) == true && numberClient != userService.Id)
-                {
-                    userService.ClientUserService.GetActiveBoard().IDMembers.Remove(numberClient);
-                    userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник удален");
-                    DataStorage.GetInstance().Clients[numberClient].BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
-                    userService.SetHandler(new ShowMembersHandler());
-                    userService.HandleUpdate(update);
-                }
-                else if (numberClient == userService.Id)
-                {
-                    userService.TgClient.SendTextMessageAsync(userService.Id, $"Хотите выйти из доски?", replyMarkup: YesOrNo());
+                    if (userService.ClientUserService.GetActiveBoard().IDAdmin.Contains(numberClient) == true && numberClient != userService.Id)
+                    {
+                        userService.ClientUserService.GetActiveBoard().IDAdmin.Remove(numberClient);
+                        userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник удален");
+                        DataStorage.GetInstance().Clients[numberClient].BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
+                        userService.SetHandler(new ShowMembersHandler());
+                        userService.HandleUpdate(update);
+                    }
+                    else if (userService.ClientUserService.GetActiveBoard().IDMembers.Contains(numberClient) == true && numberClient != userService.Id)
+                    {
+                        userService.ClientUserService.GetActiveBoard().IDMembers.Remove(numberClient);
+                        userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник удален");
+                        DataStorage.GetInstance().Clients[numberClient].BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
+                        userService.SetHandler(new ShowMembersHandler());
+                        userService.HandleUpdate(update);
+                    }
+                    else if (numberClient == userService.Id)
+                    {
+                        userService.TgClient.SendTextMessageAsync(userService.Id, $"Хотите выйти из доски?", replyMarkup: YesOrNo());
+                    }
+                    else
+                    {
+                        userService.TgClient.SendTextMessageAsync(userService.Id, $"В этой доске такого пользователя не существует!");
+                        userService.SetHandler(new ShowMembersHandler());
+                        userService.HandleUpdate(update);
+                    }
+
+                    DataStorage.GetInstance().RewriteFileForClients();
+                    DataStorage.GetInstance().RewriteFileForBoards();
                 }
                 else
                 {
-                    userService.TgClient.SendTextMessageAsync(userService.Id, $"В этой доске такого пользователя не существует!");
+                    userService.TgClient.SendTextMessageAsync(userService.Id, "Пользователя с таким Id в хранилище не существует!");
                     userService.SetHandler(new ShowMembersHandler());
                     userService.HandleUpdate(update);
                 }
-
-                DataStorage.GetInstance().RewriteFileForClients();
-                DataStorage.GetInstance().RewriteFileForBoards();
-               
             }
             else
             {
-                userService.TgClient.SendTextMessageAsync(userService.Id, "Пользователя с таким Id в хранилище не существует!");
+                userService.TgClient.SendTextMessageAsync(userService.Id, $"значение id участника - число");
                 userService.SetHandler(new ShowMembersHandler());
                 userService.HandleUpdate(update);
             }
