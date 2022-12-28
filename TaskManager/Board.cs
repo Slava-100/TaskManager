@@ -1,4 +1,5 @@
 ﻿using TaskManager.Enums;
+using Telegram.Bot.Types;
 
 namespace TaskManager
 {
@@ -18,7 +19,7 @@ namespace TaskManager
 
         public long Key { get; set; }
 
-        public Board(int numberBoard, long idAdmin,string nameBoard)
+        public Board(int numberBoard, long idAdmin, string nameBoard)
         {
             IDMembers = new List<long>();
             IDAdmin = new List<long>();
@@ -167,7 +168,7 @@ namespace TaskManager
             }
         }
 
-        public List<Issue> GetAllIssuesInBoard(long idUser)
+        public List<Issue> GetAllIssuesForClientInBoard(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
 
@@ -182,7 +183,22 @@ namespace TaskManager
             return allIssues;
         }
 
-        public List<Issue> GetIssuesDoneInBoard(long idUser)
+        public List<Issue> GetIssuesInProfressForClientInBoard(long idUser)
+        {
+            List<Issue> allIssues = new List<Issue>();
+
+            if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
+            {
+                foreach (Issue issue in Issues)
+                {
+                    if (issue.IdUser == idUser && issue.Status == IssueStatus.InProgress) 
+                        allIssues.Add(issue);
+                }
+            }
+            return allIssues;
+        }
+
+        public List<Issue> GetIssuesDoneForClientInBoard(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
             if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
@@ -197,7 +213,7 @@ namespace TaskManager
             return new List<Issue>();
         }
 
-        public List<Issue> GetIssuesReviewAndDoneInBoard(long idUser)
+        public List<Issue> GetIssuesReviewAndDoneForClientInBoard(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
             if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
@@ -212,7 +228,7 @@ namespace TaskManager
             return new List<Issue>();
         }
 
-        public List<Issue> GetIssuesReviewInBoard(long idUser)
+        public List<Issue> GetIssuesReviewForClientInBoard(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
             if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
@@ -227,7 +243,7 @@ namespace TaskManager
             return new List<Issue>();
         }
 
-        public List<Issue> GetIssuesFreeInBoard(long idUser)
+        public List<Issue> GetIssuesFreeForClientInBoard(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
             if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
@@ -240,6 +256,25 @@ namespace TaskManager
                 return allIssues;
             }
             return new List<Issue>();
+        }
+
+        public List<Issue> GetAllIssuesInBoard()
+        {
+            return Issues;
+        }
+
+        public List<Issue> GetAllIssuesReviewForAllClientsInBoard()
+        {
+            List<Issue> allIssues = new List<Issue>();
+
+            foreach (Issue issue in Issues)
+            {
+                if (issue.Status == Enums.IssueStatus.Review)
+                {
+                    allIssues.Add(issue);
+                }
+            }
+            return allIssues;
         }
 
         public void ChangeRoleFromMemberToAdmin(long idMemeber)

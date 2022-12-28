@@ -38,28 +38,34 @@ namespace TaskManager
 
         public List<Issue> GetAllIssuesInBoardByIdUser(long idUser, Board board)
         {
-            return board.GetAllIssuesInBoard(idUser).OrderBy(issue => issue.Status).ToList();
+            return board.GetAllIssuesForClientInBoard(idUser).OrderBy(issue => issue.Status).ToList();
         }
+
+        public List<Issue> GetIssuesInProfressForClientInBoard(long idUser, Board board)
+        {
+            return board.GetIssuesInProfressForClientInBoard(idUser);
+        }
+              
 
         public List<Issue> GetIssuesDoneInBoardByIdUser(long idUser, Board board)
         {
-            return board.GetIssuesDoneInBoard(idUser);
+            return board.GetIssuesDoneForClientInBoard(idUser);
         }
 
         public List<Issue> GetIssuesReviewAndDoneInBoard(long idUser, Board board)
         {
-            return board.GetIssuesReviewAndDoneInBoard(idUser);
+            return board.GetIssuesReviewAndDoneForClientInBoard(idUser);
         }
         
 
         public List<Issue> GetIssuesReviewInBoard(long idUser, Board board)
         {
-            return board.GetIssuesReviewInBoard(idUser);
+            return board.GetIssuesReviewForClientInBoard(idUser);
         }
 
         public List<Issue> GetIssuesFreeInBoardByIdUser(long idUser, Board board)
         {
-            return board.GetIssuesFreeInBoard(idUser);
+            return board.GetIssuesFreeForClientInBoard(idUser);
         }
     }
 }

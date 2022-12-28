@@ -57,7 +57,7 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetAllIssuesInBoardTestCaseSource))]
         public void GetAllIssuesInBoardTest(Board baseBoard, long idUser, List<Issue> expectedIssues)
         {
-            List<Issue> actualIssues = baseBoard.GetAllIssuesInBoard(idUser);
+            List<Issue> actualIssues = baseBoard.GetAllIssuesForClientInBoard(idUser);
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
@@ -65,7 +65,7 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetIssuesDoneInBoardTestCaseSource))]
         public void GetIssuesDoneInBoardTest(Board baseBoard, long idUser, List<Issue> expectedIssues)
         {
-            List<Issue> actualIssues = baseBoard.GetIssuesDoneInBoard(idUser);
+            List<Issue> actualIssues = baseBoard.GetIssuesDoneForClientInBoard(idUser);
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }

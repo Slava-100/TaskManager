@@ -22,7 +22,7 @@ namespace TaskManager.Handler
         }
         public async void HandleUpdateHandler(Update update, UserService userService)
         {
-            List<Issue> issues = userService.ClientUserService.GetAllIssuesInBoardByBoard();
+            List<Issue> issues = userService.ClientUserService.GetAllIssuesInBoardForClientByBoard();
 
             switch (update.Type)
             {
@@ -37,8 +37,8 @@ namespace TaskManager.Handler
                             userService.ClientUserService.MoveIssueFromInProgressToReview(_numberIssue);
                             await userService.TgClient.SendTextMessageAsync(userService.Id, $"Теперь с задача с номером: {issues.FirstOrDefault(i => i.NumberIssue == _numberIssue).NumberIssue} находится в статусе Review в списке выполненных вами задач.");
                             break;
-                        case "BackToShowIssue":
-                            userService.SetHandler(new ShowIssueHandler());
+                        case "BackToAllTaskHandler":
+                            userService.SetHandler(new ShowAllTasksHandler());
                             userService.HandleUpdate(update);
                             break;
                         default:

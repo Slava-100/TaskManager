@@ -1,4 +1,5 @@
-﻿using TaskManager.Enums;
+﻿using TaskManager;
+using TaskManager.Enums;
 
 namespace TaskManager
 {
@@ -45,5 +46,16 @@ namespace TaskManager
             issue.Status = IssueStatus.Done;
             _dataStorage.RewriteFileForBoards();
         }
+
+        public List<Issue> GetAllIssuesInBoard( Board board)
+        {
+            return board.GetAllIssuesInBoard();
+        }
+
+        public List<Issue> GetAllIssuesReviewForAllClientsInBoard(Board board)
+        {
+            return board.GetAllIssuesReviewForAllClientsInBoard();
+        }
     }
 }
+

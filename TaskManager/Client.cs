@@ -148,7 +148,7 @@ namespace TaskManager
         public bool MoveIssueFromReviewToDone(int idIssue)
         {
             var issue = _activeBoard.Issues.FirstOrDefault(currentIssue => idIssue == currentIssue.NumberIssue);
-            if (_userRole is AdminUser)
+            if (issue != null && _userRole is AdminUser)
             {
                 ((AdminUser)_userRole).MoveIssueFromReviewToDone(_activeBoard, issue);
                 return true;
@@ -162,31 +162,56 @@ namespace TaskManager
             return DataStorage.GetInstance().GetAllBoardsByNumbersOfBoard(BoardsForUser);
         }
 
-        public List<Issue> GetAllIssuesInBoardByBoard()
+        public List<Issue> GetAllIssuesInBoardForClientByBoard()
         {
             return _userRole.GetAllIssuesInBoardByIdUser(IDUser, _activeBoard);
         }
 
-        public List<Issue> GetIssuesDoneInBoardByBoard()
+        public List<Issue> GetIssuesInProgressForClientInBoard()
+        {
+            return _userRole.GetIssuesInProfressForClientInBoard(IDUser, _activeBoard);
+        }
+               
+
+        public List<Issue> GetIssuesDoneInBoardForClientByBoard()
         {
             return _userRole.GetIssuesDoneInBoardByIdUser(IDUser, _activeBoard);
         }
 
-        public List<Issue> GetIssuesReviewAndDoneInBoard()
+        public List<Issue> GetIssuesReviewAndDoneForClientInBoard()
         {
             return _userRole.GetIssuesReviewAndDoneInBoard(IDUser, _activeBoard);
         }
 
 
-        public List<Issue> GetIssuesReviewInBoard()
+        public List<Issue> GetIssuesReviewForClientInBoard()
         {
             return _userRole.GetIssuesReviewInBoard(IDUser, _activeBoard);
         }
 
-        public List<Issue> GetIssuesFreeInBoardByBoard()
+        public List<Issue> GetIssuesFreeInBoardForClientByBoard()
         {
             return _userRole.GetIssuesFreeInBoardByIdUser(IDUser, _activeBoard);
         }
+
+        public List<Issue> GetAllIssuesInBoard()
+        {
+            if (_userRole is AdminUser)
+            {
+                return ((AdminUser)_userRole).GetAllIssuesInBoard(_activeBoard);
+            }
+            return new List < Issue >();
+        }
+
+        public List<Issue> GetAllIssuesReviewForAllClientsInBoard()
+        {
+            if (_userRole is AdminUser)
+            {
+                return ((AdminUser)_userRole).GetAllIssuesReviewForAllClientsInBoard(_activeBoard);
+            }
+            return new List<Issue>();
+        }
+        
 
         public List<Board> GetAllBoardsAdmins()
         {

@@ -14,7 +14,7 @@ namespace TaskManager.Handler
     {
         public async void HandleUpdateHandler(Update update, UserService userService)
         {
-            List<Issue> issues = userService.ClientUserService.GetAllIssuesInBoardByBoard();
+            List<Issue> issues = userService.ClientUserService.GetAllIssuesInBoardForClientByBoard();
 
             switch (update.Type)
             {
