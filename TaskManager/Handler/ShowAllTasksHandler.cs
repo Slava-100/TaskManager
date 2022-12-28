@@ -33,11 +33,11 @@ namespace TaskManager.Handler
                             break;
 
 
-                        case "ShowDoneMyIssues":
-                            ShowsDoneIssuesForMember(userService);
+                        case "ShowDoneAndReviewMyIssues":
+                            ShowsDoneAndReviewIssuesForMember(userService);
 
-                            userService.SetHandler(new ShowsDoneIssuesHandler());
-                            userService.HandleUpdate(update);
+                            //userService.SetHandler(new ShowsDoneIssuesHandler());
+                            //userService.HandleUpdate(update);
                             break;
 
                         case "ShowFreeIssues":
@@ -76,8 +76,8 @@ namespace TaskManager.Handler
                         new[]
                         {
                             new InlineKeyboardButton("Задачи доски") {CallbackData = "ShowTasks"},
-                            new InlineKeyboardButton("Мои задачи") {CallbackData="ShowAllMyIssues"},
-                            new InlineKeyboardButton("Мои выполненные задачи") {CallbackData="ShowDoneMyIssues"},
+                            new InlineKeyboardButton("Моя задача") {CallbackData="ShowAllMyIssues"},
+                            new InlineKeyboardButton("Мои выполненные задачи") {CallbackData="ShowDoneAndReviewMyIssues"},
                             new InlineKeyboardButton("Свободные задачи") {CallbackData="ShowFreeIssues"}
                         },
                         new[]
@@ -114,16 +114,16 @@ namespace TaskManager.Handler
             }
         }
 
-        private async void ShowsDoneIssuesForMember(UserService userService)
+        private async void ShowsDoneAndReviewIssuesForMember(UserService userService)
         {
             await userService.TgClient.SendTextMessageAsync
                 (userService.Id, $"Перед вами список всех выполненных вами задач текущей доски: \n" +
-                $" {GetIssuesDoneInBoard(userService)}", replyMarkup: GetBackButton());
+                $" {GetIssuesReviewAndDoneInBoard(userService)}", replyMarkup: GetBackButton());
         }
 
-        private string GetIssuesDoneInBoard(UserService userService)
+        private string GetIssuesReviewAndDoneInBoard(UserService userService)
         {
-            List<Issue> issues = userService.ClientUserService.GetIssuesDoneInBoardByBoard();
+            List<Issue> issues = userService.ClientUserService.GetIssuesReviewAndDoneInBoard();
             if (issues.Count > 0)
             {
                 string result = $"{issues[0]}";

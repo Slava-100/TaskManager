@@ -197,6 +197,36 @@ namespace TaskManager
             return new List<Issue>();
         }
 
+        public List<Issue> GetIssuesReviewAndDoneInBoard(long idUser)
+        {
+            List<Issue> allIssues = new List<Issue>();
+            if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
+            {
+                foreach (Issue issue in Issues)
+                {
+                    if ((issue.IdUser == idUser) && ((issue.Status == Enums.IssueStatus.Done) || (issue.Status == Enums.IssueStatus.Review)))
+                        allIssues.Add(issue);
+                }
+                return allIssues;
+            }
+            return new List<Issue>();
+        }
+
+        public List<Issue> GetIssuesReviewInBoard(long idUser)
+        {
+            List<Issue> allIssues = new List<Issue>();
+            if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
+            {
+                foreach (Issue issue in Issues)
+                {
+                    if ((issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.Review))
+                        allIssues.Add(issue);
+                }
+                return allIssues;
+            }
+            return new List<Issue>();
+        }
+
         public List<Issue> GetIssuesFreeInBoard(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();

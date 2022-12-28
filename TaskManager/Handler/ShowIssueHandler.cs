@@ -12,7 +12,7 @@ namespace TaskManager.Handler
 {
     public class ShowIssueHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public async void HandleUpdateHandler(Update update, UserService userService)
         {
             List<Issue> issues = userService.ClientUserService.GetAllIssuesInBoardByBoard();
 
@@ -25,6 +25,9 @@ namespace TaskManager.Handler
                             userService.SetHandler(new ShowAllTasksHandler());
                             userService.HandleUpdate(update);
                             break;
+                        default:
+                            await userService.TgClient.SendTextMessageAsync(userService.Id, "Для изменения статуса задачи вам необходимо ввести номер задачи.");
+                            break;
                     }
                     break;
                 case UpdateType.Message:
@@ -32,21 +35,21 @@ namespace TaskManager.Handler
                                             && int.TryParse(update.Message.Text, out var numberIssue)
                                             && issues.Any(crntIssue => crntIssue.NumberIssue == numberIssue))
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, $"{issues[numberIssue]}", replyMarkup: GetBackButton());
+                        userService.SetHandler(new ChangeStatusOfIssueHandler(numberIssue));
+                        userService.HandleUpdate(update);
+                        break;
                     }
                     else if (!int.TryParse(update.Message.Text, out numberIssue))
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вам необходимо ввести числовое значение задния", replyMarkup: GetBackButton());
+                        await userService.TgClient.SendTextMessageAsync(userService.Id, "Вам необходимо ввести числовое значение задния", replyMarkup: GetBackButton());
                     }
                     else if (!issues.Any(crntIssue => crntIssue.NumberIssue == numberIssue))
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вы ввели номер задания, которое отсутствует в текущей доске.", replyMarkup: GetBackButton());
-                        //ShowsAllBoards(userService);
-                        //AsksToEnterBoardNumber(userService);
+                        await userService.TgClient.SendTextMessageAsync(userService.Id, "Вы ввели номер задания, которое отсутствует в текущей доске.", replyMarkup: GetBackButton());
                     }
                     else if (update.Message.Text == null)
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вы не ввели номер задания , попробуйте ещё раз", replyMarkup: GetBackButton());
+                        await userService.TgClient.SendTextMessageAsync(userService.Id, "Вы не ввели номер задания , попробуйте ещё раз", replyMarkup: GetBackButton());
                     }
                     break;
             }
@@ -60,54 +63,4 @@ namespace TaskManager.Handler
 }
 
 
-//        switch (update.Type)
-//        {
-//            case UpdateType.CallbackQuery:
-//                switch (update.CallbackQuery.Data)
-//                {
-//                    case "DeleteIssue":
-//                        userService.SetHandler(new DeleteIssueHandler());
-//                        userService.HandleUpdate(update);
-//                        break;
-//                    case "Back":
-//                        userService.SetHandler(new SelectTaskHandler());
-//                        userService.HandleUpdate(update);
-//                        break;
-//                    default:
-//                        //SubmitsQuestion(userService);
-//                        break;
-//                }
-//                break;
-//            default:
-//                //SubmitsQuestion(userService);
-//                break;
-//        }
-//    }
-
-//    private InlineKeyboardMarkup ButtonList(UserService userService)
-//    {
-//        InlineKeyboardMarkup keyboard;
-//        if (userService.ClientUserService.GetRole() == "Участник")
-//        {
-//            keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back" };
-//        }
-//        else
-//        {
-//            keyboard = new InlineKeyboardMarkup(
-//                new[]
-//                    {
-//                    new[]
-//                    {
-//                        new InlineKeyboardButton("Удалить задачу") {CallbackData = "DeleteIssue"},
-//                    },
-//                    new[]
-//                    {
-//                        new InlineKeyboardButton("Назад") {CallbackData = "Back"},
-//                    }
-//                });
-//        }
-
-//        return keyboard;
-//    }
-//}
 
