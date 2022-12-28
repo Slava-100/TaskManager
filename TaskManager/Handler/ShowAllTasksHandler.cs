@@ -25,7 +25,7 @@ namespace TaskManager.Handler
                             break;
 
                         case "ShowAllMyIssues":
-                            ShowsAllIssuesInBoard(userService);
+                            //ShowsAllIssuesInBoard(userService);
                             userService.SetHandler(new ShowIssueHandler());
                             userService.HandleUpdate(update);
                             break;

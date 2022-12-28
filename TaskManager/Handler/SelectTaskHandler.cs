@@ -44,21 +44,29 @@ namespace TaskManager.Handler
                     {
                         MoveIssueFromReviewToDone(userService);
                         userService.TgClient.SendTextMessageAsync(userService.Id, $"Вы перенесли задачу с номером {_numberIssue} в статус Done", replyMarkup: GetBackButton());
+                        userService.SetHandler(new ShowTasksHandler());
+                        userService.HandleUpdate(update);
+
                     }
                     else if (!int.TryParse(update.Message.Text, out _numberIssue))
                     {
                         userService.TgClient.SendTextMessageAsync(userService.Id, "Вам необходимо ввести числовое значение номера задачи", replyMarkup: GetBackButton());
+                        userService.SetHandler(new ShowTasksHandler());
+                        userService.HandleUpdate(update);
                     }
                     else if (!issuesReview.Any(crntIssue => crntIssue.NumberIssue == _numberIssue))
                     {
                         userService.TgClient.SendTextMessageAsync(userService.Id, "Вы ввели номер задачи, которой нет в списке со статусом Review", replyMarkup: GetBackButton());
+                        userService.SetHandler(new ShowTasksHandler());
+                        userService.HandleUpdate(update);
                     }
                     else if (update.Message.Text == null)
                     {
                         userService.TgClient.SendTextMessageAsync(userService.Id, "Вы не ввели номер задачи, попробуйте ещё раз", replyMarkup: GetBackButton());
+                        userService.SetHandler(new ShowTasksHandler());
+                        userService.HandleUpdate(update);
                     }
                     break;
-
             }
         }
 

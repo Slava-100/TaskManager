@@ -32,13 +32,17 @@ namespace TaskManager.Handler
                         case "MoveToBacklog":
                             userService.ClientUserService.MoveIssueFromInProgressToBacklog(_numberIssue);
                             await userService.TgClient.SendTextMessageAsync(userService.Id, $"Теперь с задача с номером: {issues.FirstOrDefault(i => i.NumberIssue == _numberIssue).NumberIssue} находится в статусе Backlog в общем списке задач доски.");
+                            userService.SetHandler(new ShowIssueHandler());
+                            userService.HandleUpdate(update);
                             break;
                         case "MoveToReview":
                             userService.ClientUserService.MoveIssueFromInProgressToReview(_numberIssue);
                             await userService.TgClient.SendTextMessageAsync(userService.Id, $"Теперь с задача с номером: {issues.FirstOrDefault(i => i.NumberIssue == _numberIssue).NumberIssue} находится в статусе Review в списке выполненных вами задач.");
+                            userService.SetHandler(new ShowIssueHandler());
+                            userService.HandleUpdate(update);
                             break;
-                        case "BackToAllTaskHandler":
-                            userService.SetHandler(new ShowAllTasksHandler());
+                        case "BackToShowIssueHandler":
+                            userService.SetHandler(new ShowIssueHandler());
                             userService.HandleUpdate(update);
                             break;
                         default:
@@ -65,7 +69,7 @@ namespace TaskManager.Handler
                         },
                         new[]
                         {
-                            new InlineKeyboardButton("Назад") {CallbackData = "BackToShowIssue"}
+                            new InlineKeyboardButton("Назад") {CallbackData = "BackToShowIssueHandler"}
                         }
     });
 
