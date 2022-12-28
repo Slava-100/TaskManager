@@ -11,7 +11,7 @@ namespace TaskManager.Tests
         [SetUp]
         public void SetUp()
         {
-            _board = new Board(1, 0);
+            _board = new Board(1, 0, "boardName");
         }
 
         [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetNextNumberIssueTestSource))]
@@ -24,7 +24,7 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.AddBlokingAndBlockedByIssueTestSource))]
         public void AddBlokingAndBlockedByIssueTest(Issue blockedByCurrentIssue, Issue blockingCurrentIssue, List<int> expectedBlockedByCurrentIssue, List<int> expectedBlockingIssues)
         {
-            Board board = new Board(1, 1);
+            Board board = new Board(1, 1, "name");
             board.Issues.Add(blockedByCurrentIssue);
             board.Issues.Add(blockingCurrentIssue);
             board.AddBlokingAndBlockedByIssue(blockedByCurrentIssue.NumberIssue, blockingCurrentIssue.NumberIssue);

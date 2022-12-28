@@ -70,10 +70,11 @@ namespace TaskManager.Tests
             long idMember = 12;
             int keyBoard = 1;
             string nameMember = "";
+            string nameBoard = "nameBoard";
 
             Dictionary<int, Board> storageBoards = new Dictionary<int, Board>()
             {
-                { numberBoard, new Board(numberBoard,idMember) }
+                { numberBoard, new Board(numberBoard,idMember,nameBoard) }
             };
 
             storageBoards[numberBoard].Key = 2;
@@ -103,18 +104,22 @@ namespace TaskManager.Tests
         }
 
         [TestCaseSource(typeof(DataStorageTestCaseSource), nameof(DataStorageTestCaseSource.AddBoardTestSource))]
-        public void AddBoardTest(Dictionary<int, Board> baseBoards, long idAdmin, Dictionary<int, Board> expectedBoards, int expectedNumberBoard)
+        public void AddBoardTest(Dictionary<int, Board> baseBoards, Dictionary<long, Client> baseClients, long idAdmin, Board expectedBoard, int expectedNumberBoard, string nameBoard)
         {
             //Given
             _dataStorage.Boards = baseBoards;
+            _dataStorage.Clients = baseClients;
+
 
             //When
-            int actualNumberBoard = _dataStorage.AddBoard(idAdmin);
+            int actualNumberBoard = _dataStorage.AddBoard(idAdmin, nameBoard);
             Dictionary<int, Board> actualBoards = _dataStorage.Boards;
 
             //Then
             Assert.That(actualNumberBoard, Is.EqualTo(expectedNumberBoard));
-            actualBoards.Should().BeEquivalentTo(expectedBoards);
+            Assert.That(_dataStorage.Boards[expectedNumberBoard].IDAdmin.Contains(idAdmin)
+                && _dataStorage.Boards[expectedNumberBoard].NameBoard == expectedBoard.NameBoard
+                && _dataStorage.Boards[expectedNumberBoard].NumberBoard == expectedBoard.NumberBoard);
         }
 
         [TestCaseSource(typeof(DataStorageTestCaseSource), nameof(DataStorageTestCaseSource.GetAllBoardsByNumbersOfBoardTestCaseSource))]
