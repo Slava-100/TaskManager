@@ -71,7 +71,8 @@ namespace TaskManager.Handler
                 userService.ClientUserService.GetActiveBoard().IDMembers.Remove(userService.Id);
             }
 
-            DataStorage.GetInstance().Clients[userService.Id].BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
+            userService.ClientUserService.BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
+            userService.ClientUserService._activeBoard = null;
 
             DataStorage.GetInstance().RewriteFileForBoards();
             DataStorage.GetInstance().RewriteFileForClients();
