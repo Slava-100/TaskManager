@@ -45,7 +45,7 @@ namespace TaskManager.Handler
                     }
                     break;
                 case UpdateType.CallbackQuery:
-                    if (update.CallbackQuery.Data == "Back")
+                    if (update.CallbackQuery.Data == "BackToJoinTheBoard")
                     {
                         userService.SetHandler(new JoinTheBoardHandler());
                         userService.HandleUpdate(update);
@@ -59,7 +59,7 @@ namespace TaskManager.Handler
 
         private InlineKeyboardMarkup GetBackButton()
         {
-            return new InlineKeyboardButton("Назад") { CallbackData = "Back" };
+            return new InlineKeyboardButton("Назад") { CallbackData = "BackToJoinTheBoard" };
         }
     }
 }

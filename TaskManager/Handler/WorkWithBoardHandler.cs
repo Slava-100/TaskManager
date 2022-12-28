@@ -21,7 +21,7 @@ namespace TaskManager.Handler
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
-                        case "Back0":
+                        case "BackToMainMenu":
                             userService.SetHandler(new MainMenuHandler());
                             userService.HandleUpdate(update);
                             break;
@@ -38,23 +38,30 @@ namespace TaskManager.Handler
                     else
                     {
                         string text = update.Message.Text;
-                        int number = Convert.ToInt32(text);
-                        if (dataStorage.Boards.ContainsKey(number)) 
+                        int number;
+                        if (int.TryParse(text, out number)) 
                         {
-                            if (userService.ClientUserService.BoardsForUser.Contains(number))
+                            if (dataStorage.Boards.ContainsKey(number))
                             {
-                                userService.ClientUserService.SetActiveBoard(number);
-                                userService.SetHandler(new BoardHandler());
-                                userService.HandleUpdate(update);
+                                if (userService.ClientUserService.BoardsForUser.Contains(number))
+                                {
+                                    userService.ClientUserService.SetActiveBoard(number);
+                                    userService.SetHandler(new BoardHandler());
+                                    userService.HandleUpdate(update);
+                                }
+                                else
+                                {
+                                    userService.TgClient.SendTextMessageAsync(userService.Id, "Ты не являешься участником данной доски!", replyMarkup: DefaultButton());
+                                }
                             }
                             else
                             {
-                                userService.TgClient.SendTextMessageAsync(userService.Id, "Ты не являешься участником данной доски!", replyMarkup: DefaultButton());
+                                userService.TgClient.SendTextMessageAsync(userService.Id, "Такой доски не существует!", replyMarkup: DefaultButton());
                             }
                         }
                         else
                         {
-                            userService.TgClient.SendTextMessageAsync(userService.Id, "Такой доски не существует!", replyMarkup: DefaultButton());
+                            userService.TgClient.SendTextMessageAsync(userService.Id, "Введи числовое значение номера доски!");
                         }
                     }
                     break;
@@ -140,7 +147,7 @@ namespace TaskManager.Handler
 
         private InlineKeyboardMarkup ButtonBack()
         {
-            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back0" };
+            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "BackToMainMenu" };
             return keyboard;
         }
     }

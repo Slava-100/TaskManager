@@ -21,7 +21,7 @@ namespace TaskManager.Handler
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
-                        case "Back6":
+                        case "BackToShowMembers":
                             userService.SetHandler(new ShowMembersHandler());
                             userService.HandleUpdate(update);
                             break;
@@ -53,7 +53,7 @@ namespace TaskManager.Handler
                         new[]
                         {
                             new InlineKeyboardButton("Да") {CallbackData = "Yes"},
-                            new InlineKeyboardButton("Нет") {CallbackData = "Back7"},
+                            new InlineKeyboardButton("Нет") {CallbackData = "BackToShowMembers"},
                         },
                 });
 
@@ -71,7 +71,8 @@ namespace TaskManager.Handler
                 userService.ClientUserService.GetActiveBoard().IDMembers.Remove(userService.Id);
             }
 
-            DataStorage.GetInstance().Clients[userService.Id].BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
+            userService.ClientUserService.BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
+            userService.ClientUserService._activeBoard = null;
 
             DataStorage.GetInstance().RewriteFileForBoards();
             DataStorage.GetInstance().RewriteFileForClients();

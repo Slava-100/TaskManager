@@ -21,7 +21,7 @@ namespace TaskManager.Handler
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
-                        case "Back2":
+                        case "BackToBoard":
                             userService.SetHandler(new BoardHandler());
                             userService.HandleUpdate(update);
                             break;
@@ -33,9 +33,6 @@ namespace TaskManager.Handler
                             SubmitsQuestion(userService);
                             break;
                     }
-                    break;
-                case UpdateType.Message:
-
                     break;
                 default:
                     SubmitsQuestion(userService);
@@ -50,7 +47,7 @@ namespace TaskManager.Handler
 
         private void DeleteBoard(UserService userService)
         {
-            DataStorage dataStorage = DataStorage.GetInstance();
+            DataStorage dataStorage = DataStorage.GetInstance();     
             dataStorage.DeleteActiveBoard(userService.ClientUserService.GetActiveBoard(), userService.Id);
         }
 
@@ -62,11 +59,11 @@ namespace TaskManager.Handler
                     new[]
                     {
                         new InlineKeyboardButton("Да") {CallbackData = "Yes"},
-                        new InlineKeyboardButton("нет") {CallbackData="Back2"},
+                        new InlineKeyboardButton("нет") {CallbackData="BackToBoard"},
                     },
                     new[]
                     {
-                        new InlineKeyboardButton("Назад") {CallbackData = "Back2"},
+                        new InlineKeyboardButton("Назад") {CallbackData = "BackToBoard"},
                     }
                 });
 

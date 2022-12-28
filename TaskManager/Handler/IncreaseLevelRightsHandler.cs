@@ -20,7 +20,7 @@ namespace TaskManager.Handler
                 case UpdateType.CallbackQuery:
                     switch (update.CallbackQuery.Data)
                     {
-                        case "Back8":
+                        case "BackToShowMembers":
                             userService.SetHandler(new ShowMembersHandler());
                             userService.HandleUpdate(update);
                             break;
@@ -45,42 +45,50 @@ namespace TaskManager.Handler
 
         private InlineKeyboardMarkup ButtonBack()
         {
-            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "Back8" };
+            InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "BackToShowMembers" };
             return keyboard;
         }
 
         private void IncreaseLevelRights(Update update, UserService userService) 
         {
-            string textMessage = update.Message.Text;
-            long numberClient = Convert.ToInt64(textMessage);
+            string text = update.Message.Text;
+            long numberClient;
 
-            if (DataStorage.GetInstance().Clients.ContainsKey(numberClient))
+            if (long.TryParse(text, out numberClient))
             {
-                if (userService.ClientUserService.GetActiveBoard().IDAdmin.Contains(numberClient) == true && numberClient != userService.Id)
+                if (DataStorage.GetInstance().Clients.ContainsKey(numberClient))
                 {
-                    userService.TgClient.SendTextMessageAsync(userService.Id, $"Он и так уже администратор! (выше прав нет)");
-                }
-                else if(userService.ClientUserService.GetActiveBoard().IDMembers.Contains(numberClient) == true)
-                {
-                    userService.ClientUserService.GetActiveBoard().IDAdmin.Add(numberClient);
-                    userService.ClientUserService.GetActiveBoard().IDMembers.Remove(numberClient);
+                    if (userService.ClientUserService.GetActiveBoard().IDAdmin.Contains(numberClient) == true && numberClient != userService.Id)
+                    {
+                        userService.TgClient.SendTextMessageAsync(userService.Id, $"Он и так уже администратор! (выше прав нет)");
+                    }
+                    else if (userService.ClientUserService.GetActiveBoard().IDMembers.Contains(numberClient) == true)
+                    {
+                        userService.ClientUserService.GetActiveBoard().IDAdmin.Add(numberClient);
+                        userService.ClientUserService.GetActiveBoard().IDMembers.Remove(numberClient);
 
-                    userService.TgClient.SendTextMessageAsync(userService.Id, $"Права участника (имя: {DataStorage.GetInstance().Clients[numberClient].NameUser}) повышены!");
-                }else if (numberClient == userService.Id)
-                {
-                    userService.TgClient.SendTextMessageAsync(userService.Id, $"Вы не можете повысить себе права! (Вы и так админ)");
+                        userService.TgClient.SendTextMessageAsync(userService.Id, $"Права участника (имя: {DataStorage.GetInstance().Clients[numberClient].NameUser}) повышены!");
+                    }
+                    else if (numberClient == userService.Id)
+                    {
+                        userService.TgClient.SendTextMessageAsync(userService.Id, $"Вы не можете повысить себе права! (Вы и так админ)");
+                    }
+                    else
+                    {
+                        userService.TgClient.SendTextMessageAsync(userService.Id, $"В этой доске такого пользователя не существует!");
+                    }
+
+                    DataStorage.GetInstance().RewriteFileForClients();
+                    DataStorage.GetInstance().RewriteFileForBoards();
                 }
                 else
                 {
-                    userService.TgClient.SendTextMessageAsync(userService.Id, $"В этой доске такого пользователя не существует!");
+                    userService.TgClient.SendTextMessageAsync(userService.Id, $"Пользователя с таким Id в хранилище не существует!");
                 }
-
-                DataStorage.GetInstance().RewriteFileForClients();
-                DataStorage.GetInstance().RewriteFileForBoards();
             }
             else
             {
-                userService.TgClient.SendTextMessageAsync(userService.Id, $"Пользователя с таким Id в хранилище не существует!");
+                userService.TgClient.SendTextMessageAsync(userService.Id, $"значение id участника - число");
             }
 
             userService.SetHandler(new ShowMembersHandler());

@@ -31,7 +31,7 @@ namespace TaskManager.Handler
                             userService.SetHandler(new DeleteIssueHandler(new ShowTasksHandler()));
                             userService.HandleUpdate(update);
                             break;
-                        case "Back3":
+                        case "BackToShowAllTasks":
                             userService.SetHandler(new ShowAllTasksHandler());
                             userService.HandleUpdate(update);
                             break;
@@ -78,7 +78,7 @@ namespace TaskManager.Handler
                         },
                         new[]
                         {
-                            new InlineKeyboardButton("Назад") {CallbackData = "Back3"},
+                            new InlineKeyboardButton("Назад") {CallbackData = "BackToShowAllTasks"},
                         }
                     });
             }
@@ -89,7 +89,7 @@ namespace TaskManager.Handler
                     {
                         new[]
                         {
-                            new InlineKeyboardButton("Назад") {CallbackData = "Back3"},
+                            new InlineKeyboardButton("Назад") {CallbackData = "BackToShowAllTasks"},
                         }
                     });
             }
@@ -113,7 +113,7 @@ namespace TaskManager.Handler
                         },
                         new[]
                         {
-                            new InlineKeyboardButton("Назад") {CallbackData = "Back3"},
+                            new InlineKeyboardButton("Назад") {CallbackData = "BackToShowAllTasks"},
                         }
                     });
             }
@@ -122,8 +122,15 @@ namespace TaskManager.Handler
                 keyboard = new InlineKeyboardMarkup(
                                             new[]
                         {
-                            new InlineKeyboardButton("Назад") {CallbackData = "Back3"},
-                        });                    
+                        new[]
+                        {
+                            new InlineKeyboardButton("ВЫбрать задачу") {CallbackData="SelectTask"}
+                        },
+                        new[]
+                        {
+                            new InlineKeyboardButton("Назад") {CallbackData = "BackToShowAllTasks"},
+                        }
+                    });
             }
 
             return keyboard;
