@@ -1,6 +1,4 @@
-﻿using TaskManager.Handl;
-using TaskManager.Handler;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -9,54 +7,77 @@ namespace TaskManager.Handler
 {
     public class DeleteIssueHandler : IHandler
     {
+        private IHandler _handler;
+
+        public DeleteIssueHandler(IHandler handler)
+        {
+            _handler = handler;
+        }
+
         public async void HandleUpdateHandler(Update update, UserService userService)
         {
-            List<Issue> issues = userService.ClientUserService.GetAllIssuesInBoardForClientByBoard();
-
+            List<Issue> issues = userService.ClientUserService._activeBoard.Issues;
             switch (update.Type)
             {
                 case UpdateType.CallbackQuery:
-                    if (userService.ClientUserService.GetRole() == "Админ")
+                    switch (update.CallbackQuery.Data)
                     {
-                        await userService.TgClient.SendTextMessageAsync(userService.Id, "Введите номер задачи, которую хотите удалить.");
+                        case "BackToIssues":
+                            userService.SetHandler(_handler);
+                            userService.HandleUpdate(update);
+                            break;
+                        default:
+                            AskIssueNumber(userService);
+                            break;
                     }
                     break;
                 case UpdateType.Message:
                     if (update.Message.Text != null
                         && int.TryParse(update.Message.Text, out var numberIssue)
-                        && issues.Any(crntIssue => crntIssue.NumberIssue == numberIssue))
+                        && issues.Exists(crntIssue => crntIssue.NumberIssue == numberIssue))
                     {
                         userService.ClientUserService.RemoveIssue(numberIssue);
+                        userService.TgClient.SendTextMessageAsync(userService.Id, "Задача удалена");
+                        userService.SetHandler(_handler);
+                        userService.HandleUpdate(update);
                     }
-                    else if (!int.TryParse(update.Message.Text, out numberIssue))
+                    else
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вам необходимо ввести числовое значение номера задания", replyMarkup: GetBackButton());
+                        userService.TgClient.SendTextMessageAsync(userService.Id, "Ошибка : Некорректный ввод");
+                        AskIssueNumber(userService);
                     }
-                    else if (!issues.Any(crntBoard => crntBoard.NumberIssue == numberIssue))
-                    {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Задания с введенным вами номером нет в текущей доске.", replyMarkup: GetBackButton());
-                        AsksToEnterIssueNumber(userService);
-                    }
-                    else if (update.Message.Text == null)
-                    {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вы не ввели номер задания, попробуйте ещё раз", replyMarkup: GetBackButton());
-                    }
+                    //else if (!int.TryParse(update.Message.Text, out numberIssue))
+                    //{
+                    //    userService.TgClient.SendTextMessageAsync(userService.Id, "Ошибка : Вам необходимо ввести числовое значение номера задания");
+                    //    AskIssueNumber(userService);
+                    //}
+                    //else if (!issues.Any(crntBoard => crntBoard.NumberIssue == numberIssue))
+                    //{
+                    //    userService.TgClient.SendTextMessageAsync(userService.Id, "Ошибка : Задания с введенным вами номером нет в текущей доске.");
+                    //    AskIssueNumber(userService);
+                    //}
+                    //else if (update.Message.Text == null)
+                    //{
+                    //    userService.TgClient.SendTextMessageAsync(userService.Id, "Ошибка : Вы не ввели номер задания.");
+                    //    AskIssueNumber(userService);
+                    //}
                     break;
                 default:
-                    AsksToEnterIssueNumber(userService);
+                    AskIssueNumber(userService);
                     break;
             }
         }
 
-        private async void AsksToEnterIssueNumber(UserService userService)
+
+        private async void AskIssueNumber(UserService userService)
         {
             await userService.TgClient.SendTextMessageAsync(userService.Id, $"Введите номер задания, которое хотите удалить.\n" +
-                $"Если вы не хотите удалять задание, нажмите кнопку \"Назад\".", replyMarkup: GetBackButton());
+                $"Для отмены, нажмите кнопку \"Вернуться к задачам\".", replyMarkup: GetBackButton());
         }
 
         private InlineKeyboardMarkup GetBackButton()
         {
-            return new InlineKeyboardButton("Назад") { CallbackData = "Back" };
+            return new InlineKeyboardButton("Вернуться к задачам") { CallbackData = "BackToIssues" };
         }
     }
 }

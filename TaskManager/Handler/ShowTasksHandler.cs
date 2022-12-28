@@ -28,7 +28,7 @@ namespace TaskManager.Handler
                             userService.HandleUpdate(update);
                             break;
                         case "DeleteTask":
-                            userService.SetHandler(new DeleteBoardHandler());
+                            userService.SetHandler(new DeleteIssueHandler(new ShowTasksHandler()));
                             userService.HandleUpdate(update);
                             break;
                         case "Back3":
