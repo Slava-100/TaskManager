@@ -17,7 +17,7 @@ namespace TaskManager.Handler
         public async void HandleUpdateHandler(Update update, UserService userService)
         {
 
-            List<Issue> freeIssues = userService.ClientUserService.GetIssuesFreeInBoardByBoard();
+            List<Issue> freeIssues = userService.ClientUserService.GetIssuesFreeInBoardForClientByBoard();
 
             switch (update.Type)
             {

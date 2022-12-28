@@ -9,14 +9,14 @@ namespace TaskManager.Tests.TestCaseSource
         {
             Issue issue1 = new Issue(1, "1");
             Issue issue2 = new Issue(2, "2");
-            Board board = new Board(10, 10);
+            Board board = new Board(10, 10, "nameBoard");
             board.Issues.Add(issue1);
             board.Issues.Add(issue2);
             int expectedNumberIssue = 3;
 
             yield return new object[] { board, expectedNumberIssue };
 
-            board = new Board(11, 11);
+            board = new Board(11, 11, "nameBoard");
             expectedNumberIssue = 1;
 
             yield return new object[] { board, expectedNumberIssue };
@@ -114,7 +114,7 @@ namespace TaskManager.Tests.TestCaseSource
             Issue issue2 = new Issue(2, "2");
             issue2.IdUser = client.IDUser;
             long idUser = client.IDUser;
-            Board baseBoard = new Board(100, 10);
+            Board baseBoard = new Board(100, 10, "nameBoard");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
 
@@ -136,7 +136,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue2 = new Issue(22, "22");
             issue2.IdUser = memeber.IDUser;
             idUser = memeber.IDUser;
-            baseBoard = new Board(1002, 102);
+            baseBoard = new Board(1002, 102, "nameBoard");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.IDMembers.Add(2);
@@ -148,7 +148,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue2 = new Issue(22, "22");
             expIssue2.IdUser = expMemeber.IDUser;
             expectedIssues = new List<Issue> { expIssue1, expIssue2 };
-            Board expBoard = new Board(1002, 102);
+            Board expBoard = new Board(1002, 102, "nameBoard");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.IDMembers.Add(2);
@@ -163,7 +163,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue2 = new Issue(23, "23");
             issue2.IdUser = client.IDUser;
             idUser = client.IDUser;
-            baseBoard = new Board(1003, 10);
+            baseBoard = new Board(1003, 10, "nameBoard");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
 
@@ -187,7 +187,7 @@ namespace TaskManager.Tests.TestCaseSource
             Issue issueOther = new Issue(661, "661");
             issueOther.IdUser = otherClient.IDUser;
             idUser = client.IDUser;
-            baseBoard = new Board(1004, 104);
+            baseBoard = new Board(1004, 104, "nameBoard");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.Issues.Add(issueOther);
@@ -201,7 +201,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue2.IdUser = client.IDUser;
             Issue expIssueOther = new Issue(661, "661");
             expIssueOther.IdUser = expOtherClient.IDUser;
-            expBoard = new Board(1004, 104);
+            expBoard = new Board(1004, 104, "nameBoard");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.Issues.Add(expIssueOther);
@@ -222,7 +222,7 @@ namespace TaskManager.Tests.TestCaseSource
             issueOther = new Issue(6615, "6615");
             issueOther.IdUser = otherClient.IDUser;
             idUser = client.IDUser;
-            baseBoard = new Board(10045, 50);
+            baseBoard = new Board(10045, 50, "nameBoard");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.Issues.Add(issueOther);
@@ -238,7 +238,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue2.IdUser = client.IDUser;
             expIssueOther = new Issue(6615, "6615");
             expIssueOther.IdUser = expOtherClient.IDUser;
-            expBoard = new Board(10045, 50);
+            expBoard = new Board(10045, 50, "nameBoard");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.Issues.Add(expIssueOther);
@@ -261,7 +261,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue2.IdUser = client.IDUser;
             issue2.Status = Enums.IssueStatus.Done;
             long idUser = client.IDUser;
-            Board baseBoard = new Board(100, 10);
+            Board baseBoard = new Board(100, 10, "nameBoard");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
 
@@ -287,7 +287,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue2.IdUser = memeber.IDUser;
             issue2.Status = Enums.IssueStatus.Done;
             idUser = memeber.IDUser;
-            baseBoard = new Board(1002, 102);
+            baseBoard = new Board(1002, 102, "nameBoard");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.IDMembers.Add(2);
@@ -301,7 +301,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue2.IdUser = expMemeber.IDUser;
             expIssue2.Status = Enums.IssueStatus.Done;
             expectedIssues = new List<Issue> { expIssue1, expIssue2 };
-            Board expBoard = new Board(1002, 102);
+            Board expBoard = new Board(1002, 102, "nameBoard");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.IDMembers.Add(2);
@@ -318,7 +318,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue2.IdUser = client.IDUser;
             issue2.Status = Enums.IssueStatus.Done;
             idUser = client.IDUser;
-            baseBoard = new Board(1003, 10);
+            baseBoard = new Board(1003, 10, "nameBoard");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
 
@@ -347,7 +347,7 @@ namespace TaskManager.Tests.TestCaseSource
             issueOther.IdUser = otherClient.IDUser;
             issueOther.Status = Enums.IssueStatus.Done;
             idUser = client.IDUser;
-            baseBoard = new Board(1004, 104);
+            baseBoard = new Board(1004, 104, "nameBoard");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.Issues.Add(issueOther);
@@ -364,7 +364,7 @@ namespace TaskManager.Tests.TestCaseSource
             Issue expIssueOther = new Issue(661, "661");
             expIssueOther.IdUser = expOtherClient.IDUser;
             expIssueOther.Status = Enums.IssueStatus.Done;
-            expBoard = new Board(1004, 104);
+            expBoard = new Board(1004, 104, "nameBoard");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssueOther);
@@ -388,7 +388,7 @@ namespace TaskManager.Tests.TestCaseSource
             issueOther.IdUser = otherClient.IDUser;
             issueOther.Status = Enums.IssueStatus.Done;
             idUser = client.IDUser;
-            baseBoard = new Board(10045, 50);
+            baseBoard = new Board(10045, 50, "nameBoard");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.Issues.Add(issueOther);
@@ -407,7 +407,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssueOther = new Issue(6615, "6615");
             expIssueOther.IdUser = expOtherClient.IDUser;
             expIssueOther.Status = Enums.IssueStatus.Done;
-            expBoard = new Board(10045, 50);
+            expBoard = new Board(10045, 50, "nameBoard");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.Issues.Add(expIssueOther);
@@ -433,7 +433,7 @@ namespace TaskManager.Tests.TestCaseSource
             issueOtherStatus2.IdUser = client.IDUser;
             issueOtherStatus2.Status = Enums.IssueStatus.Backlog;
             idUser = client.IDUser;
-            baseBoard = new Board(100, 10);
+            baseBoard = new Board(100, 10, "nameBoard");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.Issues.Add(issueOtherStatus1);
@@ -473,7 +473,7 @@ namespace TaskManager.Tests.TestCaseSource
             issueOtherStatus2.IdUser = client.IDUser;
             issueOtherStatus2.Status = Enums.IssueStatus.UserStory;
             idUser = memeber.IDUser;
-            baseBoard = new Board(1002, 102);
+            baseBoard = new Board(1002, 102, "nameBoard");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.Issues.Add(issueOtherStatus1);
@@ -495,7 +495,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssueOtherStatus2.IdUser = client.IDUser;
             expIssueOtherStatus2.Status = Enums.IssueStatus.UserStory;
             expectedIssues = new List<Issue> { expIssue1, expIssue2 };
-            expBoard = new Board(1002, 102);
+            expBoard = new Board(1002, 102, "nameBoard");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.IDMembers.Add(2);
