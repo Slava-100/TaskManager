@@ -11,7 +11,7 @@ namespace TaskManager.Tests
         [SetUp]
         public void SetUp()
         {
-            _board = new Board(1, 0);
+            _board = new Board(1, 0, "boardName");
         }
 
         [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetNextNumberIssueTestSource))]
@@ -24,7 +24,7 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.AddBlokingAndBlockedByIssueTestSource))]
         public void AddBlokingAndBlockedByIssueTest(Issue blockedByCurrentIssue, Issue blockingCurrentIssue, List<int> expectedBlockedByCurrentIssue, List<int> expectedBlockingIssues)
         {
-            Board board = new Board(1, 1);
+            Board board = new Board(1, 1, "name");
             board.Issues.Add(blockedByCurrentIssue);
             board.Issues.Add(blockingCurrentIssue);
             board.AddBlokingAndBlockedByIssue(blockedByCurrentIssue.NumberIssue, blockingCurrentIssue.NumberIssue);
@@ -57,7 +57,7 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetAllIssuesInBoardTestCaseSource))]
         public void GetAllIssuesInBoardTest(Board baseBoard, long idUser, List<Issue> expectedIssues)
         {
-            List<Issue> actualIssues = baseBoard.GetAllIssuesInBoard(idUser);
+            List<Issue> actualIssues = baseBoard.GetAllIssuesForClientInBoard(idUser);
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
@@ -65,7 +65,7 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetIssuesDoneInBoardTestCaseSource))]
         public void GetIssuesDoneInBoardTest(Board baseBoard, long idUser, List<Issue> expectedIssues)
         {
-            List<Issue> actualIssues = baseBoard.GetIssuesDoneInBoard(idUser);
+            List<Issue> actualIssues = baseBoard.GetIssuesDoneForClientInBoard(idUser);
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }

@@ -1,4 +1,7 @@
-﻿namespace TaskManager
+﻿using TaskManager;
+using TaskManager.Enums;
+
+namespace TaskManager
 {
     public class AdminUser : AbstractUser
     {
@@ -21,7 +24,6 @@
 
         public bool RemoveBoard(int numberBoard)
         {
-            //DataStorage dataStorage = DataStorage.GetInstance();
             bool tmp = _dataStorage.RemoveBoard(numberBoard);
             _dataStorage.RewriteFileForBoards();
             return tmp;
@@ -38,5 +40,22 @@
             board.ChangeRoleFromAdminToMember(idAdmin);
             _dataStorage.RewriteFileForBoards();
         }
+
+        public void MoveIssueFromReviewToDone(Board board, Issue issue)
+        {
+            issue.Status = IssueStatus.Done;
+            _dataStorage.RewriteFileForBoards();
+        }
+
+        public List<Issue> GetAllIssuesInBoard( Board board)
+        {
+            return board.GetAllIssuesInBoard();
+        }
+
+        public List<Issue> GetAllIssuesReviewForAllClientsInBoard(Board board)
+        {
+            return board.GetAllIssuesReviewForAllClientsInBoard();
+        }
     }
 }
+

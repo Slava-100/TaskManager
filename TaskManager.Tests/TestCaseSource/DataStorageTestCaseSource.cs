@@ -6,8 +6,8 @@ namespace TaskManager.Tests.TestCaseSource
     {
         public static IEnumerable RemoveBoardTestSource()
         {
-            Board board1 = new Board(1, 1);
-            Board board2 = new Board(2, 2);
+            Board board1 = new Board(1, 1, "nameOfBoard");
+            Board board2 = new Board(2, 2, "nameOfBoard");
             Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
             {
                 { 1, board1},
@@ -22,8 +22,8 @@ namespace TaskManager.Tests.TestCaseSource
 
             yield return new Object[] { baseBoards, boardNumber, expectedBoards, expectedBool };
 
-            Board board10 = new Board(10, 10);
-            Board board21 = new Board(21, 21);
+            Board board10 = new Board(10, 10, "nameOfBoard");
+            Board board21 = new Board(21, 21, "nameOfBoard");
             baseBoards = new Dictionary<int, Board>
             {
                 { 10, board10},
@@ -48,15 +48,16 @@ namespace TaskManager.Tests.TestCaseSource
         public static IEnumerable AddBoardTestSource()
         {
             Dictionary<int, Board> baseBoards = new Dictionary<int, Board>();
-            long idAdmin = 12;
-            Board addBoard = new Board(1, 12);
-            Dictionary<int, Board> expectedBoards = new Dictionary<int, Board>
+            Dictionary<long, Client> baseClients = new()
             {
-              {addBoard.NumberBoard, addBoard }
+                { 12, new Client(12, "12") }
             };
+            long idAdmin = 12;
+            Board expectedBoard = new Board(1, 12, "nameOfBoard");
             int expectedNumberBoard = 1;
+            string nameBoard = "nameOfBoard";
 
-            yield return new Object[] { baseBoards, idAdmin, expectedBoards, expectedNumberBoard };
+            yield return new Object[] { baseBoards, baseClients, idAdmin, expectedBoard, expectedNumberBoard, nameBoard };
         }
 
         public class AddNewUserByKeyTestCaseSource : IEnumerable
@@ -67,7 +68,7 @@ namespace TaskManager.Tests.TestCaseSource
                 long idMember = 123;
                 int keyBoard = 1;
                 string nameMember = "";
-                Board board = new Board(numberBoard, 1234);
+                Board board = new Board(numberBoard, 1234, "nameOfBoard");
                 board.Key = keyBoard;
 
                 Dictionary<int, Board> storageBoard = new Dictionary<int, Board>()
@@ -78,7 +79,7 @@ namespace TaskManager.Tests.TestCaseSource
                 DataStorage dataStorage = new DataStorage();
                 dataStorage.Boards = storageBoard;
 
-                board.IDMembers.Add(idMember);
+                //board.IDMembers.Add(idMember);
 
                 Client user = new Client(idMember, nameMember);
 
@@ -105,9 +106,9 @@ namespace TaskManager.Tests.TestCaseSource
             {
                 Dictionary<int, Board> boards = new Dictionary<int, Board>()
                 {
-                    {1,new Board(1,22) },
-                    {2,new Board(2,33) },
-                    {3,new Board(3,44) }
+                    {1,new Board(1,22, "boardName") },
+                    {2,new Board(2,33, "boardName") },
+                    {3,new Board(3,44, "boardName") }
                 };
                 List<Issue> tasks = new List<Issue>()
                 {
@@ -151,9 +152,9 @@ namespace TaskManager.Tests.TestCaseSource
             //1. Проверка, если запрашиваем доски для Админа
 
             Client client = new Client(11, "11");
-            Board board1 = new Board(1, 11);
+            Board board1 = new Board(1, 11, "boardName");
             board1.IDAdmin.Add(11);
-            Board board2 = new Board(2, 11);
+            Board board2 = new Board(2, 11, "boardName");
             board2.IDAdmin.Add(11);
             Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
             {
@@ -163,9 +164,9 @@ namespace TaskManager.Tests.TestCaseSource
             List<int> baseBoardsForUser = new List<int> { board1.NumberBoard, board2.NumberBoard };
 
             Client expClient = new Client(11, "11");
-            Board expBoard1 = new Board(1, 11);
+            Board expBoard1 = new Board(1, 11, "boardName");
             expBoard1.IDAdmin.Add(11);
-            Board expBoard2 = new Board(2, 11);
+            Board expBoard2 = new Board(2, 11, "boardName");
             expBoard2.IDAdmin.Add(11);
             Dictionary<int, Board> expBoards = new Dictionary<int, Board>
             {
@@ -181,9 +182,9 @@ namespace TaskManager.Tests.TestCaseSource
 
             Client admin = new Client(112, "112");
             client = new Client(2, "2");
-            board1 = new Board(12, 112);
+            board1 = new Board(12, 112, "boardName");
             board1.IDAdmin.Add(2);
-            board2 = new Board(22, 112);
+            board2 = new Board(22, 112, "boardName");
             board2.IDAdmin.Add(2);
             baseBoards = new Dictionary<int, Board>
             {
@@ -194,9 +195,9 @@ namespace TaskManager.Tests.TestCaseSource
 
             Client expAdmin = new Client(112, "112");
             expClient = new Client(2, "2");
-            expBoard1 = new Board(12, 112);
+            expBoard1 = new Board(12, 112, "boardName");
             expBoard1.IDAdmin.Add(2);
-            expBoard2 = new Board(22, 112);
+            expBoard2 = new Board(22, 112, "boardName");
             expBoard2.IDAdmin.Add(2);
             expBoards = new Dictionary<int, Board>
             {

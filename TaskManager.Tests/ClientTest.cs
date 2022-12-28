@@ -48,7 +48,7 @@ namespace TaskManager.Tests
             _dataStorage.Boards.Add(baseBoard.NumberBoard, baseBoard);
             _dataStorage.Clients.Add(baseClient.IDUser, baseClient);
             baseClient.SetActiveBoard(baseBoard.NumberBoard);
-            List<Issue> actualIssues = baseClient.GetAllIssuesInBoardByBoard();
+            List<Issue> actualIssues = baseClient.GetAllIssuesInBoardForClientByBoard();
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
@@ -59,7 +59,7 @@ namespace TaskManager.Tests
             _dataStorage.Boards.Add(baseBoard.NumberBoard, baseBoard);
             _dataStorage.Clients.Add(baseClient.IDUser, baseClient);
             baseClient.SetActiveBoard(baseBoard.NumberBoard);
-            List<Issue> actualIssues = baseClient.GetIssuesDoneInBoardByBoard();
+            List<Issue> actualIssues = baseClient.GetIssuesDoneInBoardForClientByBoard();
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }

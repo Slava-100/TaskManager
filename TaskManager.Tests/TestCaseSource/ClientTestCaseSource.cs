@@ -11,7 +11,7 @@ namespace TaskManager.Tests.TestCaseSource
 
             Issue issue1 = new Issue(1, "1");
             Issue attachIssue = new Issue(2, "2");
-            Board board = new Board(10, 5);
+            Board board = new Board(10, 5, "boardName");
             board.Issues.Add(issue1);
             board.Issues.Add(attachIssue);
             int idAttachIssue = 2;
@@ -29,8 +29,9 @@ namespace TaskManager.Tests.TestCaseSource
 
             Issue expIssue1 = new Issue(1, "1");
             Issue expAttachIssue = new Issue(2, "2");
+            expAttachIssue.Status = Enums.IssueStatus.InProgress;
             Client expClient = new Client(5, "5");
-            Board expBoard = new Board(10, 5);
+            Board expBoard = new Board(10, 5, "boardName");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expAttachIssue);
             expClient.BoardsForUser.Add(10);
@@ -53,7 +54,7 @@ namespace TaskManager.Tests.TestCaseSource
             Issue issue10 = new Issue(10, "10");
             attachIssue = new Issue(20, "20");
             Client admin = new Client(22, "22");
-            board = new Board(22, 22);
+            board = new Board(22, 22, "boardName");
             board.Issues.Add(issue10);
             board.Issues.Add(attachIssue);
             idAttachIssue = 20;
@@ -73,11 +74,12 @@ namespace TaskManager.Tests.TestCaseSource
 
             Issue expIssue10 = new Issue(10, "10");
             expAttachIssue = new Issue(20, "20");
-            expIssue10.Status = Enums.IssueStatus.Backlog;
+            expAttachIssue.Status = Enums.IssueStatus.InProgress;
+            //expIssue10.Status = Enums.IssueStatus.Backlog;
             Client expAdmin = new Client(22, "22");
-            expBoard = new Board(22, 22);
-            expBoard.Issues.Add(issue10);
-            expBoard.Issues.Add(attachIssue);
+            expBoard = new Board(22, 22, "boardName");
+            expBoard.Issues.Add(expIssue10);
+            expBoard.Issues.Add(expAttachIssue);
             expClient = new Client(50, "50");
             expClient.BoardsForUser.Add(22);
             expBoard.IDMembers.Add(50);
@@ -98,7 +100,7 @@ namespace TaskManager.Tests.TestCaseSource
             // 3. проверка на недобавление задания к Админу, если такого задания нет в доске
 
             issue1 = new Issue(13, "13");
-            board = new Board(103, 53);
+            board = new Board(103, 53, "boardName");
             board.Issues.Add(issue1);
             idAttachIssue = 23;
             baseBoards = new Dictionary<int, Board>
@@ -115,7 +117,7 @@ namespace TaskManager.Tests.TestCaseSource
 
             expIssue1 = new Issue(13, "13");
             expClient = new Client(53, "53");
-            expBoard = new Board(103, 53);
+            expBoard = new Board(103, 53, "boardName");
             expBoard.Issues.Add(expIssue1);
             expClient.BoardsForUser.Add(103);
             expBoard.IDAdmin.Add(53);
@@ -134,7 +136,7 @@ namespace TaskManager.Tests.TestCaseSource
 
             issue10 = new Issue(104, "104");
             admin = new Client(224, "224");
-            board = new Board(224, 224);
+            board = new Board(224, 224, "boardName");
             board.Issues.Add(issue10);
             idAttachIssue = 204;
             baseBoards = new Dictionary<int, Board>
@@ -153,8 +155,8 @@ namespace TaskManager.Tests.TestCaseSource
 
             expIssue10 = new Issue(104, "104");
             expAdmin = new Client(224, "224");
-            expBoard = new Board(224, 224);
-            expBoard.Issues.Add(issue10);
+            expBoard = new Board(224, 224, "boardName");
+            expBoard.Issues.Add(expIssue10);
             expClient = new Client(504, "504");
             expClient.BoardsForUser.Add(224);
             expBoard.IDMembers.Add(504);
@@ -179,7 +181,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue1.IdUser = client.IDUser;
             attachIssue = new Issue(25, "25");
             attachIssue.Status = Enums.IssueStatus.InProgress;
-            board = new Board(105, 55);
+            board = new Board(105, 55, "boardName");
             board.Issues.Add(issue1);
             board.Issues.Add(attachIssue);
             idAttachIssue = 25;
@@ -200,7 +202,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue1.IdUser = expClient.IDUser;
             expAttachIssue = new Issue(25, "25");
             expAttachIssue.Status = Enums.IssueStatus.InProgress;
-            expBoard = new Board(105, 55);
+            expBoard = new Board(105, 55, "boardName");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expAttachIssue);
             expClient.BoardsForUser.Add(105);
@@ -225,7 +227,7 @@ namespace TaskManager.Tests.TestCaseSource
             attachIssue = new Issue(206, "206");
             attachIssue.Status = Enums.IssueStatus.InProgress;
             admin = new Client(226, "226");
-            board = new Board(226, 226);
+            board = new Board(226, 226, "boardName");
             board.Issues.Add(issue10);
             board.Issues.Add(attachIssue);
             idAttachIssue = 206;
@@ -248,9 +250,9 @@ namespace TaskManager.Tests.TestCaseSource
             expAttachIssue = new Issue(206, "206");
             expAttachIssue.Status = Enums.IssueStatus.InProgress;
             expAdmin = new Client(226, "226");
-            expBoard = new Board(226, 226);
+            expBoard = new Board(226, 226, "boardName");
             expBoard.Issues.Add(issue10);
-            expBoard.Issues.Add(expAttachIssue);
+             expBoard.Issues.Add(expAttachIssue);
             expClient.BoardsForUser.Add(226);
             expBoard.IDMembers.Add(506);
 
@@ -274,7 +276,7 @@ namespace TaskManager.Tests.TestCaseSource
             attachIssue = new Issue(257, "257");
             attachIssue.Status = Enums.IssueStatus.InProgress;
             attachIssue.IdUser = otherClient.IDUser;
-            board = new Board(1057, 557);
+            board = new Board(1057, 557, "boardName");
             board.Issues.Add(attachIssue);
             idAttachIssue = 257;
             baseBoards = new Dictionary<int, Board>
@@ -294,7 +296,7 @@ namespace TaskManager.Tests.TestCaseSource
             expAttachIssue = new Issue(257, "257");
             expAttachIssue.IdUser = expOtherClient.IDUser;
             expAttachIssue.Status = Enums.IssueStatus.InProgress;
-            expBoard = new Board(1057, 557);
+            expBoard = new Board(1057, 557, "boardName");
             expBoard.Issues.Add(expAttachIssue);
             expClient.BoardsForUser.Add(1057);
             expBoard.IDAdmin.Add(557);
@@ -316,7 +318,7 @@ namespace TaskManager.Tests.TestCaseSource
             admin = new Client(2248, "2248");
             issue10.Status = Enums.IssueStatus.InProgress;
             issue10.IdUser = admin.IDUser;
-            board = new Board(2248, 2248);
+            board = new Board(2248, 2248, "boardName");
             board.Issues.Add(issue10);
             idAttachIssue = 1048;
             baseBoards = new Dictionary<int, Board>
@@ -338,7 +340,7 @@ namespace TaskManager.Tests.TestCaseSource
             expClient = new Client(5048, "5048");
             expIssue10.Status = Enums.IssueStatus.InProgress;
             expIssue10.IdUser = expAdmin.IDUser;
-            expBoard = new Board(2248, 2248);
+            expBoard = new Board(2248, 2248, "boardName");
             expBoard.Issues.Add(issue10);
             expClient.BoardsForUser.Add(2248);
             expBoard.IDMembers.Add(5048);
@@ -355,11 +357,11 @@ namespace TaskManager.Tests.TestCaseSource
 
             yield return new object[] { baseBoards, board, baseClients, client, expectedBoards, idAttachIssue, expectedClients };
 
-            //8. проверка на не добавление задания к человеку, если он не является админом или мембером
+            //9. проверка на не добавление задания к человеку, если он не является админом или мембером
 
             issue1 = new Issue(18, "18");
             attachIssue = new Issue(28, "28");
-            board = new Board(108, 58);
+            board = new Board(108, 58, "boardName");
             board.Issues.Add(issue1);
             board.Issues.Add(attachIssue);
             idAttachIssue = 28;
@@ -367,30 +369,31 @@ namespace TaskManager.Tests.TestCaseSource
             {
                 { board.NumberBoard, board}
             };
-            Client clientNope = new Client(666, "666");
-            client = new Client(58, "58");
-            client.BoardsForUser.Add(108);
+            Client clientNope = new Client(58, "58");
+            client = new Client(666, "666");
+            clientNope.BoardsForUser.Add(108);
             board.IDAdmin.Add(58);
             baseClients = new Dictionary<long, Client>
             {
-                { 58, client }
+                { 666, client },
+                { 58, clientNope }
             };
 
             expIssue1 = new Issue(18, "18");
             expAttachIssue = new Issue(28, "28");
             expClient = new Client(58, "58");
-            expBoard = new Board(108, 58);
+            expBoard = new Board(108, 58, "boardName");
+            expClient.BoardsForUser.Add(108);
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expAttachIssue);
-            expClient.BoardsForUser.Add(108);
             expBoard.IDAdmin.Add(58);
-            expAttachIssue.IdUser = expClient.IDUser;
             expectedBoards = new Dictionary<int, Board>
             {
                 { expBoard.NumberBoard, expBoard}
             };
             expectedClients = new Dictionary<long, Client>
              {
+                {666, new Client(666, "666") },
                 { 58, expClient }
             };
 
@@ -410,7 +413,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue2.IdUser = baseClient.IDUser;
             Issue issue3 = new Issue(3, "3");
             issue3.IdUser = otherClient.IDUser;
-            Board baseBoard = new Board(55, 55);
+            Board baseBoard = new Board(55, 55, "boardMy");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.Issues.Add(issue3);
@@ -424,7 +427,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue2.IdUser = expClient.IDUser;
             Issue expIssue3 = new Issue(3, "3");
             expIssue3.IdUser = expOtherClient.IDUser;
-            Board expBoard = new Board(55, 55);
+            Board expBoard = new Board(55, 55, "boardMy");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.Issues.Add(expIssue3);
@@ -445,7 +448,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue2.IdUser = admin.IDUser;
             issue3 = new Issue(3, "3");
             issue3.IdUser = baseClient.IDUser;
-            baseBoard = new Board(999, 999);
+            baseBoard = new Board(999, 999, "boardMy");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.Issues.Add(issue3);
@@ -461,7 +464,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue2.IdUser = admin.IDUser;
             expIssue3 = new Issue(3, "3");
             expIssue3.IdUser = expClient.IDUser;
-            expBoard = new Board(999, 999);
+            expBoard = new Board(999, 999, "boardMy");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.Issues.Add(expIssue3);
@@ -490,7 +493,7 @@ namespace TaskManager.Tests.TestCaseSource
             Issue issue5 = new Issue(5, "5");
             issue5.Status = Enums.IssueStatus.Review;
             issue5.IdUser = baseClient.IDUser;
-            baseBoard = new Board(55, 55);
+            baseBoard = new Board(55, 55, "boardMy");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.Issues.Add(issue3);
@@ -514,7 +517,7 @@ namespace TaskManager.Tests.TestCaseSource
             Issue expIssue5 = new Issue(5, "5");
             expIssue5.Status = Enums.IssueStatus.Review;
             expIssue5.IdUser = expClient.IDUser;
-            expBoard = new Board(55, 55);
+            expBoard = new Board(55, 55, "boardMy");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.Issues.Add(expIssue3);
@@ -546,7 +549,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue5.IdUser = baseClient.IDUser;
             issue4.Status = Enums.IssueStatus.Done;
             issue5.Status = Enums.IssueStatus.Review;
-            baseBoard = new Board(999, 999);
+            baseBoard = new Board(999, 999, "boardMy");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.Issues.Add(issue3);
@@ -573,7 +576,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue5.IdUser = baseClient.IDUser;
             expIssue4.Status = Enums.IssueStatus.Done;
             expIssue5.Status = Enums.IssueStatus.Review;
-            expBoard = new Board(999, 999);
+            expBoard = new Board(999, 999, "boardMy");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.Issues.Add(expIssue3);
@@ -602,7 +605,7 @@ namespace TaskManager.Tests.TestCaseSource
             Issue issue3 = new Issue(3, "3");
             issue3.IdUser = otherClient.IDUser;
             issue3.Status = Enums.IssueStatus.Done;
-            Board baseBoard = new Board(55, 55);
+            Board baseBoard = new Board(55, 55, "boardMy");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.Issues.Add(issue3);
@@ -619,7 +622,7 @@ namespace TaskManager.Tests.TestCaseSource
             Issue expIssue3 = new Issue(3, "3");
             expIssue3.IdUser = expOtherClient.IDUser;
             expIssue3.Status = Enums.IssueStatus.Done;
-            Board expBoard = new Board(55, 55);
+            Board expBoard = new Board(55, 55, "boardMy");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.Issues.Add(expIssue3);
@@ -643,7 +646,7 @@ namespace TaskManager.Tests.TestCaseSource
             issue3 = new Issue(32, "32");
             issue3.IdUser = baseClient.IDUser;
             issue3.Status = Enums.IssueStatus.Done;
-            baseBoard = new Board(9992, 9992);
+            baseBoard = new Board(9992, 9992, "boardMy");
             baseBoard.Issues.Add(issue1);
             baseBoard.Issues.Add(issue2);
             baseBoard.Issues.Add(issue3);
@@ -662,7 +665,7 @@ namespace TaskManager.Tests.TestCaseSource
             expIssue3 = new Issue(32, "32");
             expIssue3.IdUser = expClient.IDUser;
             expIssue3.Status = Enums.IssueStatus.Done;
-            expBoard = new Board(9992, 9992);
+            expBoard = new Board(9992, 9992, "boardMy");
             expBoard.Issues.Add(expIssue1);
             expBoard.Issues.Add(expIssue2);
             expBoard.Issues.Add(expIssue3);
@@ -679,8 +682,8 @@ namespace TaskManager.Tests.TestCaseSource
             //1. Проверка, если запрашиваем доски для Админа
 
             Client client = new Client(10, "10");
-            Board board1 = new Board(1, 10);
-            Board board2 = new Board(2, 10);
+            Board board1 = new Board(1, 10, "boardMy");
+            Board board2 = new Board(2, 10, "boardMy");
             List<int> baseBoardsForUser = new List<int>
             {
             board1.NumberBoard,
@@ -694,8 +697,8 @@ namespace TaskManager.Tests.TestCaseSource
             client.BoardsForUser = baseBoardsForUser;
 
             Client expClient = new Client(10, "10");
-            Board expBoard1 = new Board(1, 10);
-            Board expBoard2 = new Board(2, 10);
+            Board expBoard1 = new Board(1, 10, "boardMy");
+            Board expBoard2 = new Board(2, 10, "boardMy");
             Dictionary<int, Board> expBaseBoards = new Dictionary<int, Board>
             {
                 {expBoard1.NumberBoard, expBoard1 },
@@ -715,9 +718,9 @@ namespace TaskManager.Tests.TestCaseSource
 
             Client admin = new Client(10, "10");
             client = new Client(100, "100");
-            board1 = new Board(10, 10);
+            board1 = new Board(10, 10, "nameOfBoard");
             board1.IDMembers.Add(100);
-            board2 = new Board(20, 10);
+            board2 = new Board(20, 10, "nameOfBoard");
             board2.IDMembers.Add(100);
             baseBoardsForUser = new List<int>
             {
@@ -733,9 +736,9 @@ namespace TaskManager.Tests.TestCaseSource
 
             Client expAdmin = new Client(10, "10");
             expClient = new Client(100, "100");
-            expBoard1 = new Board(10, 10);
+            expBoard1 = new Board(10, 10, "nameOfBoard");
             expBoard1.IDMembers.Add(100);
-            expBoard2 = new Board(20, 10);
+            expBoard2 = new Board(20, 10, "nameOfBoard");
             expBoard2.IDMembers.Add(100);
             expBaseBoards = new Dictionary<int, Board>
             {
@@ -755,9 +758,9 @@ namespace TaskManager.Tests.TestCaseSource
             //3. Проверка, если запрашиваем доски для Админа, где часть досок на другом участнике
 
             client = new Client(103, "103");
-            board1 = new Board(13, 103);
-            board2 = new Board(23, 103);
-            Board boardOther = new Board(66, 66);
+            board1 = new Board(13, 103, "nameOfBoard");
+            board2 = new Board(23, 103, "nameOfBoard");
+            Board boardOther = new Board(66, 66, "nameOfBoard");
             baseBoardsForUser = new List<int>
             {
             board1.NumberBoard,
@@ -772,9 +775,9 @@ namespace TaskManager.Tests.TestCaseSource
             client.BoardsForUser = baseBoardsForUser;
 
             expClient = new Client(103, "103");
-            expBoard1 = new Board(13, 103);
-            expBoard2 = new Board(23, 103);
-            Board expBoardOther = new Board(66, 66);
+            expBoard1 = new Board(13, 103, "nameOfBoard");
+            expBoard2 = new Board(23, 103, "nameOfBoard");
+            Board expBoardOther = new Board(66, 66, "nameOfBoard");
             expBaseBoards = new Dictionary<int, Board>
             {
                 {expBoard1.NumberBoard, expBoard1 },
@@ -795,11 +798,11 @@ namespace TaskManager.Tests.TestCaseSource
 
             admin = new Client(104, "104");
             client = new Client(1004, "1004");
-            board1 = new Board(104, 104);
+            board1 = new Board(104, 104, "nameOfBoard");
             board1.IDMembers.Add(1004);
-            board2 = new Board(204, 104);
+            board2 = new Board(204, 104, "nameOfBoard");
             board2.IDMembers.Add(1004);
-            boardOther = new Board(99, 99);
+            boardOther = new Board(99, 99, "nameOfBoard");
             baseBoardsForUser = new List<int>
             {
             board1.NumberBoard,
@@ -815,11 +818,11 @@ namespace TaskManager.Tests.TestCaseSource
 
             expAdmin = new Client(104, "104");
             expClient = new Client(1004, "1004");
-            expBoard1 = new Board(104, 104);
+            expBoard1 = new Board(104, 104, "nameOfBoard");
             expBoard1.IDMembers.Add(1004);
-            expBoard2 = new Board(204, 104);
+            expBoard2 = new Board(204, 104, "nameOfBoard");
             expBoard2.IDMembers.Add(1004);
-            Board expboardOther = new Board(99, 99);
+            Board expboardOther = new Board(99, 99, "nameOfBoard");
             expBaseBoards = new Dictionary<int, Board>
             {
                 {expBoard1.NumberBoard, expBoard1 },
@@ -839,9 +842,9 @@ namespace TaskManager.Tests.TestCaseSource
             //5. Показать все доски у участника, в которых он и Админ, и Мембер
 
             client = new Client(1045, "1045");
-            board1 = new Board(1045, 1045);
-            board2 = new Board(2045, 1045);
-            boardOther = new Board(995, 995);
+            board1 = new Board(1045, 1045, "nameOfBoard");
+            board2 = new Board(2045, 1045, "nameOfBoard");
+            boardOther = new Board(995, 995, "nameOfBoard");
             boardOther.IDMembers.Add(1045);
             baseBoardsForUser = new List<int>
             {
@@ -858,9 +861,9 @@ namespace TaskManager.Tests.TestCaseSource
             client.BoardsForUser = baseBoardsForUser;
 
             expClient = new Client(1045, "1045");
-            expBoard1 = new Board(1045, 1045);
-            expBoard2 = new Board(2045, 1045);
-            expboardOther = new Board(995, 995);
+            expBoard1 = new Board(1045, 1045, "nameOfBoard");
+            expBoard2 = new Board(2045, 1045, "nameOfBoard");
+            expboardOther = new Board(995, 995, "nameOfBoard");
             expboardOther.IDMembers.Add(1045);
             expBaseBoards = new Dictionary<int, Board>
             {
@@ -885,10 +888,10 @@ namespace TaskManager.Tests.TestCaseSource
             //1. Проверяем метод, где Админ одной из досок заправшивает список своих админских досок.
 
             Client client = new Client(10, "10");
-            Board board1 = new Board(10, 10);
-            Board board2 = new Board(20, 20);
+            Board board1 = new Board(10, 10, "boardMy");
+            Board board2 = new Board(20, 20, "boardMy");
             board2.IDAdmin.Add(10);
-            Board board3 = new Board(30, 30);
+            Board board3 = new Board(30, 30, "boardMy");
             board3.IDMembers.Add(10);
             Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
             {
@@ -904,10 +907,10 @@ namespace TaskManager.Tests.TestCaseSource
             };
 
             Client expClient = new Client(10, "10");
-            Board expBoard1 = new Board(10, 10);
-            Board expBoard2 = new Board(20, 20);
+            Board expBoard1 = new Board(10, 10, "boardMy");
+            Board expBoard2 = new Board(20, 20, "boardMy");
             expBoard2.IDAdmin.Add(10);
-            Board expBoard3 = new Board(30, 30);
+            Board expBoard3 = new Board(30, 30, "boardMy");
             expBoard3.IDMembers.Add(10);
             List<Board> expectedBoards = new List<Board>
             {
@@ -920,11 +923,11 @@ namespace TaskManager.Tests.TestCaseSource
             //2. Проверяем метод, где Мембер одной из досок заправшивает список своих админских досок(которых нет).
 
             client = new Client(102, "102");
-            board1 = new Board(2, 2);
+            board1 = new Board(2, 2, "boardMy");
             board1.IDMembers.Add(102);
-            board2 = new Board(202, 202);
+            board2 = new Board(202, 202, "boardMy");
             board2.IDMembers.Add(102);
-            board3 = new Board(302, 302);
+            board3 = new Board(302, 302, "boardMy");
             board3.IDMembers.Add(102);
             baseBoards = new Dictionary<int, Board>
             {
@@ -940,11 +943,11 @@ namespace TaskManager.Tests.TestCaseSource
             };
 
             expClient = new Client(102, "102");
-            expBoard1 = new Board(2, 2);
+            expBoard1 = new Board(2, 2, "boardMy");
             expBoard1.IDMembers.Add(102);
-            expBoard2 = new Board(202, 202);
+            expBoard2 = new Board(202, 202, "boardMy");
             expBoard2.IDMembers.Add(102);
-            expBoard3 = new Board(302, 302);
+            expBoard3 = new Board(302, 302, "boardMy");
             expBoard3.IDMembers.Add(102);
             expectedBoards = new List<Board>();
 
@@ -956,10 +959,10 @@ namespace TaskManager.Tests.TestCaseSource
             //1. Проверяем метод, где Админ одной из досок заправшивает список своих мемборских досок.
 
             Client client = new Client(10, "10");
-            Board board1 = new Board(10, 10);
-            Board board2 = new Board(20, 20);
+            Board board1 = new Board(10, 10, "boardJoy");
+            Board board2 = new Board(20, 20, "boardJoy");
             board2.IDAdmin.Add(10);
-            Board board3 = new Board(30, 30);
+            Board board3 = new Board(30, 30, "boardJoy");
             board3.IDMembers.Add(10);
             Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
             {
@@ -975,10 +978,10 @@ namespace TaskManager.Tests.TestCaseSource
             };
 
             Client expClient = new Client(10, "10");
-            Board expBoard1 = new Board(10, 10);
-            Board expBoard2 = new Board(20, 20);
+            Board expBoard1 = new Board(10, 10, "boardJoy");
+            Board expBoard2 = new Board(20, 20, "boardJoy");
             expBoard2.IDAdmin.Add(10);
-            Board expBoard3 = new Board(30, 30);
+            Board expBoard3 = new Board(30, 30, "boardJoy");
             expBoard3.IDMembers.Add(10);
             List<Board> expectedBoards = new List<Board>
             {
@@ -990,11 +993,11 @@ namespace TaskManager.Tests.TestCaseSource
             //2. Проверяем метод, где Админ одной из досок заправшивает список своих мемборских досок, которых нет.
 
             client = new Client(102, "102");
-            board1 = new Board(19, 19);
+            board1 = new Board(19, 19, "boardJoy");
             board1.IDAdmin.Add(102);
-            board2 = new Board(202, 202);
+            board2 = new Board(202, 202, "boardJoy");
             board2.IDAdmin.Add(102);
-            board3 = new Board(302, 302);
+            board3 = new Board(302, 302, "boardJoy");
             board3.IDAdmin.Add(102);
             baseBoards = new Dictionary<int, Board>
             {
@@ -1010,11 +1013,11 @@ namespace TaskManager.Tests.TestCaseSource
             };
 
             expClient = new Client(102, "102");
-            expBoard1 = new Board(19, 19);
+            expBoard1 = new Board(19, 19, "boardJoy");
             expBoard1.IDAdmin.Add(102);
-            expBoard2 = new Board(202, 202);
+            expBoard2 = new Board(202, 202, "boardJoy");
             expBoard2.IDAdmin.Add(102);
-            expBoard3 = new Board(302, 302);
+            expBoard3 = new Board(302, 302, "boardJoy");
             expBoard3.IDMembers.Add(102);
             expectedBoards = new List<Board>();
 
@@ -1023,11 +1026,11 @@ namespace TaskManager.Tests.TestCaseSource
             //3. Проверяем метод, где Мембер одной из досок заправшивает список своих мемборских
 
             client = new Client(1023, "1023");
-            board1 = new Board(23, 23);
+            board1 = new Board(23, 23, "boardJoy");
             board1.IDMembers.Add(1023);
-            board2 = new Board(2023, 2023);
+            board2 = new Board(2023, 2023, "boardJoy");
             board2.IDAdmin.Add(1023);
-            board3 = new Board(3023, 3023);
+            board3 = new Board(3023, 3023, "boardJoy");
             board3.IDMembers.Add(1023);
             baseBoards = new Dictionary<int, Board>
             {
@@ -1043,11 +1046,11 @@ namespace TaskManager.Tests.TestCaseSource
             };
 
             expClient = new Client(1023, "1023");
-            expBoard1 = new Board(23, 23);
+            expBoard1 = new Board(23, 23, "boardJoy");
             expBoard1.IDMembers.Add(1023);
-            expBoard2 = new Board(2023, 2023);
+            expBoard2 = new Board(2023, 2023, "boardJoy");
             expBoard2.IDAdmin.Add(1023);
-            expBoard3 = new Board(3023, 3023);
+            expBoard3 = new Board(3023, 3023, "boardJoy");
             expBoard3.IDMembers.Add(1023);
             expectedBoards = new List<Board>
             {
@@ -1062,7 +1065,7 @@ namespace TaskManager.Tests.TestCaseSource
         {
             //1. Проверяем, когда Админ может поменять роль у Мембера
 
-            Board activeBoard = new Board(11, 11);
+            Board activeBoard = new Board(11, 11, "boardJoy");
             Client client = new Client(1, "1");
             Client member = new Client(10, "10");
             Client member2 = new Client(20, "20");
@@ -1075,7 +1078,7 @@ namespace TaskManager.Tests.TestCaseSource
                 {activeBoard.NumberBoard, activeBoard }
             };
 
-            Board expActiveBoard = new Board(11, 11);
+            Board expActiveBoard = new Board(11, 11, "boardJoy");
             Client expClient = new Client(1, "1");
             Client expMember = new Client(10, "10");
             Client expMember2 = new Client(20, "20");
@@ -1091,7 +1094,7 @@ namespace TaskManager.Tests.TestCaseSource
 
             //2. Проверяем, что Мембер не может поменять роль у Мембера
 
-            activeBoard = new Board(12, 1);
+            activeBoard = new Board(12, 1, "boardJoy");
             client = new Client(12, "12");
             member = new Client(102, "102");
             member2 = new Client(202, "202");
@@ -1104,7 +1107,7 @@ namespace TaskManager.Tests.TestCaseSource
                 {activeBoard.NumberBoard, activeBoard }
             };
 
-            expActiveBoard = new Board(12, 1);
+            expActiveBoard = new Board(12, 1, "boardJoy");
             expClient = new Client(12, "12");
             expMember = new Client(102, "102");
             expMember2 = new Client(202, "202");
@@ -1120,8 +1123,8 @@ namespace TaskManager.Tests.TestCaseSource
 
             //3. Проверяем, когда Админ пытается поменять роль у Мембера, которого нет в этой доске
 
-            activeBoard = new Board(13, 13);
-            Board otherBoard = new Board(50, 50);
+            activeBoard = new Board(13, 13, "boardJoy");
+            Board otherBoard = new Board(50, 50, "boardJoy");
             Client otherClient = new Client(49, "49");
             client = new Client(13, "13");
             member = new Client(103, "103");
@@ -1136,8 +1139,8 @@ namespace TaskManager.Tests.TestCaseSource
                 {otherBoard.NumberBoard, otherBoard }
             };
 
-            expActiveBoard = new Board(13, 13);
-            Board expOtherBoard = new Board(50, 50);
+            expActiveBoard = new Board(13, 13, "boardJoy");
+            Board expOtherBoard = new Board(50, 50, "boardJoy");
             Client expOtherClient = new Client(49, "49");
             expClient = new Client(13, "13");
             expMember = new Client(103, "103");
@@ -1155,7 +1158,7 @@ namespace TaskManager.Tests.TestCaseSource
 
             //4. Проверяем, когда Админ пытается поменять роль у другого Админа (хотя метод рассчитан на изменение статуса Мембера на Админа)
 
-            activeBoard = new Board(134, 134);
+            activeBoard = new Board(134, 134, "boardJoy");
             client = new Client(134, "134");
             member = new Client(1034, "1034");
             member2 = new Client(2034, "2034");
@@ -1168,7 +1171,7 @@ namespace TaskManager.Tests.TestCaseSource
                 {activeBoard.NumberBoard, activeBoard }
             };
 
-            expActiveBoard = new Board(134, 134);
+            expActiveBoard = new Board(134, 134, "boardJoy");
             expClient = new Client(134, "134");
             expMember = new Client(1034, "1034");
             expMember2 = new Client(2034, "2034");
@@ -1187,7 +1190,7 @@ namespace TaskManager.Tests.TestCaseSource
         {
             //1. Проверяем, когда Админ может поменять роль у другого Админа
 
-            Board activeBoard = new Board(111, 111);
+            Board activeBoard = new Board(111, 111, "boardTwo");
             Client client = new Client(111, "111");
             Client admin = new Client(11, "11");
             Client member = new Client(101, "101");
@@ -1201,7 +1204,7 @@ namespace TaskManager.Tests.TestCaseSource
                 {activeBoard.NumberBoard, activeBoard }
             };
 
-            Board expActiveBoard = new Board(111, 111);
+            Board expActiveBoard = new Board(111, 111, "boardTwo");
             Client expAdmin = new Client(11, "11");
             Client expClient = new Client(111, "111");
             Client expMember = new Client(101, "101");
@@ -1218,7 +1221,7 @@ namespace TaskManager.Tests.TestCaseSource
 
             //2. Проверяем, что Админ не может пенести Мембера (т.к. метод направлен на изменение статуса из Админа в Мембера)
 
-            activeBoard = new Board(1112, 1112);
+            activeBoard = new Board(1112, 1112, "boardTwo");
             client = new Client(1112, "1112");
             admin = new Client(112, "112");
             member = new Client(1012, "1012");
@@ -1232,7 +1235,7 @@ namespace TaskManager.Tests.TestCaseSource
                 {activeBoard.NumberBoard, activeBoard }
             };
 
-            expActiveBoard = new Board(1112, 1112);
+            expActiveBoard = new Board(1112, 1112, "boardTwo");
             expAdmin = new Client(112, "112");
             expClient = new Client(1112, "1112");
             expMember = new Client(1012, "1012");
@@ -1249,7 +1252,7 @@ namespace TaskManager.Tests.TestCaseSource
 
             //3. Проверяем, что Мембер не может пенести из Админа другого Мембера
 
-            activeBoard = new Board(11123, 11123);
+            activeBoard = new Board(11123, 11123, "boardTwo");
             client = new Client(77, "77");
             admin = new Client(1123, "1123");
             member = new Client(10123, "10123");
@@ -1264,7 +1267,7 @@ namespace TaskManager.Tests.TestCaseSource
                 {activeBoard.NumberBoard, activeBoard }
             };
 
-            expActiveBoard = new Board(11123, 11123);
+            expActiveBoard = new Board(11123, 11123, "boardTwo");
             expAdmin = new Client(1123, "1123");
             expClient = new Client(77, "77");
             expMember = new Client(10123, "10123");
@@ -1282,8 +1285,8 @@ namespace TaskManager.Tests.TestCaseSource
 
             //4. Проверяем, когда Админ пытается изменить статус у др. Админа, который не состоит в текущей доске
 
-            activeBoard = new Board(11124, 11124);
-            Board otherBoard = new Board(13, 13);
+            activeBoard = new Board(11124, 11124, "boardTwo");
+            Board otherBoard = new Board(13, 13, "boardTwo");
             Client otherClient = new Client(13, "13");
             client = new Client(11124, "11124");
             admin = new Client(1124, "1124");
@@ -1299,8 +1302,8 @@ namespace TaskManager.Tests.TestCaseSource
                 {otherBoard.NumberBoard, otherBoard }
             };
 
-            expActiveBoard = new Board(11124, 11124);
-            Board expOtherBoard = new Board(13, 13);
+            expActiveBoard = new Board(11124, 11124, "boardTwo");
+            Board expOtherBoard = new Board(13, 13, "boardTwo");
             Client expOtherClient = new Client(13, "13");
             expAdmin = new Client(1124, "1124");
             expClient = new Client(11124, "11124");
@@ -1323,11 +1326,11 @@ namespace TaskManager.Tests.TestCaseSource
             //1. Получаем 3 и 4 доски, в которых наш клиент не состоит
 
             Client client = new Client(1, "1");
-            Board boardA = new Board(1, 1);
-            Board boardB = new Board(2, 2);
+            Board boardA = new Board(1, 1, "nameOfBoard");
+            Board boardB = new Board(2, 2, "nameOfBoard");
             boardB.IDMembers.Add(1);
-            Board boardC = new Board(3, 3);
-            Board boardD = new Board(4, 4);
+            Board boardC = new Board(3, 3, "nameOfBoard");
+            Board boardD = new Board(4, 4, "nameOfBoard");
             List<int> baseNumberBoardsForUser = new List<int> { 1, 2 };
             Dictionary<int, Board> baseBoards = new Dictionary<int, Board>
             {
@@ -1337,8 +1340,8 @@ namespace TaskManager.Tests.TestCaseSource
                 {boardD.NumberBoard, boardD },
             };
 
-            Board expBoardC = new Board(3, 3);
-            Board expBoardD = new Board(4, 4);
+            Board expBoardC = new Board(3, 3, "nameOfBoard");
+            Board expBoardD = new Board(4, 4, "nameOfBoard");
             List<Board> expectedBoards = new List<Board> { expBoardC, expBoardD };
 
             yield return new Object[] { baseNumberBoardsForUser, baseBoards, client, expectedBoards };
@@ -1346,12 +1349,12 @@ namespace TaskManager.Tests.TestCaseSource
             //2. Получаем пустой лист, т.к. клиент состоит во всех имеющихся досках
 
             client = new Client(12, "12");
-            boardA = new Board(12, 12);
-            boardB = new Board(22, 22);
+            boardA = new Board(12, 12, "nameOfBoard");
+            boardB = new Board(22, 22, "nameOfBoard");
             boardB.IDMembers.Add(11);
-            boardC = new Board(33, 33);
+            boardC = new Board(33, 33, "nameOfBoard");
             boardC.IDMembers.Add(11);
-            boardD = new Board(44, 44);
+            boardD = new Board(44, 44, "nameOfBoard");
             boardD.IDAdmin.Add(11);
             baseNumberBoardsForUser = new List<int> { 12, 22, 33, 44 };
             baseBoards = new Dictionary<int, Board>

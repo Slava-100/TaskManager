@@ -23,12 +23,12 @@ namespace TaskManager.Handler
                             userService.SetHandler(new AddTaskHandler());
                             userService.HandleUpdate(update);
                             break;
-                        //case "SelectTask":
-                        //    userService.SetHandler(new SelectTaskHandler());
-                        //    userService.HandleUpdate(update);
-                        //    break;
+                        case "SelectTask":
+                            userService.SetHandler(new SelectTaskHandler());
+                            userService.HandleUpdate(update);
+                            break;
                         case "DeleteTask":
-                            userService.SetHandler(new DeleteBoardHandler());
+                            userService.SetHandler(new DeleteIssueHandler(new ShowTasksHandler()));
                             userService.HandleUpdate(update);
                             break;
                         case "BackToShowAllTasks":
@@ -54,7 +54,7 @@ namespace TaskManager.Handler
             {
                 foreach (Issue i in spisokIssues)
                 {
-                    s += $"Номер задачи: {i.NumberIssue} \nОписание задачи: \n{i.Description}\n";
+                    s += $"Номер задачи: {i.NumberIssue} \nОписание задачи: \n{i.Description}\nСтатус задачи:\n {i.Status}\n";
                 }
                 userService.TgClient.SendTextMessageAsync(userService.Id, s, replyMarkup: ButtonListIsNotEmpty(userService));
             }
@@ -94,7 +94,7 @@ namespace TaskManager.Handler
                     });
             }
 
-            return keyboard;    
+            return keyboard;
         }
 
         private InlineKeyboardMarkup ButtonListIsNotEmpty(UserService userService)
@@ -120,7 +120,7 @@ namespace TaskManager.Handler
             else
             {
                 keyboard = new InlineKeyboardMarkup(
-                    new[]
+                                            new[]
                         {
                         new[]
                         {

@@ -24,25 +24,19 @@ namespace TaskManager.Handler
                             userService.HandleUpdate(update);
                             break;
 
-
                         case "ShowAllMyIssues":
-                            ShowsAllIssuesInBoard(userService);
-
+                            //ShowsAllIssuesInBoard(userService);
                             userService.SetHandler(new ShowIssueHandler());
                             userService.HandleUpdate(update);
                             break;
 
+                        case "ShowDoneAndReviewMyIssues":
+                            ShowsDoneAndReviewIssuesForMember(userService);
 
-                        case "ShowDoneMyIssues":
-                            ShowsDoneIssuesForMember(userService);
-
-                            userService.SetHandler(new ShowsDoneIssuesHandler());
-                            userService.HandleUpdate(update);
                             break;
 
                         case "ShowFreeIssues":
                             ShowsFreeIssuesForMember(userService);
-
                             userService.SetHandler(new ShowsFreeIssuesInBoardHandler());
                             userService.HandleUpdate(update);
                             break;
@@ -92,13 +86,13 @@ namespace TaskManager.Handler
         private async void ShowsAllIssuesInBoard(UserService userService)
         {
             await userService.TgClient.SendTextMessageAsync
-                (userService.Id, $"Перед вами список всех ваших задач в текущей доске: \n" +
-                $" {GetAllIssuesInBoard(userService)}", replyMarkup: GetBackButton());
+                (userService.Id, $"Перед вами список всех ваших задач в исполнении в текущей доске: \n" +
+                $" {GetAllIssuesInProgressForClientInBoard(userService)}", replyMarkup: GetBackButton());
         }
 
-        private string GetAllIssuesInBoard(UserService userService)
+        private string GetAllIssuesInProgressForClientInBoard(UserService userService)
         {
-            List<Issue> issues = userService.ClientUserService.GetAllIssuesInBoardByBoard();
+            List<Issue> issues = userService.ClientUserService.GetIssuesInProgressForClientInBoard();
             if (issues.Count > 0)
             {
                 string result = $"{issues[0]}";
@@ -114,16 +108,16 @@ namespace TaskManager.Handler
             }
         }
 
-        private async void ShowsDoneIssuesForMember(UserService userService)
+        private async void ShowsDoneAndReviewIssuesForMember(UserService userService)
         {
             await userService.TgClient.SendTextMessageAsync
                 (userService.Id, $"Перед вами список всех выполненных вами задач текущей доски: \n" +
-                $" {GetIssuesDoneInBoard(userService)}", replyMarkup: GetBackButton());
+                $" {GetIssuesReviewAndDoneInBoard(userService)}", replyMarkup: GetBackButton());
         }
 
-        private string GetIssuesDoneInBoard(UserService userService)
+        private string GetIssuesReviewAndDoneInBoard(UserService userService)
         {
-            List<Issue> issues = userService.ClientUserService.GetIssuesDoneInBoardByBoard();
+            List<Issue> issues = userService.ClientUserService.GetIssuesReviewAndDoneForClientInBoard();
             if (issues.Count > 0)
             {
                 string result = $"{issues[0]}";
@@ -148,7 +142,7 @@ namespace TaskManager.Handler
 
         private string GetIssuesFreeInBoard(UserService userService)
         {
-            List<Issue> issues = userService.ClientUserService.GetIssuesFreeInBoardByBoard();
+            List<Issue> issues = userService.ClientUserService.GetIssuesFreeInBoardForClientByBoard();
             if (issues.Count > 0)
             {
                 string result = $"{issues[0]}";
