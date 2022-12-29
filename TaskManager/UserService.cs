@@ -10,6 +10,8 @@ namespace TaskManager
 
         private IHandler _handler;
 
+        public string AccName { get; set; }
+
         public long Id { get; set; }
 
         public string Name { get; set; }
@@ -31,6 +33,11 @@ namespace TaskManager
         public void SetHandler(IHandler handler)
         {
             _handler = handler;
+        }
+
+        public IHandler GetHandler()
+        {
+            return _handler;
         }
 
         public void HandleUpdate(Update update)

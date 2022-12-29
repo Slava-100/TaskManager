@@ -7,7 +7,7 @@ namespace TaskManager
 {
     public class TelegramService
     {
-        private Dictionary<long, UserService> _userService = new Dictionary<long, UserService>();
+        private CollectionUserServices _collectionUserServices = CollectionUserServices.GetInstance();
 
         private DataStorage _dataStorage = DataStorage.GetInstance();
 
@@ -50,12 +50,14 @@ namespace TaskManager
 
                         if (text == "/start")
                         {
-                            if (!_userService.ContainsKey(chatId))
+                            if (!_collectionUserServices._userService.ContainsKey(chatId))
                             {
-                                _userService.Add(chatId, new UserService(chatId, update.Message.Chat.FirstName, _bot));
+                                UserService userService = new UserService(chatId, update.Message.Chat.FirstName, _bot);
+                                userService.AccName = "@" + update.Message.Chat.Username;
+                                _collectionUserServices._userService.Add(chatId, userService);
                             }
                         }
-                        else if (!_userService.ContainsKey(chatId) && text != "/start")
+                        else if (!_collectionUserServices._userService.ContainsKey(chatId) && text != "/start")
                         {
                             _bot.SendTextMessageAsync(chatId, "Для начала работы с ботом введите /start");
                             chatId = -1;
@@ -63,7 +65,7 @@ namespace TaskManager
                     }
                     break;
                 case UpdateType.CallbackQuery:
-                    if (!_userService.ContainsKey(update.CallbackQuery.Message.Chat.Id))
+                    if (!_collectionUserServices._userService.ContainsKey(update.CallbackQuery.Message.Chat.Id))
                     {
                         _bot.SendTextMessageAsync(update.CallbackQuery.Message.Chat.Id, "Для начала работы с ботом введите /start");
                     }
@@ -77,13 +79,13 @@ namespace TaskManager
 
             if (chatId != -1)
             {
-                _userService[chatId].HandleUpdate(update);
+                _collectionUserServices._userService[chatId].HandleUpdate(update);
             }
         }
 
         public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
-            foreach (var userService in _userService)
+            foreach (var userService in _collectionUserServices._userService)
             {
                 _bot.SendTextMessageAsync(userService.Key, $"Я СЛОМАЛСЯ! \n{exception}");
             }

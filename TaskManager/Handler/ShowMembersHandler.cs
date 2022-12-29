@@ -56,14 +56,14 @@ namespace TaskManager.Handler
 
             foreach (long i in userService.ClientUserService.GetActiveBoard().IDAdmin)
             {
-                s += $"Id участника: {i} Имя участника: {DataStorage.GetInstance().Clients[i].NameUser}\n";    
+                s += $"Id участника: {i} Имя участника: {DataStorage.GetInstance().Clients[i].NameUser} {CollectionUserServices.GetInstance()._userService[i].AccName}\n";    
             }
 
             s += "Участники:\n";
 
             foreach (long i in userService.ClientUserService.GetActiveBoard().IDMembers)
             {
-                s += $"Id участника: {i} Имя участника: {DataStorage.GetInstance().Clients[i].NameUser}\n";
+                s += $"Id участника: {i} Имя участника: {DataStorage.GetInstance().Clients[i].NameUser} {CollectionUserServices.GetInstance()._userService[i].AccName}\n";
             }
 
             userService.TgClient.SendTextMessageAsync(userService.Id, s, replyMarkup: Button(userService));

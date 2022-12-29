@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Handl;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -67,6 +68,13 @@ namespace TaskManager.Handler
                     {
                         userService.ClientUserService.GetActiveBoard().IDMembers.Add(numberClient);
                         DataStorage.GetInstance().Clients[numberClient].BoardsForUser.Add(userService.ClientUserService.GetActiveBoard().NumberBoard);
+
+                        if (CollectionUserServices.GetInstance()._userService[numberClient].GetHandler() is WorkWithBoardHandler)
+                        {
+                            CollectionUserServices.GetInstance()._userService[numberClient].SetHandler(new MainMenuHandler());
+                            CollectionUserServices.GetInstance()._userService[numberClient].HandleUpdate(update);
+                        }
+
                         DataStorage.GetInstance().RewriteFileForClients();
                         DataStorage.GetInstance().RewriteFileForBoards();
 
