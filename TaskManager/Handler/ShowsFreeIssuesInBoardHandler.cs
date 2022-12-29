@@ -39,22 +39,28 @@ namespace TaskManager.Handler
                         && int.TryParse(update.Message.Text, out var numberIssue)
                         && freeIssues.Any(crntIssue => crntIssue.NumberIssue == numberIssue))
                     {
-                        userService.ClientUserService.AttachIssueToClient(numberIssue);
-                        userService.TgClient.SendTextMessageAsync(userService.Id, $"Теперь задача с номером {numberIssue} находится в вашем исполнении.", replyMarkup: GetBackButton());
+                        if (userService.ClientUserService.AttachIssueToClient(numberIssue))
+                        {
+                            await userService.TgClient.SendTextMessageAsync(userService.Id, $"Теперь задача с номером {numberIssue} находится в вашем исполнении.", replyMarkup: GetBackButton());
+                        }
+                        else
+                        {
+                            await userService.TgClient.SendTextMessageAsync(userService.Id, "У вас может быть только 1 задача в исполнении.", replyMarkup: GetBackButton());
+                        }
 
                     }
                     else if (!int.TryParse(update.Message.Text, out numberIssue))
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вам необходимо ввести числовое значение номера задания", replyMarkup: GetBackButton());
+                        await userService.TgClient.SendTextMessageAsync(userService.Id, "Вам необходимо ввести числовое значение номера задания", replyMarkup: GetBackButton());
                     }
                     else if (!freeIssues.Any(crntBoard => crntBoard.NumberIssue == numberIssue))
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Задания с введенным вами номером нет в текущей доске.", replyMarkup: GetBackButton());
+                        await userService.TgClient.SendTextMessageAsync(userService.Id, "Задания с введенным вами номером нет в текущей доске.", replyMarkup: GetBackButton());
                         AsksToEnterIssueNumber(userService);
                     }
                     else if (update.Message.Text == null)
                     {
-                        userService.TgClient.SendTextMessageAsync(userService.Id, "Вы не ввели номер задания, попробуйте ещё раз", replyMarkup: GetBackButton());
+                        await userService.TgClient.SendTextMessageAsync(userService.Id, "Вы не ввели номер задания, попробуйте ещё раз", replyMarkup: GetBackButton());
                     }
                     break;
                 default:
