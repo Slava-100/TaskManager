@@ -49,7 +49,7 @@ namespace TaskManager.Handler
         private InlineKeyboardMarkup Button(UserService userService)
         {
             InlineKeyboardMarkup keyboard;
-            if (userService.ClientUserService.GetRole() == "Админ")
+            if (userService.ClientUserService.GetActiveBoard().OwnerBoard == userService.Id)
             {
                 keyboard = new InlineKeyboardMarkup(
                     new[]
