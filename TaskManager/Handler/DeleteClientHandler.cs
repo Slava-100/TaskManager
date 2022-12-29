@@ -97,6 +97,13 @@ namespace TaskManager.Handler
                         else
                         {
                             userService.ClientUserService.GetActiveBoard().IDAdmin.Remove(numberClient);
+
+                            if (CollectionUserServices.GetInstance()._userService.ContainsKey(numberClient) && userService.ClientUserService.GetActiveBoard() == CollectionUserServices.GetInstance()._userService[numberClient].ClientUserService.GetActiveBoard())
+                            {
+                                CollectionUserServices.GetInstance()._userService[numberClient].SetHandler(new StartHandler());
+                                CollectionUserServices.GetInstance()._userService[numberClient].HandleUpdate(update);
+                            }
+
                             userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник удален");
                             DataStorage.GetInstance().Clients[numberClient].BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
                         }
