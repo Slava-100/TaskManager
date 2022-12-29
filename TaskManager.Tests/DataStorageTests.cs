@@ -70,14 +70,11 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(DataStorageTestCaseSource), nameof(DataStorageTestCaseSource.RemoveBoardTestSource))]
         public void RemoveBoardTest(Dictionary<int, Board> baseBoards, int boardNumber, Dictionary<int, Board> expectedBoards, bool expectedBool)
         {
-            //Given
             _dataStorage.Boards = baseBoards;
 
-            //When
             bool actualBool = _dataStorage.RemoveBoard(boardNumber);
             Dictionary<int, Board> actualBoards = _dataStorage.Boards;
 
-            //Then
             Assert.That(actualBool, Is.EqualTo(expectedBool));
             actualBoards.Should().BeEquivalentTo(expectedBoards);
         }
@@ -85,16 +82,13 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(DataStorageTestCaseSource), nameof(DataStorageTestCaseSource.AddBoardTestSource))]
         public void AddBoardTest(Dictionary<int, Board> baseBoards, Dictionary<long, Client> baseClients, long idAdmin, Board expectedBoard, int expectedNumberBoard, string nameBoard)
         {
-            //Given
             _dataStorage.Boards = baseBoards;
             _dataStorage.Clients = baseClients;
 
 
-            //When
             int actualNumberBoard = _dataStorage.AddBoard(idAdmin, nameBoard);
             Dictionary<int, Board> actualBoards = _dataStorage.Boards;
 
-            //Then
             Assert.That(actualNumberBoard, Is.EqualTo(expectedNumberBoard));
             Assert.That(_dataStorage.Boards[expectedNumberBoard].IDAdmin.Contains(idAdmin)
                 && _dataStorage.Boards[expectedNumberBoard].NameBoard == expectedBoard.NameBoard
@@ -116,76 +110,6 @@ namespace TaskManager.Tests
             File.Delete(_pathClient);
             File.Delete(_pathBoards);
         }
-
-        //[Test]
-        //public void testboard()
-        //{
-        //    string path = @".\mazafakatest.txt";
-
-        //    Board expectedBoard = new Board(1,11);
-
-        //    using (StreamWriter sw = new StreamWriter(path))
-        //    {
-        //        string serialiseForFile = JsonSerializer.Serialize(expectedBoard);
-        //        sw.WriteLine(serialiseForFile);
-        //    }
-
-        //    Board actualBoard = new Board();
-
-        //    using (StreamReader sr = new StreamReader(path))
-        //    {
-        //        string jsn = sr.ReadLine();
-        //        actualBoard = JsonSerializer.Deserialize<Board>(jsn);
-        //    }
-
-        //    Assert.AreEqual(expectedBoard, actualBoard);
-
-        //}
-
-        //[TestCaseSource(typeof(TestCaseForRewriteAndReturnTest))]
-        //public void RewriteFileTest(Dictionary<int, Board> boards, Dictionary<long, User> users)
-        //{
-        //    _dataStorage.Boards = boards;
-        //    _dataStorage.Clients = users;
-        //    _dataStorage.RewriteFile();
-        //    using (StreamReader sr = new StreamReader(_dataStorage.Path))
-        //    {
-        //        string jsn = sr.ReadLine();
-        //        _dataStorage.Boards = JsonSerializer.Deserialize<Dictionary<int, Board>>(jsn);
-        //        jsn = sr.ReadLine();
-        //        _dataStorage.Clients = JsonSerializer.Deserialize<Dictionary<long, User>>(jsn);
-        //    }
-        //    Dictionary<int, Board> expectedBoards = boards;
-        //    Dictionary<int, Board> actualBoards = _dataStorage.Boards;
-        //    Dictionary<long, User> expectedUsers = users;
-        //    Dictionary<long, User> actualUsers = _dataStorage.Clients;
-
-        //    CollectionAssert.AreEqual(expectedBoards, actualBoards);
-        //    CollectionAssert.AreEqual(expectedUsers, actualUsers);
-        //}
-
-        //[TestCaseSource(typeof(TestCaseForRewriteAndReturnTest))]
-        //public void ReturnFromFIleTest(Dictionary<int, Board> boards, Dictionary<long, User> users)
-        //{
-        //    _dataStorage.Boards = boards;
-        //    _dataStorage.Clients = users;
-
-        //    using (StreamWriter sw = new StreamWriter(_dataStorage.Path))
-        //    {
-        //        string serialiseToFile = JsonSerializer.Serialize(_dataStorage.Boards);
-        //        sw.WriteLine(serialiseToFile);
-        //        serialiseToFile = JsonSerializer.Serialize(_dataStorage.Clients);
-        //        sw.WriteLine(serialiseToFile);
-        //    }
-        //    _dataStorage.ReturnFromFile();
-        //    Dictionary<int, Board> expectedBoards = boards;
-        //    Dictionary<int, Board> actualBoards = _dataStorage.Boards;
-        //    Dictionary<long, User> expectedUsers = users;
-        //    Dictionary<long, User> actualUsers = _dataStorage.Clients;
-
-        //    CollectionAssert.AreEqual(expectedBoards,actualBoards);
-        //    CollectionAssert.AreEqual(expectedUsers,actualUsers);
-        //}
     }
 }
 
