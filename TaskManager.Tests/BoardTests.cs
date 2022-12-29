@@ -27,7 +27,7 @@ namespace TaskManager.Tests
             Board board = new Board(1, 1, "name");
             board.Issues.Add(blockedByCurrentIssue);
             board.Issues.Add(blockingCurrentIssue);
-            board.AddBlokingAndBlockedByIssue(blockedByCurrentIssue.NumberIssue, blockingCurrentIssue.NumberIssue);
+            board.SetBlockforIssue(blockedByCurrentIssue.NumberIssue, blockingCurrentIssue.NumberIssue);
 
             var actualBlockedByCurrentIssue = blockingCurrentIssue.BlockedByCurrentIssue;
             var actualBlockingIssues = blockedByCurrentIssue.BlockingIssues;
@@ -57,7 +57,7 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetAllIssuesInBoardTestCaseSource))]
         public void GetAllIssuesInBoardTest(Board baseBoard, long idUser, List<Issue> expectedIssues)
         {
-            List<Issue> actualIssues = baseBoard.GetAllIssuesForClientInBoard(idUser);
+            List<Issue> actualIssues = baseBoard.GetAllIssuesAbountIdUser(idUser);
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
@@ -65,7 +65,7 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(BoardTestCaseSource), nameof(BoardTestCaseSource.GetIssuesDoneInBoardTestCaseSource))]
         public void GetIssuesDoneInBoardTest(Board baseBoard, long idUser, List<Issue> expectedIssues)
         {
-            List<Issue> actualIssues = baseBoard.GetIssuesDoneForClientInBoard(idUser);
+            List<Issue> actualIssues = baseBoard.GetIssuesDoneForUser(idUser);
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }

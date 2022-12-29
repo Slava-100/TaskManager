@@ -1,5 +1,4 @@
-﻿using TaskManager;
-using TaskManager.Enums;
+﻿using TaskManager.Enums;
 
 namespace TaskManager
 {
@@ -17,9 +16,9 @@ namespace TaskManager
             return board.RemoveIssue(numberIssue);
         }
 
-        public void AddBlokingAndBlockedByIssue(Board board, int blockedByCurrentIssue, int blockingCurrentIssue)
+        public void SetBlockforIssue(Board board, int blockedByCurrentIssue, int blockingCurrentIssue)
         {
-            board.AddBlokingAndBlockedByIssue(blockedByCurrentIssue, blockingCurrentIssue);
+            board.SetBlockforIssue(blockedByCurrentIssue, blockingCurrentIssue);
         }
 
         public bool RemoveBoard(int numberBoard)
@@ -31,13 +30,13 @@ namespace TaskManager
 
         public void ChangeRoleFromMemberToAdmin(long idMemeber, Board board)
         {
-            board.ChangeRoleFromMemberToAdmin(idMemeber);
+            board.ChangeRoleMemberToAdmin(idMemeber);
             _dataStorage.RewriteFileForBoards();
         }
 
         public void ChangeRoleFromAdminToMember(long idAdmin, Board board)
         {
-            board.ChangeRoleFromAdminToMember(idAdmin);
+            board.ChangeRoleAdminToMember(idAdmin);
             _dataStorage.RewriteFileForBoards();
         }
 
@@ -47,15 +46,14 @@ namespace TaskManager
             _dataStorage.RewriteFileForBoards();
         }
 
-        public List<Issue> GetAllIssuesInBoard( Board board)
+        public List<Issue> GetAllIssuesInBoard(Board board)
         {
             return board.GetAllIssuesInBoard();
         }
 
-        public List<Issue> GetAllIssuesReviewForAllClientsInBoard(Board board)
+        public List<Issue> GetIssuesReviewForUsersBoard(Board board)
         {
-            return board.GetAllIssuesReviewForAllClientsInBoard();
+            return board.GetIssuesReviewForUsersBoard();
         }
     }
 }
-

@@ -1,5 +1,4 @@
-﻿using TaskManager;
-using TaskManager.Enums;
+﻿using TaskManager.Enums;
 
 namespace TaskManager
 {
@@ -15,7 +14,7 @@ namespace TaskManager
             _dataStorage.RewriteFileForClients();
         }
 
-        public void MoveIssueFromInProgressToBacklog(Board board, int IdIssue, long iDUser)
+        public void MoveIssueToBacklog(Board board, int IdIssue, long iDUser)
         {
             var issue = board.Issues.FirstOrDefault(currentIssue => IdIssue == currentIssue.NumberIssue);
             if (issue.IdUser == iDUser)
@@ -26,7 +25,7 @@ namespace TaskManager
             }
         }
 
-        public void MoveIssueFromInProgressToReview(Board board, int IdIssue, long iDUser)
+        public void MoveIssueToReview(Board board, int IdIssue, long iDUser)
         {
             var issue = board.Issues.FirstOrDefault(currentIssue => IdIssue == currentIssue.NumberIssue);
             if (issue.IdUser == iDUser)
@@ -36,36 +35,34 @@ namespace TaskManager
             }
         }
 
-        public List<Issue> GetAllIssuesInBoardByIdUser(long idUser, Board board)
+        public List<Issue> GetAllIssuesAbountIdUser(long idUser, Board board)
         {
-            return board.GetAllIssuesForClientInBoard(idUser).OrderBy(issue => issue.Status).ToList();
+            return board.GetAllIssuesAbountIdUser(idUser).OrderBy(issue => issue.Status).ToList();
         }
 
-        public List<Issue> GetIssuesInProfressForClientInBoard(long idUser, Board board)
+        public List<Issue> GetIssuesInProgressForUser(long idUser, Board board)
         {
-            return board.GetIssuesInProfressForClientInBoard(idUser);
-        }
-              
-
-        public List<Issue> GetIssuesDoneInBoardByIdUser(long idUser, Board board)
-        {
-            return board.GetIssuesDoneForClientInBoard(idUser);
+            return board.GetIssuesInProgressUser(idUser);
         }
 
-        public List<Issue> GetIssuesReviewAndDoneInBoard(long idUser, Board board)
+        public List<Issue> GetIssuesDoneForUser(long idUser, Board board)
         {
-            return board.GetIssuesReviewAndDoneForClientInBoard(idUser);
-        }
-        
-
-        public List<Issue> GetIssuesReviewInBoard(long idUser, Board board)
-        {
-            return board.GetIssuesReviewForClientInBoard(idUser);
+            return board.GetIssuesDoneForUser(idUser);
         }
 
-        public List<Issue> GetIssuesFreeInBoardByIdUser(long idUser, Board board)
+        public List<Issue> GetIssuesCompletedForUser(long idUser, Board board)
         {
-            return board.GetIssuesFreeForClientInBoard(idUser);
+            return board.GetIssuesCompletedForUser(idUser);
+        }
+
+        public List<Issue> GetIssuesReviewForUser(long idUser, Board board)
+        {
+            return board.GetIssuesReviewForUser(idUser);
+        }
+
+        public List<Issue> GetIssuesFreeInBoard(long idUser, Board board)
+        {
+            return board.GetIssuesFreeInBoard(idUser);
         }
     }
 }

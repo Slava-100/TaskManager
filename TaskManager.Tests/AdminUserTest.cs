@@ -56,7 +56,7 @@ namespace TaskManager.Tests
         public void GetAllIssuesInBoardByIdUserTest(long idUser, Board board, List<Issue> expectedIssues)
         {
             AdminUser adminUser= new AdminUser();
-            List<Issue> actualIssues = adminUser.GetAllIssuesInBoardByIdUser(idUser, board);
+            List<Issue> actualIssues = adminUser.GetAllIssuesAbountIdUser(idUser, board);
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
@@ -65,7 +65,7 @@ namespace TaskManager.Tests
         public void GetIssuesDoneInBoardByIdUserTest(long idUser, Board board, List<Issue> expectedIssues)
         {
             AdminUser adminUser = new AdminUser();
-            List<Issue> actualIssues = adminUser.GetIssuesDoneInBoardByIdUser(idUser, board);
+            List<Issue> actualIssues = adminUser.GetIssuesDoneForUser(idUser, board);
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);
         }
