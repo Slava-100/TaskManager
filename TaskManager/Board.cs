@@ -11,7 +11,7 @@ namespace TaskManager
 
         public int NumberBoard { get; set; }
 
-        public string NameBoard { get;private  set; }
+        public string NameBoard { get;  set; }
 
         public List<long> IDMembers { get;  set; }
 
