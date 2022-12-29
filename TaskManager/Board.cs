@@ -19,7 +19,7 @@ namespace TaskManager
 
         public List<Issue> Issues { get; set; }
 
-        public long Key { get;private set; }
+        public long Key { get; set; }
 
         public Board(int numberBoard, long idAdmin, string nameBoard)
         {
