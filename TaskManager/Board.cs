@@ -7,13 +7,13 @@ namespace TaskManager
     {
         private int _numberNextIssue = 1;
 
-        public int NumberBoard { get; set; }
+        public int NumberBoard { get;  set; }
 
-        public string NameBoard { get; set; }
+        public string NameBoard { get;  set; }
 
-        public List<long> IDMembers { get; set; }
+        public List<long> IDMembers { get;  set; }
 
-        public List<long> IDAdmin { get; set; }
+        public List<long> IDAdmin { get;  set; }
 
         public List<Issue> Issues { get; set; }
 
@@ -153,7 +153,7 @@ namespace TaskManager
             }
         }
 
-        public void AddBlokingAndBlockedByIssue(int blockedByCurrentIssue, int blockingCurrentIssue)
+        public void SetBlockforIssue(int blockedByCurrentIssue, int blockingCurrentIssue)
         {
             foreach (var currentIssue in Issues)
             {
@@ -168,7 +168,7 @@ namespace TaskManager
             }
         }
 
-        public List<Issue> GetAllIssuesForClientInBoard(long idUser)
+        public List<Issue> GetAllIssuesAbountIdUser(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
 
@@ -183,7 +183,7 @@ namespace TaskManager
             return allIssues;
         }
 
-        public List<Issue> GetIssuesInProfressForClientInBoard(long idUser)
+        public List<Issue> GetIssuesInProgressUser(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
 
@@ -198,7 +198,7 @@ namespace TaskManager
             return allIssues;
         }
 
-        public List<Issue> GetIssuesDoneForClientInBoard(long idUser)
+        public List<Issue> GetIssuesDoneForUser(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
             if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
@@ -213,7 +213,7 @@ namespace TaskManager
             return new List<Issue>();
         }
 
-        public List<Issue> GetIssuesReviewAndDoneForClientInBoard(long idUser)
+        public List<Issue> GetIssuesCompletedForUser(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
             if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
@@ -228,7 +228,7 @@ namespace TaskManager
             return new List<Issue>();
         }
 
-        public List<Issue> GetIssuesReviewForClientInBoard(long idUser)
+        public List<Issue> GetIssuesReviewForUser(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
             if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
@@ -236,14 +236,16 @@ namespace TaskManager
                 foreach (Issue issue in Issues)
                 {
                     if ((issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.Review))
+                    {
                         allIssues.Add(issue);
+                    }
                 }
                 return allIssues;
             }
             return new List<Issue>();
         }
 
-        public List<Issue> GetIssuesFreeForClientInBoard(long idUser)
+        public List<Issue> GetIssuesFreeInBoard(long idUser)
         {
             List<Issue> allIssues = new List<Issue>();
             if (IDMembers.Contains(idUser) || IDAdmin.Contains(idUser))
@@ -251,7 +253,9 @@ namespace TaskManager
                 foreach (Issue issue in Issues)
                 {
                     if ((issue.IdUser != idUser) && (issue.Status == Enums.IssueStatus.UserStory) || (issue.IdUser != idUser) && (issue.Status == Enums.IssueStatus.Backlog))
+                    {
                         allIssues.Add(issue);
+                    }
                 }
                 return allIssues;
             }
@@ -263,7 +267,7 @@ namespace TaskManager
             return Issues;
         }
 
-        public List<Issue> GetAllIssuesReviewForAllClientsInBoard()
+        public List<Issue> GetIssuesReviewForUsersBoard()
         {
             List<Issue> allIssues = new List<Issue>();
 
@@ -277,7 +281,7 @@ namespace TaskManager
             return allIssues;
         }
 
-        public void ChangeRoleFromMemberToAdmin(long idMemeber)
+        public void ChangeRoleMemberToAdmin(long idMemeber)
         {
             if (IDMembers.Contains(idMemeber))
             {
@@ -286,7 +290,7 @@ namespace TaskManager
             }
         }
 
-        public void ChangeRoleFromAdminToMember(long idAdmin)
+        public void ChangeRoleAdminToMember(long idAdmin)
         {
             if (IDAdmin.Contains(idAdmin))
             {

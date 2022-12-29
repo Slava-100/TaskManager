@@ -94,7 +94,7 @@ namespace TaskManager
         {
             if (_userRole is AdminUser adminUser)
             {
-                adminUser.AddBlokingAndBlockedByIssue(_activeBoard, blockedByCurrentIssue, blockingCurrentIssue);
+                adminUser.SetBlockforIssue(_activeBoard, blockedByCurrentIssue, blockingCurrentIssue);
             }
         }
 
@@ -137,12 +137,12 @@ namespace TaskManager
 
         public void MoveIssueFromInProgressToBacklog(int idIssue)
         {
-            _userRole.MoveIssueFromInProgressToBacklog(_activeBoard, idIssue, IDUser);
+            _userRole.MoveIssueToBacklog(_activeBoard, idIssue, IDUser);
         }
 
         public void MoveIssueFromInProgressToReview(int idIssue)
         {
-            _userRole.MoveIssueFromInProgressToReview(_activeBoard, idIssue, IDUser);
+            _userRole.MoveIssueToReview(_activeBoard, idIssue, IDUser);
         }
 
         public bool MoveIssueFromReviewToDone(int idIssue)
@@ -164,34 +164,34 @@ namespace TaskManager
 
         public List<Issue> GetAllIssuesInBoardForClientByBoard()
         {
-            return _userRole.GetAllIssuesInBoardByIdUser(IDUser, _activeBoard);
+            return _userRole.GetAllIssuesAbountIdUser(IDUser, _activeBoard);
         }
 
         public List<Issue> GetIssuesInProgressForClientInBoard()
         {
-            return _userRole.GetIssuesInProfressForClientInBoard(IDUser, _activeBoard);
+            return _userRole.GetIssuesInProgressForUser(IDUser, _activeBoard);
         }
                
 
         public List<Issue> GetIssuesDoneInBoardForClientByBoard()
         {
-            return _userRole.GetIssuesDoneInBoardByIdUser(IDUser, _activeBoard);
+            return _userRole.GetIssuesDoneForUser(IDUser, _activeBoard);
         }
 
         public List<Issue> GetIssuesReviewAndDoneForClientInBoard()
         {
-            return _userRole.GetIssuesReviewAndDoneInBoard(IDUser, _activeBoard);
+            return _userRole.GetIssuesCompletedForUser(IDUser, _activeBoard);
         }
 
 
         public List<Issue> GetIssuesReviewForClientInBoard()
         {
-            return _userRole.GetIssuesReviewInBoard(IDUser, _activeBoard);
+            return _userRole.GetIssuesReviewForUser(IDUser, _activeBoard);
         }
 
         public List<Issue> GetIssuesFreeInBoardForClientByBoard()
         {
-            return _userRole.GetIssuesFreeInBoardByIdUser(IDUser, _activeBoard);
+            return _userRole.GetIssuesFreeInBoard(IDUser, _activeBoard);
         }
 
         public List<Issue> GetAllIssuesInBoard()
@@ -207,7 +207,7 @@ namespace TaskManager
         {
             if (_userRole is AdminUser)
             {
-                return ((AdminUser)_userRole).GetAllIssuesReviewForAllClientsInBoard(_activeBoard);
+                return ((AdminUser)_userRole).GetIssuesReviewForUsersBoard(_activeBoard);
             }
             return new List<Issue>();
         }

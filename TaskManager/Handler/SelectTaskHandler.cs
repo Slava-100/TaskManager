@@ -18,8 +18,6 @@ namespace TaskManager.Handler
             List<Issue> issues = userService.ClientUserService.GetAllIssuesInBoard();
             List<Issue> issuesReview = userService.ClientUserService.GetAllIssuesReviewForAllClientsInBoard();
 
-
-
             switch (update.Type)
             {
                 case UpdateType.CallbackQuery:

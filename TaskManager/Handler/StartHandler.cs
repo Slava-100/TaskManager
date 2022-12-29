@@ -33,14 +33,6 @@ namespace TaskManager.Handler
 
         private void SendStart(UserService userService)
         {
-            //InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup(
-            //                    new[]
-            //                        {
-            //                        new[]{
-            //                            new InlineKeyboardButton("Начать работу") {CallbackData = "StartWork"},
-            //                        }
-            //                    });
-
             InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Начать работу") { CallbackData = "StartWork" };
 
             if (userService.ClientUserService == null)
@@ -49,7 +41,7 @@ namespace TaskManager.Handler
                 dataStorage.Clients.Add(userService.Id, new Client(userService.Id, userService.Name));
                 userService.ClientUserService = dataStorage.Clients[userService.Id];
                 dataStorage.RewriteFileForClients();
-                userService.TgClient.SendTextMessageAsync(userService.Id, "Добрый день! Меня зовут Паша - я менеджер задач. " +
+                userService.TgClient.SendTextMessageAsync(userService.Id, "Добрый день! Я менеджер задач. " +
                                 "\tЯ могу создавать для Вас доски или присоединять уже к существующим." +
                                 "\tВ доске Вы можете создавать или удалять задачи и контролировать процесс их выполнения или брать на себя их выполнение" +
                                 "\tВы можете добавлять своих коллег, чтобы они могли принимать участие в выполнении задач Вашей доски." +
