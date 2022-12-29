@@ -35,6 +35,11 @@ namespace TaskManager
             _handler = handler;
         }
 
+        public IHandler GetHandler()
+        {
+            return _handler;
+        }
+
         public void HandleUpdate(Update update)
         {
             _handler.HandleUpdateHandler(update, this);
