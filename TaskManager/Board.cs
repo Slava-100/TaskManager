@@ -9,7 +9,7 @@ namespace TaskManager
 
         public int NumberBoard { get;  set; }
 
-        public string NameBoard { get;  set; }
+        public string NameBoard { get;private  set; }
 
         public List<long> IDMembers { get;  set; }
 
@@ -17,7 +17,7 @@ namespace TaskManager
 
         public List<Issue> Issues { get; set; }
 
-        public long Key { get; set; }
+        public long Key { get;private set; }
 
         public Board(int numberBoard, long idAdmin, string nameBoard)
         {
