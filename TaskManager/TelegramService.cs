@@ -15,14 +15,7 @@ namespace TaskManager
 
         public TelegramService()
         {
-            // токен Кр
-            //string token = @"5919984451:AAHv_KcJuWKeNTdrxXY1P80y31Cbu2PqSl8";
-
-            //это наш рабочий токен
-           string token = @"5934008674:AAGx_6xThM933nF22Dxk6VdRUxrBAX03NSk";
-
-            //токен юриного бота
-            //string token = @"5905776080:AAE7pRFaZciLV6t7F0CqYf84hsfWV8SCY-A";
+            string token = @"5815242340:AAHJwcZ5QaUSWotzJpmAylXcRVEZsdGGBXc";
 
             _bot = new TelegramBotClient(token);
             Console.WriteLine("Запущен бот " + _bot.GetMeAsync().Result.FirstName);
@@ -62,12 +55,25 @@ namespace TaskManager
                                 _userService.Add(chatId, new UserService(chatId, update.Message.Chat.FirstName, _bot));
                             }
                         }
+                        else if (!_userService.ContainsKey(chatId) && text != "/start")
+                        {
+                            _bot.SendTextMessageAsync(chatId, "Для начала работы с ботом введите /start");
+                            chatId = -1;
+                        }
                     }
                     break;
                 case UpdateType.CallbackQuery:
-                    chatId = update.CallbackQuery.Message.Chat.Id;
+                    if (!_userService.ContainsKey(update.CallbackQuery.Message.Chat.Id))
+                    {
+                        _bot.SendTextMessageAsync(update.CallbackQuery.Message.Chat.Id, "Для начала работы с ботом введите /start");
+                    }
+                    else
+                    {
+                        chatId = update.CallbackQuery.Message.Chat.Id;
+                    }
                     break;
             }
+            
 
             if (chatId != -1)
             {
@@ -79,8 +85,9 @@ namespace TaskManager
         {
             foreach (var userService in _userService)
             {
-                _bot.SendTextMessageAsync(userService.Key, $"Я упал \n{exception}") ;
+                _bot.SendTextMessageAsync(userService.Key, $"Я СЛОМАЛСЯ! \n{exception}");
             }
         }
     }
 }
+
