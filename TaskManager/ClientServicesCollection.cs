@@ -6,7 +6,7 @@
 
         public Dictionary<long, ClientService> _userService;
 
-        public ClientServicesCollection()
+        private ClientServicesCollection()
         {
             _userService = new Dictionary<long, ClientService>();
         }
