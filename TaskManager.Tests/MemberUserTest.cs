@@ -28,24 +28,14 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(MemberUserTestCaseSource), nameof(MemberUserTestCaseSource.AttachIssueToClientTestCaseSource))]
         public void AttachIssueToClientTest(Dictionary<int, Board> baseBoards, Dictionary<long, Client> baseClients, Board board, Issue attachIssue, long idUser, Dictionary<int, Board> expectedBoards, Dictionary<long, Client> expectedClients)
         {
+            MemberUser memberUser = new MemberUser();
             _dataStorage.Boards = baseBoards;
             _dataStorage.Clients = baseClients;
+            Dictionary<int, Board> actualBoards = _dataStorage.Boards;
+            Dictionary<long, Client> actualClients = _dataStorage.Clients;
 
-            MemberUser memberUser = new MemberUser();
             memberUser.AttachIssueToClient(board, attachIssue, idUser);
 
-            Dictionary<int, Board> actualBoards;
-            Dictionary<long, Client> actualClients;
-            using (StreamReader sr = new StreamReader(_pathBoards))
-            {
-                string jsn = sr.ReadLine();
-                actualBoards = JsonSerializer.Deserialize<Dictionary<int, Board>>(jsn);
-            }
-            using (StreamReader sr = new StreamReader(_pathClient))
-            {
-                string jsn = sr.ReadLine();
-                actualClients = JsonSerializer.Deserialize<Dictionary<long, Client>>(jsn);
-            }
             actualBoards.Should().BeEquivalentTo(expectedBoards);
             actualClients.Should().BeEquivalentTo(expectedClients);
         }

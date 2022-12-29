@@ -30,24 +30,14 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(AdminUserTestCaseSource), nameof(AdminUserTestCaseSource.AttachIssueToClientTestCaseSource))]
         public void AttachIssueToClientTest(Dictionary<int, Board> baseBoards, Dictionary<long, Client> baseClients, Board board, Issue attachIssue, long idUser, Dictionary<int, Board> expectedBoards, Dictionary<long, Client> expectedClients)
         {
+            AdminUser adminUser = new AdminUser();
             _dataStorage.Boards = baseBoards;
             _dataStorage.Clients = baseClients;
+            Dictionary<int, Board> actualBoards = _dataStorage.Boards;
+            Dictionary<long, Client> actualClients = _dataStorage.Clients;
 
-            AdminUser adminUser = new AdminUser();
             adminUser.AttachIssueToClient(board, attachIssue, idUser);
 
-            Dictionary<int, Board> actualBoards;
-            Dictionary<long, Client> actualClients;
-            using (StreamReader sr = new StreamReader(_pathBoards))
-            {
-                string jsn = sr.ReadLine();
-                actualBoards = JsonSerializer.Deserialize<Dictionary<int, Board>>(jsn);
-            }
-            using (StreamReader sr = new StreamReader(_pathClient))
-            {
-                string jsn = sr.ReadLine();
-                actualClients = JsonSerializer.Deserialize<Dictionary<long, Client>>(jsn);
-            }
             actualBoards.Should().BeEquivalentTo(expectedBoards);
             actualClients.Should().BeEquivalentTo(expectedClients);
         }
@@ -55,7 +45,7 @@ namespace TaskManager.Tests
         [TestCaseSource(typeof(AdminUserTestCaseSource), nameof(AdminUserTestCaseSource.GetAllIssuesInBoardByIdUserTestCaseSource))]
         public void GetAllIssuesInBoardByIdUserTest(long idUser, Board board, List<Issue> expectedIssues)
         {
-            AdminUser adminUser= new AdminUser();
+            AdminUser adminUser = new AdminUser();
             List<Issue> actualIssues = adminUser.GetAllIssuesAbountIdUser(idUser, board);
 
             actualIssues.Should().BeEquivalentTo(expectedIssues);

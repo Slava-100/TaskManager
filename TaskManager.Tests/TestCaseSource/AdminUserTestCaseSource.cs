@@ -16,7 +16,6 @@ namespace TaskManager.Tests.TestCaseSource
                 { board.NumberBoard, board}
             };
             Client client = new Client(5, "5");
-            //long idUser = client.IDUser;
             Dictionary<long, Client> baseClients = new Dictionary<long, Client>
             {
                 { 5, client }
