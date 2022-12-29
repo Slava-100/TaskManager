@@ -816,19 +816,10 @@ namespace TaskManager.Tests.TestCaseSource
                         };
             client.BoardsForUser = baseBoardsForUser;
 
-            expAdmin = new Client(104, "104");
-            expClient = new Client(1004, "1004");
             expBoard1 = new Board(104, 104, "nameOfBoard");
             expBoard1.IDMembers.Add(1004);
             expBoard2 = new Board(204, 104, "nameOfBoard");
             expBoard2.IDMembers.Add(1004);
-            Board expboardOther = new Board(99, 99, "nameOfBoard");
-            expBaseBoards = new Dictionary<int, Board>
-            {
-                {expBoard1.NumberBoard, expBoard1 },
-                {expBoard2.NumberBoard, expBoard2 },
-                { expboardOther.NumberBoard, expboardOther}
-            };
             expBoardsForUser = new List<int>
             {
             expBoard1.NumberBoard,
@@ -863,14 +854,8 @@ namespace TaskManager.Tests.TestCaseSource
             expClient = new Client(1045, "1045");
             expBoard1 = new Board(1045, 1045, "nameOfBoard");
             expBoard2 = new Board(2045, 1045, "nameOfBoard");
-            expboardOther = new Board(995, 995, "nameOfBoard");
+            Board expboardOther = new Board(995, 995, "nameOfBoard");
             expboardOther.IDMembers.Add(1045);
-            expBaseBoards = new Dictionary<int, Board>
-            {
-                {expBoard1.NumberBoard, expBoard1 },
-                {expBoard2.NumberBoard, expBoard2 },
-                { expboardOther.NumberBoard, expboardOther}
-            };
             expBoardsForUser = new List<int>
             {
             expBoard1.NumberBoard,
@@ -1254,9 +1239,6 @@ namespace TaskManager.Tests.TestCaseSource
 
             activeBoard = new Board(11123, 11123, "boardTwo");
             client = new Client(77, "77");
-            admin = new Client(1123, "1123");
-            member = new Client(10123, "10123");
-            member2 = new Client(20123, "20123");
             activeBoard.IDAdmin.Add(1123);
             activeBoard.IDMembers.Add(77);
             activeBoard.IDMembers.Add(10123);
@@ -1268,10 +1250,6 @@ namespace TaskManager.Tests.TestCaseSource
             };
 
             expActiveBoard = new Board(11123, 11123, "boardTwo");
-            expAdmin = new Client(1123, "1123");
-            expClient = new Client(77, "77");
-            expMember = new Client(10123, "10123");
-            expMember2 = new Client(20123, "20123");
             expActiveBoard.IDAdmin.Add(1123);
             expActiveBoard.IDMembers.Add(77);
             expActiveBoard.IDMembers.Add(10123);
@@ -1287,11 +1265,7 @@ namespace TaskManager.Tests.TestCaseSource
 
             activeBoard = new Board(11124, 11124, "boardTwo");
             Board otherBoard = new Board(13, 13, "boardTwo");
-            Client otherClient = new Client(13, "13");
             client = new Client(11124, "11124");
-            admin = new Client(1124, "1124");
-            member = new Client(10124, "10124");
-            member2 = new Client(20124, "20124");
             activeBoard.IDAdmin.Add(1124);
             activeBoard.IDMembers.Add(10124);
             activeBoard.IDMembers.Add(20124);
@@ -1304,11 +1278,6 @@ namespace TaskManager.Tests.TestCaseSource
 
             expActiveBoard = new Board(11124, 11124, "boardTwo");
             Board expOtherBoard = new Board(13, 13, "boardTwo");
-            Client expOtherClient = new Client(13, "13");
-            expAdmin = new Client(1124, "1124");
-            expClient = new Client(11124, "11124");
-            expMember = new Client(10124, "10124");
-            expMember2 = new Client(20124, "20124");
             expActiveBoard.IDAdmin.Add(1124);
             expActiveBoard.IDMembers.Add(10124);
             expActiveBoard.IDMembers.Add(20124);
