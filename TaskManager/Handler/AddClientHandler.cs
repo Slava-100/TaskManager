@@ -71,11 +71,11 @@ namespace TaskManager.Handler
                         DataStorage.GetInstance().RewriteFileForClients();
                         DataStorage.GetInstance().RewriteFileForBoards();
 
-                        if (CollectionUserServices.GetInstance()._userService[numberClient].GetHandler() is WorkWithBoardHandler)
-                        {
-                            CollectionUserServices.GetInstance()._userService[numberClient].SetHandler(new MainMenuHandler());
-                            CollectionUserServices.GetInstance()._userService[numberClient].HandleUpdate(update);
-                        }
+                        //if (CollectionUserServices.GetInstance()._userService[numberClient].GetHandler() is WorkWithBoardHandler)
+                        //{
+                        //    CollectionUserServices.GetInstance()._userService[numberClient].SetHandler(new MainMenuHandler());
+                        //    CollectionUserServices.GetInstance()._userService[numberClient].HandleUpdate(update);
+                        //}
 
                         userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник (Имя: {DataStorage.GetInstance().Clients[numberClient].NameUser}) добавлен!");
                         userService.SetHandler(new ShowMembersHandler());
