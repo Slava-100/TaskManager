@@ -67,7 +67,7 @@ namespace TaskManager.Handler
             }
 
             userService.ClientUserService.BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
-            userService.ClientUserService._activeBoard = null;
+            userService.ClientUserService.ActiveBoard = null;
             DataStorage.GetInstance().RewriteFileForBoards();
             DataStorage.GetInstance().RewriteFileForClients();
             userService.SetHandler(new MainMenuHandler());

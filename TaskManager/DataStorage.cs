@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 
 namespace TaskManager
 {
@@ -17,11 +14,11 @@ namespace TaskManager
 
         public Dictionary<long, Client> Clients { get; set; }
 
-        public List <long> KeysForBoards { get; set; }
+        public List<long> KeysForBoards { get; set; }
 
         private static DataStorage _instance;
 
-        public DataStorage()
+        private DataStorage()
         {
             Boards = new Dictionary<int, Board>();
             Clients = new Dictionary<long, Client>();
@@ -106,15 +103,15 @@ namespace TaskManager
 
         public int AddBoard(long idAdmin, string nameboard)
         {
-            Board board = new Board(NextNumberBoard, idAdmin,nameboard);
+            Board board = new Board(NextNumberBoard, idAdmin, nameboard);
             board.Key = GenerateKeyForBoards();
             Boards.Add(board.NumberBoard, board);
             DataStorage.GetInstance().Clients[idAdmin].BoardsForUser.Add(NextNumberBoard);
             NextNumberBoard = NextNumberBoard + 1;
-            
+
             RewriteFileForBoards();
             RewriteFileForClients();
-            
+
             return board.NumberBoard;
         }
 
@@ -125,7 +122,7 @@ namespace TaskManager
 
             RewriteFileForBoards();
             RewriteFileForClients();
-        } 
+        }
 
         private long GenerateKeyForBoards()
         {

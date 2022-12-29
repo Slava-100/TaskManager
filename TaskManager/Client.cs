@@ -4,7 +4,7 @@
     {
         private AbstractUser _userRole;
 
-        public Board _activeBoard { get; set; }
+        public Board ActiveBoard { get; set; }
 
         public long IDUser { get; set; }
 
@@ -26,13 +26,13 @@
 
         public void SetActiveBoard(int numberBoard)
         {
-            _activeBoard = DataStorage.GetInstance().Boards[numberBoard];
+            ActiveBoard = DataStorage.GetInstance().Boards[numberBoard];
             SelectRole();
         }
 
         public Board GetActiveBoard()
         {
-            return _activeBoard;
+            return ActiveBoard;
         }
 
         public string GetRole()
@@ -53,13 +53,13 @@
 
         public bool SelectRole()
         {
-            if (_activeBoard.IDAdmin.Contains(IDUser))
+            if (ActiveBoard.IDAdmin.Contains(IDUser))
             {
                 _userRole = new AdminUser();
 
                 return true;
             }
-            else if (_activeBoard.IDMembers.Contains(IDUser))
+            else if (ActiveBoard.IDMembers.Contains(IDUser))
             {
                 _userRole = new MemberUser();
 
@@ -75,7 +75,7 @@
         {
             if (_userRole is AdminUser)
             {
-                return ((AdminUser)_userRole).AddNewIssue(_activeBoard, description);
+                return ((AdminUser)_userRole).AddNewIssue(ActiveBoard, description);
             }
 
             return false;
@@ -85,7 +85,7 @@
         {
             if (_userRole is AdminUser)
             {
-                return ((AdminUser)_userRole).RemoveIssue(_activeBoard, numberIssue);
+                return ((AdminUser)_userRole).RemoveIssue(ActiveBoard, numberIssue);
             }
 
             return false;
@@ -95,7 +95,7 @@
         {
             if (_userRole is AdminUser adminUser)
             {
-                adminUser.SetBlockforIssue(_activeBoard, blockedByCurrentIssue, blockingCurrentIssue);
+                adminUser.SetBlockforIssue(ActiveBoard, blockedByCurrentIssue, blockingCurrentIssue);
             }
         }
 
@@ -121,15 +121,15 @@
 
         public bool AttachIssueToClient(int IdIssue)
         {
-            var issue = _activeBoard.Issues.FirstOrDefault(currentIssue => IdIssue == currentIssue.NumberIssue);
+            var issue = ActiveBoard.Issues.FirstOrDefault(currentIssue => IdIssue == currentIssue.NumberIssue);
 
             if ((issue != null && issue.Status == Enums.IssueStatus.UserStory) || (issue != null && issue.Status == Enums.IssueStatus.Backlog))
             {
-                var issueInWork = _activeBoard.Issues.FirstOrDefault(crntIssue => crntIssue.Status == Enums.IssueStatus.InProgress && crntIssue.IdUser == IDUser);
+                var issueInWork = ActiveBoard.Issues.FirstOrDefault(crntIssue => crntIssue.Status == Enums.IssueStatus.InProgress && crntIssue.IdUser == IDUser);
 
                 if (issueInWork == null && issue.IsAssignable && SelectRole())
                 {
-                    _userRole.AttachIssueToClient(_activeBoard, issue, IDUser);
+                    _userRole.AttachIssueToClient(ActiveBoard, issue, IDUser);
                     return true;
                 }
             }
@@ -139,20 +139,20 @@
 
         public void MoveIssueFromInProgressToBacklog(int idIssue)
         {
-            _userRole.MoveIssueToBacklog(_activeBoard, idIssue, IDUser);
+            _userRole.MoveIssueToBacklog(ActiveBoard, idIssue, IDUser);
         }
 
         public void MoveIssueFromInProgressToReview(int idIssue)
         {
-            _userRole.MoveIssueToReview(_activeBoard, idIssue, IDUser);
+            _userRole.MoveIssueToReview(ActiveBoard, idIssue, IDUser);
         }
 
         public bool MoveIssueFromReviewToDone(int idIssue)
         {
-            var issue = _activeBoard.Issues.FirstOrDefault(currentIssue => idIssue == currentIssue.NumberIssue);
+            var issue = ActiveBoard.Issues.FirstOrDefault(currentIssue => idIssue == currentIssue.NumberIssue);
             if (issue != null && _userRole is AdminUser)
             {
-                ((AdminUser)_userRole).MoveIssueFromReviewToDone(_activeBoard, issue);
+                ((AdminUser)_userRole).MoveIssueFromReviewToDone(ActiveBoard, issue);
                 return true;
             }
 
@@ -167,41 +167,41 @@
 
         public List<Issue> GetAllIssuesInBoardForClientByBoard()
         {
-            return _userRole.GetAllIssuesAbountIdUser(IDUser, _activeBoard);
+            return _userRole.GetAllIssuesAbountIdUser(IDUser, ActiveBoard);
         }
 
         public List<Issue> GetIssuesInProgressForClientInBoard()
         {
-            return _userRole.GetIssuesInProgressForUser(IDUser, _activeBoard);
+            return _userRole.GetIssuesInProgressForUser(IDUser, ActiveBoard);
         }
 
 
         public List<Issue> GetIssuesDoneInBoardForClientByBoard()
         {
-            return _userRole.GetIssuesDoneForUser(IDUser, _activeBoard);
+            return _userRole.GetIssuesDoneForUser(IDUser, ActiveBoard);
         }
 
         public List<Issue> GetIssuesReviewAndDoneForClientInBoard()
         {
-            return _userRole.GetIssuesCompletedForUser(IDUser, _activeBoard);
+            return _userRole.GetIssuesCompletedForUser(IDUser, ActiveBoard);
         }
 
 
         public List<Issue> GetIssuesReviewForClientInBoard()
         {
-            return _userRole.GetIssuesReviewForUser(IDUser, _activeBoard);
+            return _userRole.GetIssuesReviewForUser(IDUser, ActiveBoard);
         }
 
         public List<Issue> GetIssuesFreeInBoardForClientByBoard()
         {
-            return _userRole.GetIssuesFreeInBoard(IDUser, _activeBoard);
+            return _userRole.GetIssuesFreeInBoard(IDUser, ActiveBoard);
         }
 
         public List<Issue> GetAllIssuesInBoard()
         {
             if (_userRole is AdminUser)
             {
-                return ((AdminUser)_userRole).GetAllIssuesInBoard(_activeBoard);
+                return ((AdminUser)_userRole).GetAllIssuesInBoard(ActiveBoard);
             }
 
             return new List<Issue>();
@@ -211,7 +211,7 @@
         {
             if (_userRole is AdminUser)
             {
-                return ((AdminUser)_userRole).GetIssuesReviewForUsersBoard(_activeBoard);
+                return ((AdminUser)_userRole).GetIssuesReviewForUsersBoard(ActiveBoard);
             }
 
             return new List<Issue>();
@@ -240,7 +240,7 @@
         {
             if (_userRole is AdminUser)
             {
-                ((AdminUser)_userRole).ChangeRoleFromMemberToAdmin(idMemeber, _activeBoard);
+                ((AdminUser)_userRole).ChangeRoleFromMemberToAdmin(idMemeber, ActiveBoard);
             }
         }
 
@@ -248,7 +248,7 @@
         {
             if (_userRole is AdminUser)
             {
-                ((AdminUser)_userRole).ChangeRoleFromAdminToMember(idAdmin, _activeBoard);
+                ((AdminUser)_userRole).ChangeRoleFromAdminToMember(idAdmin, ActiveBoard);
             }
         }
 

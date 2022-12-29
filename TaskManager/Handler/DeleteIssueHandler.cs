@@ -16,7 +16,7 @@ namespace TaskManager.Handler
 
         public async void HandleUpdateHandler(Update update, ClientService userService)
         {
-            List<Issue> issues = userService.ClientUserService._activeBoard.Issues;
+            List<Issue> issues = userService.ClientUserService.ActiveBoard.Issues;
             switch (update.Type)
             {
                 case UpdateType.CallbackQuery:

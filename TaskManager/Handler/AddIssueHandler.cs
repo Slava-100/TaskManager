@@ -23,7 +23,7 @@ namespace TaskManager.Handler
                     bool result = userService.ClientUserService.AddNewIssue(update.Message.Text);
                     if (result)
                     {
-                        Issue newIssue = userService.ClientUserService._activeBoard.Issues.Last();
+                        Issue newIssue = userService.ClientUserService.ActiveBoard.Issues.Last();
                         userService.TgClient.SendTextMessageAsync(userService.Id, "Задача создана:\n\n" + newIssue.ToString());
                         userService.SetHandler(new ShowTasksHandler());
                         userService.HandleUpdate(update);
