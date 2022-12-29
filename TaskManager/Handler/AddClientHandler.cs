@@ -68,15 +68,14 @@ namespace TaskManager.Handler
                     {
                         userService.ClientUserService.GetActiveBoard().IDMembers.Add(numberClient);
                         DataStorage.GetInstance().Clients[numberClient].BoardsForUser.Add(userService.ClientUserService.GetActiveBoard().NumberBoard);
+                        DataStorage.GetInstance().RewriteFileForClients();
+                        DataStorage.GetInstance().RewriteFileForBoards();
 
                         if (CollectionUserServices.GetInstance()._userService[numberClient].GetHandler() is WorkWithBoardHandler)
                         {
                             CollectionUserServices.GetInstance()._userService[numberClient].SetHandler(new MainMenuHandler());
                             CollectionUserServices.GetInstance()._userService[numberClient].HandleUpdate(update);
                         }
-
-                        DataStorage.GetInstance().RewriteFileForClients();
-                        DataStorage.GetInstance().RewriteFileForBoards();
 
                         userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник (Имя: {DataStorage.GetInstance().Clients[numberClient].NameUser}) добавлен!");
                         userService.SetHandler(new ShowMembersHandler());
