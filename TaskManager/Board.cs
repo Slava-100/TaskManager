@@ -7,6 +7,8 @@ namespace TaskManager
     {
         private int _numberNextIssue = 1;
 
+        public long OwnerBoard { get; set; }
+
         public int NumberBoard { get; set; }
 
         public string NameBoard { get; set; }
@@ -90,6 +92,7 @@ namespace TaskManager
             //}
             #endregion
             return obj is Board board &&
+                   OwnerBoard == board.OwnerBoard &&
                    NameBoard == board.NameBoard &&
                    _numberNextIssue == board._numberNextIssue &&
                    NumberBoard == board.NumberBoard &&

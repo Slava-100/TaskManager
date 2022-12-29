@@ -64,6 +64,7 @@ namespace TaskManager.Handler
         {
             if (userService.ClientUserService.GetRole() == "Админ")
             {
+                userService.ClientUserService.GetActiveBoard().OwnerBoard = 0;
                 userService.ClientUserService.GetActiveBoard().IDAdmin.Remove(userService.Id);
             }
             else

@@ -60,45 +60,45 @@ namespace TaskManager.Tests.TestCaseSource
             yield return new Object[] { baseBoards, baseClients, idAdmin, expectedBoard, expectedNumberBoard, nameBoard };
         }
 
-        public class AddNewUserByKeyTestCaseSource : IEnumerable
-        {
-            public IEnumerator GetEnumerator()
-            {
-                int numberBoard = 1;
-                long idMember = 123;
-                int keyBoard = 1;
-                string nameMember = "";
-                Board board = new Board(numberBoard, 1234, "nameOfBoard");
-                board.Key = keyBoard;
+        //public class AddNewUserByKeyTestCaseSource : IEnumerable
+        //{
+        //    public IEnumerator GetEnumerator()
+        //    {
+        //        int numberBoard = 1;
+        //        long idMember = 123;
+        //        int keyBoard = 1;
+        //        string nameMember = "";
+        //        Board board = new Board(numberBoard, 1234, "nameOfBoard");
+        //        board.Key = keyBoard;
 
-                Dictionary<int, Board> storageBoard = new Dictionary<int, Board>()
-                {
-                {1, board}
-                };
+        //        Dictionary<int, Board> storageBoard = new Dictionary<int, Board>()
+        //        {
+        //        {1, board}
+        //        };
 
-                DataStorage dataStorage = new DataStorage();
-                dataStorage.Boards = storageBoard;
+        //        DataStorage dataStorage = new DataStorage();
+        //        dataStorage.Boards = storageBoard;
 
-                //board.IDMembers.Add(idMember);
+        //        //board.IDMembers.Add(idMember);
 
-                Client user = new Client(idMember, nameMember);
+        //        Client user = new Client(idMember, nameMember);
 
-                user.BoardsForUser.Add(numberBoard);
+        //        user.BoardsForUser.Add(numberBoard);
 
-                List<int> expectedBoardForUser = user.BoardsForUser;
+        //        List<int> expectedBoardForUser = user.BoardsForUser;
 
-                Dictionary<long, Client> expectedDictionaryUsers = new Dictionary<long, Client>
-                {
-                {idMember, user}
-                };
+        //        Dictionary<long, Client> expectedDictionaryUsers = new Dictionary<long, Client>
+        //        {
+        //        {idMember, user}
+        //        };
 
-                List<long> expectedIdMembers = board.IDMembers;
+        //        List<long> expectedIdMembers = board.IDMembers;
 
-                yield return new Object[] { nameMember, numberBoard, dataStorage, idMember, keyBoard, expectedIdMembers, expectedDictionaryUsers, expectedBoardForUser };
-            }
+        //        yield return new Object[] { nameMember, numberBoard, dataStorage, idMember, keyBoard, expectedIdMembers, expectedDictionaryUsers, expectedBoardForUser };
+        //    }
 
 
-        }
+        //}
 
         public class TestCaseForRewriteAndReturnTest : IEnumerable
         {

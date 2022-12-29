@@ -52,6 +52,7 @@ namespace TaskManager.Handler
             DataStorage dataStorage = DataStorage.GetInstance();
             int NumberNewBoard = userService.ClientUserService.AddBoard(update.Message.Text);
             Board newBoard = dataStorage.Boards[NumberNewBoard];
+            newBoard.OwnerBoard = userService.Id;
             userService.TgClient.SendTextMessageAsync(userService.Id, newBoard.ToString() + $" Ключ: {newBoard.Key}");
             userService.SetHandler(new MainMenuHandler());
             userService.HandleUpdate(update);

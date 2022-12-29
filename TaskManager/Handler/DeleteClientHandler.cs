@@ -90,9 +90,17 @@ namespace TaskManager.Handler
                 {
                     if (userService.ClientUserService.GetActiveBoard().IDAdmin.Contains(numberClient) == true && numberClient != userService.Id)
                     {
-                        userService.ClientUserService.GetActiveBoard().IDAdmin.Remove(numberClient);
-                        userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник удален");
-                        DataStorage.GetInstance().Clients[numberClient].BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
+                        if (numberClient == userService.ClientUserService.GetActiveBoard().OwnerBoard) 
+                        {
+                            userService.TgClient.SendTextMessageAsync(userService.Id, $"Ты не можешь удалить владельца доски!");
+                        }
+                        else
+                        {
+                            userService.ClientUserService.GetActiveBoard().IDAdmin.Remove(numberClient);
+                            userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник удален");
+                            DataStorage.GetInstance().Clients[numberClient].BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
+                        }
+
                         userService.SetHandler(new ShowMembersHandler());
                         userService.HandleUpdate(update);
                     }

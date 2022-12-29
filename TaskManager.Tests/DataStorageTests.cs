@@ -27,26 +27,26 @@ namespace TaskManager.Tests
             _dataStorage.UpdateNextNumberBoard();
         }
 
-        [TestCaseSource(typeof(AddNewUserByKeyTestCaseSource))]
-        public void AddNewUserByKeyTest(string nameMember, int numberBoard, DataStorage dataStorage, long idMember, int keyBoard, List<long> expectedIdMembers, Dictionary<long, Client> expectedDictionaryUsers, List<int> expectedBoardsForUser)
-        {
-            bool expectedFlag = true;
-            bool actualFlag = dataStorage.AddNewUserByKey(numberBoard, keyBoard, idMember, nameMember);
+        //[TestCaseSource(typeof(AddNewUserByKeyTestCaseSource))]
+        //public void AddNewUserByKeyTest(string nameMember, int numberBoard, DataStorage dataStorage, long idMember, int keyBoard, List<long> expectedIdMembers, Dictionary<long, Client> expectedDictionaryUsers, List<int> expectedBoardsForUser)
+        //{
+        //    bool expectedFlag = true;
+        //    bool actualFlag = dataStorage.AddNewUserByKey(numberBoard, keyBoard, idMember, nameMember);
 
-            Assert.AreEqual(expectedFlag, actualFlag);
+        //    Assert.AreEqual(expectedFlag, actualFlag);
 
-            List<long> actualIdMembers = dataStorage.Boards[numberBoard].IDMembers;
+        //    List<long> actualIdMembers = dataStorage.Boards[numberBoard].IDMembers;
 
-            CollectionAssert.AreEqual(expectedIdMembers, actualIdMembers);
+        //    CollectionAssert.AreEqual(expectedIdMembers, actualIdMembers);
 
-            List<int> actualBoardForUser = dataStorage.Clients[idMember].BoardsForUser;
+        //    List<int> actualBoardForUser = dataStorage.Clients[idMember].BoardsForUser;
 
-            CollectionAssert.AreEqual(expectedBoardsForUser, actualBoardForUser);
+        //    CollectionAssert.AreEqual(expectedBoardsForUser, actualBoardForUser);
 
-            Dictionary<long, Client> actualDictionaryUsers = dataStorage.Clients;
+        //    Dictionary<long, Client> actualDictionaryUsers = dataStorage.Clients;
 
-            CollectionAssert.AreEqual(expectedDictionaryUsers, actualDictionaryUsers);
-        }
+        //    CollectionAssert.AreEqual(expectedDictionaryUsers, actualDictionaryUsers);
+        //}
 
         [Test]
         public void AddNewUserByKeyTest_WhenBoardDoesNotExistWithId()
