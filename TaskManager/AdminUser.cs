@@ -25,6 +25,7 @@ namespace TaskManager
         {
             bool tmp = _dataStorage.RemoveBoard(numberBoard);
             _dataStorage.RewriteFileForBoards();
+
             return tmp;
         }
 

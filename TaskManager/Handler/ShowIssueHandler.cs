@@ -13,7 +13,7 @@ namespace TaskManager.Handler
 {
     public class ShowIssueHandler : IHandler
     {
-        public async void HandleUpdateHandler(Update update, UserService userService)
+        public async void HandleUpdateHandler(Update update, ClientService userService)
         {
             List<Issue> issues = userService.ClientUserService.GetAllIssuesInBoardForClientByBoard();
 
@@ -23,12 +23,9 @@ namespace TaskManager.Handler
                     switch (update.CallbackQuery.Data)
                     {
                         case "BackToAllTask":
-                            userService.SetHandler(new ShowAllTasksHandler());
+                            userService.SetHandler(new ShowAllIssueHandler());
                             userService.HandleUpdate(update);
                             break;
-                        //default:
-                        //    await userService.TgClient.SendTextMessageAsync(userService.Id, "Для изменения статуса задачи вам необходимо ввести номер задачи.");
-                        //    break;
                         default:
                             ShowsAllIssuesInBoard(userService);
                             break;
@@ -72,40 +69,12 @@ namespace TaskManager.Handler
             }
         }
 
-
-
         private InlineKeyboardMarkup GetBackButton()
         {
             return new InlineKeyboardButton("Назад") { CallbackData = "BackToAllTask" };
         }
 
-        //private async void ShowsFreeIssuesForMember(UserService userService)
-        //{
-        //    await userService.TgClient.SendTextMessageAsync
-        //        (userService.Id, $"Перед вами список всех свободных задач текущей доски, которые вы можете взять в исполнение:\n" +
-        //        $" {GetIssuesFreeInBoard(userService)}\n" +
-        //        $"\"Для изменения статуса задачи вам необходимо ввести номер задачи.", replyMarkup: GetBackButton());
-        //}
-
-        //private string GetIssuesFreeInBoard(UserService userService)
-        //{
-        //    List<Issue> issues = userService.ClientUserService.GetIssuesFreeInBoardForClientByBoard();
-        //    if (issues.Count > 0)
-        //    {
-        //        string result = $"{issues[0]}";
-        //        for (int i = 1; i < issues.Count; i++)
-        //        {
-        //            result = $"{result}\n{issues[i]}";
-        //        }
-        //        return result;
-        //    }
-        //    else
-        //    {
-        //        return "Список свободных заданий в текущей доске пуст.";
-        //    }
-        //}
-
-        private async void ShowsAllIssuesInBoard(UserService userService)
+        private async void ShowsAllIssuesInBoard(ClientService userService)
         {
             await userService.TgClient.SendTextMessageAsync
                 (userService.Id, $"Перед вами список всех ваших задач в исполнении в текущей доске: \n" +
@@ -113,7 +82,7 @@ namespace TaskManager.Handler
                 $"Для изменения статуса задачи вам необходимо ввести номер задачи.", replyMarkup: GetBackButton());
         }
 
-        private string GetAllIssuesInProgressForClientInBoard(UserService userService)
+        private string GetAllIssuesInProgressForClientInBoard(ClientService userService)
         {
             List<Issue> issues = userService.ClientUserService.GetIssuesInProgressForClientInBoard();
             if (issues.Count > 0)
@@ -123,6 +92,7 @@ namespace TaskManager.Handler
                 {
                     result = $"{result}\n{issues[i]}";
                 }
+
                 return result;
             }
             else
@@ -132,6 +102,3 @@ namespace TaskManager.Handler
         }
     }
 }
-
-
-

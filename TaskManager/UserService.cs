@@ -4,11 +4,11 @@ using Telegram.Bot.Types;
 
 namespace TaskManager
 {
-    public class UserService
+    public class ClientService
     {
-        public ITelegramBotClient TgClient { get; set; }
-
         private IHandler _handler;
+
+        public ITelegramBotClient TgClient { get; set; }
 
         public string AccName { get; set; }
 
@@ -18,12 +18,13 @@ namespace TaskManager
 
         public Client ClientUserService { get; set; }
 
-        public UserService(long id, string name, ITelegramBotClient client)
+        public ClientService(long id, string name, ITelegramBotClient client)
         {
             TgClient = client;
             Id = id;
             Name = name;
             _handler = new StartHandler();
+
             if (DataStorage.GetInstance().Clients.ContainsKey(id))
             {
                 ClientUserService = DataStorage.GetInstance().Clients[id];

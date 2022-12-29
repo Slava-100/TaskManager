@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager.Handl;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.ReplyMarkups;
+﻿using TaskManager.Handl;
 using Telegram.Bot;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace TaskManager.Handler
 {
     public class WorkWithBoardHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, ClientService userService)
         {
-            DataStorage dataStorage = DataStorage.GetInstance();    
+            DataStorage dataStorage = DataStorage.GetInstance();
             switch (update.Type)
             {
                 case UpdateType.CallbackQuery:
@@ -39,7 +34,7 @@ namespace TaskManager.Handler
                     {
                         string text = update.Message.Text;
                         int number;
-                        if (int.TryParse(text, out number)) 
+                        if (int.TryParse(text, out number))
                         {
                             if (dataStorage.Boards.ContainsKey(number))
                             {
@@ -71,11 +66,10 @@ namespace TaskManager.Handler
             }
         }
 
-        private void SubmitsQuestion(UserService userService)
+        private void SubmitsQuestion(ClientService userService)
         {
             if (GetAllBoards(userService) != "Список всех досок:\n")
             {
-                //userService.TgClient.SendTextMessageAsync(userService.Id, $"{GetAllBoards(userService)} \nВведите номер доски для работы с ней!", replyMarkup: ButtonBack());
                 userService.TgClient.SendTextMessageAsync(userService.Id, $"{GetBoardsClient(userService)} \nВведите номер доски для работы с ней!", replyMarkup: ButtonBack());
             }
             else
@@ -84,7 +78,7 @@ namespace TaskManager.Handler
             }
         }
 
-        private string GetAllBoards(UserService userService)
+        private string GetAllBoards(ClientService userService)
         {
             DataStorage dataStorage = DataStorage.GetInstance();
             string s = "Список всех досок:\n";
@@ -96,7 +90,7 @@ namespace TaskManager.Handler
             return s;
         }
 
-        private string WhriteBoardsAdmin(UserService userService)
+        private string WhriteBoardsAdmin(ClientService userService)
         {
             List<Board> boardsForAdmin = userService.ClientUserService.GetAllBoardsAdmins();
             string s = "Список всех досок c правами Администратора:\n";
@@ -115,7 +109,7 @@ namespace TaskManager.Handler
             return s;
         }
 
-        private string WhriteBoardsMember(UserService userService)
+        private string WhriteBoardsMember(ClientService userService)
         {
             List<Board> boardsForAdmin = userService.ClientUserService.GetAllBoardsMembers();
             string s = "Список всех досок c правами обычного пользователя:\n";
@@ -134,7 +128,7 @@ namespace TaskManager.Handler
             return s;
         }
 
-        private string GetBoardsClient(UserService userService)
+        private string GetBoardsClient(ClientService userService)
         {
             return $"{WhriteBoardsAdmin(userService)}\n{WhriteBoardsMember(userService)}";
         }

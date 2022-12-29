@@ -1,5 +1,4 @@
 ﻿using TaskManager.Handl;
-using TaskManager.Handler;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -17,7 +16,7 @@ namespace TaskManager.Handler
             _numberBoard = numberBoard;
         }
 
-        public async void HandleUpdateHandler(Update update, UserService userService)
+        public async void HandleUpdateHandler(Update update, ClientService userService)
         {
 
             Dictionary<int, Board> _boards = _dataStorage.Boards;

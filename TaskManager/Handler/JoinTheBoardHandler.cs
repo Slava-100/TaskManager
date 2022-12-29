@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using TaskManager.Handl;
+﻿using TaskManager.Handl;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -10,7 +9,7 @@ namespace TaskManager.Handler
 {
     public class JoinTheBoardHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, ClientService userService)
         {
             List<Board> boards = userService.ClientUserService.GetAllBoardsToWhichYouCanJoin();
 
@@ -57,14 +56,14 @@ namespace TaskManager.Handler
             }
         }
 
-        private async void ShowsAllBoards(UserService userService)
+        private async void ShowsAllBoards(ClientService userService)
         {
             await userService.TgClient.SendTextMessageAsync
                 (userService.Id, $"Перед вами список досок, к которым вы можете присоединиться: \n" +
                 $" {GetAllBoardsToWhichYouCanJoin(userService)}", replyMarkup: null);
         }
 
-        public string GetAllBoardsToWhichYouCanJoin(UserService userService)
+        public string GetAllBoardsToWhichYouCanJoin(ClientService userService)
         {
             List<Board> boards = userService.ClientUserService.GetAllBoardsToWhichYouCanJoin();
             if (boards.Count > 0)
@@ -82,18 +81,18 @@ namespace TaskManager.Handler
             }
         }
 
-        private async void AsksToEnterBoardNumber(UserService userService)
+        private async void AsksToEnterBoardNumber(ClientService userService)
         {
             await userService.TgClient.SendTextMessageAsync(userService.Id, $"Введите номер доски, к которой хотите присоединиться.\n" +
                 $"Если хотите отменить присоединение, нажмите кнопку \"Назад\".", replyMarkup: GetBackButton());
         }
 
-        private async void ClearButtons(UserService userService, Update update)
+        private async void ClearButtons(ClientService userService, Update update)
         {
             await userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
         }
 
-        private async void AsksToEnterKeyOfBoard(UserService userService)
+        private async void AsksToEnterKeyOfBoard(ClientService userService)
         {
             await userService.TgClient.SendTextMessageAsync(userService.Id, $"Введите ключ от доски, к которой хотите присоединиться.\n" +
                 $"Если хотите отменить присоединение, нажмите кнопку \"Назад\".", replyMarkup: GetBackButton());

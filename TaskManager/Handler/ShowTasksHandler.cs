@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -12,7 +7,7 @@ namespace TaskManager.Handler
 {
     public class ShowTasksHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, ClientService userService)
         {
             switch (update.Type)
             {
@@ -20,7 +15,7 @@ namespace TaskManager.Handler
                     switch (update.CallbackQuery.Data)
                     {
                         case "AddTask":
-                            userService.SetHandler(new AddTaskHandler());
+                            userService.SetHandler(new AddIssueHandler());
                             userService.HandleUpdate(update);
                             break;
                         case "SelectTask":
@@ -32,7 +27,7 @@ namespace TaskManager.Handler
                             userService.HandleUpdate(update);
                             break;
                         case "BackToShowAllTasks":
-                            userService.SetHandler(new ShowAllTasksHandler());
+                            userService.SetHandler(new ShowAllIssueHandler());
                             userService.HandleUpdate(update);
                             break;
                         default:
@@ -46,7 +41,7 @@ namespace TaskManager.Handler
             }
         }
 
-        private void SubmitsQuestion(UserService userService)
+        private void SubmitsQuestion(ClientService userService)
         {
             var spisokIssues = userService.ClientUserService.GetActiveBoard().Issues;
             string s = "";
@@ -64,7 +59,7 @@ namespace TaskManager.Handler
             }
         }
 
-        private InlineKeyboardMarkup ButtonListIsEmpty(UserService userService)
+        private InlineKeyboardMarkup ButtonListIsEmpty(ClientService userService)
         {
             InlineKeyboardMarkup keyboard;
             if (userService.ClientUserService.GetRole() == "Админ")
@@ -97,7 +92,7 @@ namespace TaskManager.Handler
             return keyboard;
         }
 
-        private InlineKeyboardMarkup ButtonListIsNotEmpty(UserService userService)
+        private InlineKeyboardMarkup ButtonListIsNotEmpty(ClientService userService)
         {
             InlineKeyboardMarkup keyboard;
             if (userService.ClientUserService.GetRole() == "Админ")
@@ -120,17 +115,17 @@ namespace TaskManager.Handler
             else
             {
                 keyboard = new InlineKeyboardMarkup(
-                                            new[]
-                        {
                         new[]
                         {
-                            new InlineKeyboardButton("ВЫбрать задачу") {CallbackData="SelectTask"}
-                        },
-                        new[]
-                        {
-                            new InlineKeyboardButton("Назад") {CallbackData = "BackToShowAllTasks"},
-                        }
-                    });
+                            new[]
+                            {
+                                new InlineKeyboardButton("ВЫбрать задачу") {CallbackData="SelectTask"}
+                            },
+                            new[]
+                            {
+                                new InlineKeyboardButton("Назад") {CallbackData = "BackToShowAllTasks"},
+                            }
+                        });
             }
 
             return keyboard;

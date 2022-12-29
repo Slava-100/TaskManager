@@ -1,7 +1,4 @@
-﻿using System.Data;
-using Telegram.Bot.Types;
-
-namespace TaskManager
+﻿namespace TaskManager
 {
     public class Client
     {
@@ -40,17 +37,17 @@ namespace TaskManager
 
         public string GetRole()
         {
-            string s = "";
+            string result = "";
             if (_userRole is AdminUser)
             {
-                s = "Админ";
+                result = "Админ";
             }
             else
             {
-                s = "Участник";
+                result = "Участник";
             }
 
-            return s;
+            return result;
         }
 
 
@@ -59,11 +56,13 @@ namespace TaskManager
             if (_activeBoard.IDAdmin.Contains(IDUser))
             {
                 _userRole = new AdminUser();
+
                 return true;
             }
             else if (_activeBoard.IDMembers.Contains(IDUser))
             {
                 _userRole = new MemberUser();
+
                 return true;
             }
             else
@@ -78,6 +77,7 @@ namespace TaskManager
             {
                 return ((AdminUser)_userRole).AddNewIssue(_activeBoard, description);
             }
+
             return false;
         }
 
@@ -87,6 +87,7 @@ namespace TaskManager
             {
                 return ((AdminUser)_userRole).RemoveIssue(_activeBoard, numberIssue);
             }
+
             return false;
         }
 
@@ -132,6 +133,7 @@ namespace TaskManager
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -153,6 +155,7 @@ namespace TaskManager
                 ((AdminUser)_userRole).MoveIssueFromReviewToDone(_activeBoard, issue);
                 return true;
             }
+
             return false;
         }
 
@@ -171,7 +174,7 @@ namespace TaskManager
         {
             return _userRole.GetIssuesInProgressForUser(IDUser, _activeBoard);
         }
-               
+
 
         public List<Issue> GetIssuesDoneInBoardForClientByBoard()
         {
@@ -200,7 +203,8 @@ namespace TaskManager
             {
                 return ((AdminUser)_userRole).GetAllIssuesInBoard(_activeBoard);
             }
-            return new List < Issue >();
+
+            return new List<Issue>();
         }
 
         public List<Issue> GetAllIssuesReviewForAllClientsInBoard()
@@ -209,9 +213,10 @@ namespace TaskManager
             {
                 return ((AdminUser)_userRole).GetIssuesReviewForUsersBoard(_activeBoard);
             }
+
             return new List<Issue>();
         }
-        
+
 
         public List<Board> GetAllBoardsAdmins()
         {

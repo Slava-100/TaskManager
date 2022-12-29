@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager.Handl;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -20,7 +14,7 @@ namespace TaskManager.Handler
         {
             _numberIssue = numberIssue;
         }
-        public async void HandleUpdateHandler(Update update, UserService userService)
+        public async void HandleUpdateHandler(Update update, ClientService userService)
         {
             List<Issue> issues = userService.ClientUserService.GetAllIssuesInBoardForClientByBoard();
 
@@ -56,22 +50,22 @@ namespace TaskManager.Handler
             }
         }
 
-        private InlineKeyboardMarkup Button(UserService userService)
+        private InlineKeyboardMarkup Button(ClientService userService)
         {
             InlineKeyboardMarkup keyboard;
             keyboard = new InlineKeyboardMarkup(
-    new[]
-    {
-                        new[]
-                        {
-                            new InlineKeyboardButton("Перенести в Backlog ") {CallbackData = "MoveToBacklog"},
-                            new InlineKeyboardButton("Перенести в Review") {CallbackData="MoveToReview"}
-                        },
-                        new[]
-                        {
-                            new InlineKeyboardButton("Назад") {CallbackData = "BackToShowIssueHandler"}
-                        }
-    });
+                new[]
+                {
+                                    new[]
+                                    {
+                                        new InlineKeyboardButton("Перенести в Backlog ") {CallbackData = "MoveToBacklog"},
+                                        new InlineKeyboardButton("Перенести в Review") {CallbackData="MoveToReview"}
+                                    },
+                                    new[]
+                                    {
+                                        new InlineKeyboardButton("Назад") {CallbackData = "BackToShowIssueHandler"}
+                                    }
+                });
 
             return keyboard;
         }

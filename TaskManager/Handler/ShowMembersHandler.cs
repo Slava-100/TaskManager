@@ -12,7 +12,7 @@ namespace TaskManager.Handler
 {
     public class ShowMembersHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, ClientService userService)
         {
             switch (update.Type)
             {
@@ -50,7 +50,7 @@ namespace TaskManager.Handler
             }
         }
 
-        private void SubmitsQuestion(UserService userService)
+        private void SubmitsQuestion(ClientService userService)
         {
             string s = "Администраторы:\n";
 
@@ -70,7 +70,7 @@ namespace TaskManager.Handler
         }
 
 
-        private InlineKeyboardMarkup Button(UserService userService)
+        private InlineKeyboardMarkup Button(ClientService userService)
         {
             InlineKeyboardMarkup keyboard;
             if (userService.ClientUserService.GetRole() == "Админ")

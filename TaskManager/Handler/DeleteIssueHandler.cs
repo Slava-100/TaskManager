@@ -14,7 +14,7 @@ namespace TaskManager.Handler
             _handler = handler;
         }
 
-        public async void HandleUpdateHandler(Update update, UserService userService)
+        public async void HandleUpdateHandler(Update update, ClientService userService)
         {
             List<Issue> issues = userService.ClientUserService._activeBoard.Issues;
             switch (update.Type)
@@ -46,21 +46,6 @@ namespace TaskManager.Handler
                         userService.TgClient.SendTextMessageAsync(userService.Id, "Ошибка : Некорректный ввод");
                         AskIssueNumber(userService);
                     }
-                    //else if (!int.TryParse(update.Message.Text, out numberIssue))
-                    //{
-                    //    userService.TgClient.SendTextMessageAsync(userService.Id, "Ошибка : Вам необходимо ввести числовое значение номера задания");
-                    //    AskIssueNumber(userService);
-                    //}
-                    //else if (!issues.Any(crntBoard => crntBoard.NumberIssue == numberIssue))
-                    //{
-                    //    userService.TgClient.SendTextMessageAsync(userService.Id, "Ошибка : Задания с введенным вами номером нет в текущей доске.");
-                    //    AskIssueNumber(userService);
-                    //}
-                    //else if (update.Message.Text == null)
-                    //{
-                    //    userService.TgClient.SendTextMessageAsync(userService.Id, "Ошибка : Вы не ввели номер задания.");
-                    //    AskIssueNumber(userService);
-                    //}
                     break;
                 default:
                     AskIssueNumber(userService);
@@ -69,7 +54,7 @@ namespace TaskManager.Handler
         }
 
 
-        private async void AskIssueNumber(UserService userService)
+        private async void AskIssueNumber(ClientService userService)
         {
             await userService.TgClient.SendTextMessageAsync(userService.Id, $"Введите номер задания, которое хотите удалить.\n" +
                 $"Для отмены, нажмите кнопку \"Вернуться к задачам\".", replyMarkup: GetBackButton());

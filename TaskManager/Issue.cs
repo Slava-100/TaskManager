@@ -47,39 +47,6 @@ namespace TaskManager
 
         public override bool Equals(object? obj)
         {
-            #region
-            //if (obj is Issue)
-            //{
-            //    List<int> blockedByCurrentIssue = ((Issue)obj).BlockedByCurrentIssue;
-
-            //    if (blockedByCurrentIssue.Count != BlockedByCurrentIssue.Count)
-            //    {
-            //        return false;
-            //    }
-            //    for (int i = 0; i < BlockedByCurrentIssue.Count; i++)
-            //    {
-            //        if (!BlockedByCurrentIssue[i].Equals(blockedByCurrentIssue[i]))
-            //        {
-            //            return false;
-            //        }
-            //    }
-
-            //    List<int> blockingIssues = ((Issue)obj).BlockingIssues;
-
-            //    if (blockingIssues.Count != BlockingIssues.Count)
-            //    {
-            //        return false;
-            //    }
-            //    for (int i = 0; i < BlockingIssues.Count; i++)
-            //    {
-            //        if (!BlockingIssues[i].Equals(blockingIssues[i]))
-            //        {
-            //            return false;
-            //        }
-            //    }
-            //}
-            #endregion
-
             return obj is Issue issue &&
                    BlockedByCurrentIssue.SequenceEqual(issue.BlockedByCurrentIssue) &&
                    BlockingIssues.SequenceEqual(issue.BlockingIssues) &&
@@ -90,30 +57,11 @@ namespace TaskManager
                    Status == issue.Status;
         }
 
-        //public override string ToString()
-        //{
-        //    return $"Номер Задачи {NumberIssue} " +
-        //        $"\nОписание задачи {Description} " +
-        //        $"\nСтатус задачи{Status}" +
-        //        $"\nИсполнитель задачи:{DataStorage.GetInstance().Clients[IdUser].NameUser}";
-        //}
-
         public override string ToString()
         {
             return $"Номер Задачи:\t {NumberIssue} " +
                    $"\nОписание задачи:\t {Description} " +
                    $"\nСтатус задачи:\t {Status}";
-                   //$"\nИсполнитель задачи: {GetNameActiveUser}";
         }
-
-        //private string GetNameActiveUser()
-        //{
-        //    if (DataStorage.GetInstance().Clients.ContainsKey(IdUser))
-        //    {
-        //        return DataStorage.GetInstance().Clients[IdUser].NameUser;
-        //    }
-
-        //    return "Задача свободна";
-        //}
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -14,7 +8,7 @@ namespace TaskManager.Handler
     public class ShowsFreeIssuesInBoardHandler : IHandler
     {
 
-        public async void HandleUpdateHandler(Update update, UserService userService)
+        public async void HandleUpdateHandler(Update update, ClientService userService)
         {
 
             List<Issue> freeIssues = userService.ClientUserService.GetIssuesFreeInBoardForClientByBoard();
@@ -25,7 +19,7 @@ namespace TaskManager.Handler
                     switch (update.CallbackQuery.Data)
                     {
                         case "BackToAllTask":
-                            userService.SetHandler(new ShowAllTasksHandler());
+                            userService.SetHandler(new ShowAllIssueHandler());
                             userService.HandleUpdate(update);
                             break;
                         case "ShowFreeIssues":
@@ -33,7 +27,7 @@ namespace TaskManager.Handler
                             break;
                     }
                     break;
-                   
+
                 case UpdateType.Message:
                     if (update.Message.Text != null
                         && int.TryParse(update.Message.Text, out var numberIssue)
@@ -69,7 +63,7 @@ namespace TaskManager.Handler
             }
         }
 
-        private async void AsksToEnterIssueNumber(UserService userService)
+        private async void AsksToEnterIssueNumber(ClientService userService)
         {
             await userService.TgClient.SendTextMessageAsync(userService.Id, $"Введите номер задания, которое хотите взять к исполнению.\n" +
                 $"Если задания, которое вы хотите взять в исполнение нет в списке, нажмите кнопку \"Назад\".", replyMarkup: GetBackButton());

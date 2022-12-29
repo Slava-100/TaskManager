@@ -1,5 +1,4 @@
 ﻿using TaskManager.Handl;
-using TaskManager.Handler;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -7,9 +6,9 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace TaskManager.Handler
 {
-    public class AddNewBoardHandler:IHandler
+    public class AddNewBoardHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, ClientService userService)
         {
             switch (update.Type)
             {
@@ -40,14 +39,14 @@ namespace TaskManager.Handler
                     break;
             }
         }
-        private void SubmitsQuestion(UserService userService)
+        private void SubmitsQuestion(ClientService userService)
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Назад") { CallbackData = "BackToMainMenu" };
             userService.TgClient.SendTextMessageAsync(userService.Id, "Введите название новой доски!" +
-                "(чтобы отменить создание, нажмите кнопку \"Назад\"", replyMarkup:keyboard);
+                "(чтобы отменить создание, нажмите кнопку \"Назад\"", replyMarkup: keyboard);
         }
 
-        private void CreateNewBoard(Update update, UserService userService)
+        private void CreateNewBoard(Update update, ClientService userService)
         {
             DataStorage dataStorage = DataStorage.GetInstance();
             int NumberNewBoard = userService.ClientUserService.AddBoard(update.Message.Text);
@@ -59,7 +58,7 @@ namespace TaskManager.Handler
             userService.HandleUpdate(update);
         }
 
-        private void ClearButtons(UserService userService, Update update)
+        private void ClearButtons(ClientService userService, Update update)
         {
             userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
         }

@@ -1,5 +1,4 @@
 ﻿using TaskManager.Enums;
-using Telegram.Bot.Types;
 
 namespace TaskManager
 {
@@ -11,11 +10,11 @@ namespace TaskManager
 
         public int NumberBoard { get; set; }
 
-        public string NameBoard { get;  set; }
+        public string NameBoard { get; set; }
 
-        public List<long> IDMembers { get;  set; }
+        public List<long> IDMembers { get; set; }
 
-        public List<long> IDAdmin { get;  set; }
+        public List<long> IDAdmin { get; set; }
 
         public List<Issue> Issues { get; set; }
 
@@ -45,52 +44,6 @@ namespace TaskManager
 
         public override bool Equals(object? obj)
         {
-            #region
-            //if (obj is Board)
-            //{
-            //    List<long> idMambers = ((Board)obj).IDMembers;
-
-            //    if (idMambers.Count != IDMembers.Count)
-            //    {
-            //        return false;
-            //    }
-            //    for (int i = 0; i < IDMembers.Count; i++)
-            //    {
-            //        if (!IDMembers[i].Equals(idMambers[i]))
-            //        {
-            //            return false;
-            //        }
-            //    }
-
-            //    List<long> idAdmins = ((Board)obj).IDAdmin;
-
-            //    if (idAdmins.Count != IDAdmin.Count)
-            //    {
-            //        return false;
-            //    }
-            //    for (int i = 0; i < IDAdmin.Count; i++)
-            //    {
-            //        if (!IDAdmin[i].Equals(idAdmins[i]))
-            //        {
-            //            return false;
-            //        }
-            //    }
-
-            //    List<Issue> tmpIssues = ((Board)obj).Issues;
-
-            //    if (tmpIssues.Count != Issues.Count)
-            //    {
-            //        return false;
-            //    }
-            //    for (int i = 0; i < Issues.Count; i++)
-            //    {
-            //        if (!Issues[i].Equals(tmpIssues[i]))
-            //        {
-            //            return false;
-            //        }
-            //    }
-            //}
-            #endregion
             return obj is Board board &&
                    OwnerBoard == board.OwnerBoard &&
                    NameBoard == board.NameBoard &&
@@ -108,6 +61,7 @@ namespace TaskManager
             {
                 Issue issue = Issues.LastOrDefault();
                 int issueNumber = issue.NumberIssue;
+
                 return issueNumber + 1;
             }
             else
@@ -183,6 +137,7 @@ namespace TaskManager
                         allIssues.Add(issue);
                 }
             }
+
             return allIssues;
         }
 
@@ -194,10 +149,11 @@ namespace TaskManager
             {
                 foreach (Issue issue in Issues)
                 {
-                    if (issue.IdUser == idUser && issue.Status == IssueStatus.InProgress) 
+                    if (issue.IdUser == idUser && issue.Status == IssueStatus.InProgress)
                         allIssues.Add(issue);
                 }
             }
+
             return allIssues;
         }
 
@@ -211,8 +167,10 @@ namespace TaskManager
                     if ((issue.IdUser == idUser) && (issue.Status == Enums.IssueStatus.Done))
                         allIssues.Add(issue);
                 }
+
                 return allIssues;
             }
+
             return new List<Issue>();
         }
 
@@ -226,8 +184,10 @@ namespace TaskManager
                     if ((issue.IdUser == idUser) && ((issue.Status == Enums.IssueStatus.Done) || (issue.Status == Enums.IssueStatus.Review)))
                         allIssues.Add(issue);
                 }
+
                 return allIssues;
             }
+
             return new List<Issue>();
         }
 
@@ -243,8 +203,10 @@ namespace TaskManager
                         allIssues.Add(issue);
                     }
                 }
+
                 return allIssues;
             }
+
             return new List<Issue>();
         }
 
@@ -260,8 +222,10 @@ namespace TaskManager
                         allIssues.Add(issue);
                     }
                 }
+
                 return allIssues;
             }
+
             return new List<Issue>();
         }
 
@@ -281,6 +245,7 @@ namespace TaskManager
                     allIssues.Add(issue);
                 }
             }
+
             return allIssues;
         }
 

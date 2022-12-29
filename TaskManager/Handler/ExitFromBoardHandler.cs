@@ -1,10 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager.Handl;
+﻿using TaskManager.Handl;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -14,7 +8,7 @@ namespace TaskManager.Handler
 {
     public class ExitFromBoardHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, ClientService userService)
         {
             switch (update.Type)
             {
@@ -39,7 +33,7 @@ namespace TaskManager.Handler
             }
         }
 
-        private void SubmitsQuestion(UserService userService)
+        private void SubmitsQuestion(ClientService userService)
         {
             userService.TgClient.SendTextMessageAsync(userService.Id, "Вы точно хотите выйти из доски!", replyMarkup: YesOrNo());
         }
@@ -60,7 +54,7 @@ namespace TaskManager.Handler
             return keyboard;
         }
 
-        private void Exit(Update update, UserService userService)
+        private void Exit(Update update, ClientService userService)
         {
             if (userService.ClientUserService.GetRole() == "Админ")
             {
@@ -74,7 +68,6 @@ namespace TaskManager.Handler
 
             userService.ClientUserService.BoardsForUser.Remove(userService.ClientUserService.GetActiveBoard().NumberBoard);
             userService.ClientUserService._activeBoard = null;
-
             DataStorage.GetInstance().RewriteFileForBoards();
             DataStorage.GetInstance().RewriteFileForClients();
             userService.SetHandler(new MainMenuHandler());

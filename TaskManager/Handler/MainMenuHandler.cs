@@ -8,13 +8,13 @@ namespace TaskManager.Handl
 {
     public class MainMenuHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, ClientService userService)
         {
             switch (update.Type)
             {
-                
+
                 case UpdateType.CallbackQuery:
-                    ClearButtons(userService,update);
+                    ClearButtons(userService, update);
                     switch (update.CallbackQuery.Data)
                     {
                         case "AddBoard":
@@ -40,12 +40,12 @@ namespace TaskManager.Handl
             }
         }
 
-        private void ClearButtons(UserService userService,Update update)
+        private void ClearButtons(ClientService userService, Update update)
         {
             userService.TgClient.EditMessageTextAsync(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, update.CallbackQuery.Message.Text, replyMarkup: null);
         }
 
-        private void SendBaseMenu(UserService userService)
+        private void SendBaseMenu(ClientService userService)
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup(
             new[]

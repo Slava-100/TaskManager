@@ -13,7 +13,7 @@ namespace TaskManager.Handler
     public class SelectTaskHandler : IHandler
     {
         private int _numberIssue;
-        public async void HandleUpdateHandler(Update update, UserService userService)
+        public async void HandleUpdateHandler(Update update, ClientService userService)
         {
             List<Issue> issues = userService.ClientUserService.GetAllIssuesInBoard();
             List<Issue> issuesReview = userService.ClientUserService.GetAllIssuesReviewForAllClientsInBoard();
@@ -30,7 +30,7 @@ namespace TaskManager.Handler
                             }
                             break;
                         case "BackToShowTasks":
-                            userService.SetHandler(new ShowAllTasksHandler());
+                            userService.SetHandler(new ShowAllIssueHandler());
                             userService.HandleUpdate(update);
                             break;
                     }
@@ -68,13 +68,13 @@ namespace TaskManager.Handler
             }
         }
 
-        private bool MoveIssueFromReviewToDone(UserService userService)
+        private bool MoveIssueFromReviewToDone(ClientService userService)
         {
             userService.ClientUserService.MoveIssueFromReviewToDone(_numberIssue);
             return true;
         }
 
-        private InlineKeyboardMarkup ButtonList(UserService userService)
+        private InlineKeyboardMarkup ButtonList(ClientService userService)
         {
             InlineKeyboardMarkup keyboard;
             if (userService.ClientUserService.GetRole() == "Админ")

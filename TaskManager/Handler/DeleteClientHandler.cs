@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager.Handl;
+﻿using TaskManager.Handl;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -13,7 +8,7 @@ namespace TaskManager.Handler
 {
     public class DeleteClientHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, ClientService userService)
         {
             switch (update.Type)
             {
@@ -52,7 +47,7 @@ namespace TaskManager.Handler
             }
         }
 
-        private void SubmitsQuestion(UserService userService)
+        private void SubmitsQuestion(ClientService userService)
         {
             userService.TgClient.SendTextMessageAsync(userService.Id, "Введите id участника", replyMarkup: ButtonBack());
         }
@@ -66,20 +61,20 @@ namespace TaskManager.Handler
         private InlineKeyboardMarkup YesOrNo()
         {
             InlineKeyboardMarkup keyboard;
-                keyboard = new InlineKeyboardMarkup(
-                    new[]
-                    {
+            keyboard = new InlineKeyboardMarkup(
+                new[]
+                {
                         new[]
                         {
                             new InlineKeyboardButton("Да") {CallbackData = "Yes"},
                             new InlineKeyboardButton("Нет") {CallbackData = "BackToShowMembers"},
                         },
-                    });
-           
+                });
+
             return keyboard;
         }
 
-        private void DeleteClient(Update update, UserService userService)
+        private void DeleteClient(Update update, ClientService userService)
         {
             string text = update.Message.Text;
             long numberClient;
@@ -90,7 +85,7 @@ namespace TaskManager.Handler
                 {
                     if (userService.ClientUserService.GetActiveBoard().IDAdmin.Contains(numberClient) == true && numberClient != userService.Id)
                     {
-                        if (numberClient == userService.ClientUserService.GetActiveBoard().OwnerBoard) 
+                        if (numberClient == userService.ClientUserService.GetActiveBoard().OwnerBoard)
                         {
                             userService.TgClient.SendTextMessageAsync(userService.Id, $"Ты не можешь удалить владельца доски!");
                         }
@@ -98,10 +93,10 @@ namespace TaskManager.Handler
                         {
                             userService.ClientUserService.GetActiveBoard().IDAdmin.Remove(numberClient);
 
-                            if (CollectionUserServices.GetInstance()._userService.ContainsKey(numberClient) && userService.ClientUserService.GetActiveBoard() == CollectionUserServices.GetInstance()._userService[numberClient].ClientUserService.GetActiveBoard())
+                            if (ClientServicesCollection.GetInstance()._userService.ContainsKey(numberClient) && userService.ClientUserService.GetActiveBoard() == ClientServicesCollection.GetInstance()._userService[numberClient].ClientUserService.GetActiveBoard())
                             {
-                                CollectionUserServices.GetInstance()._userService[numberClient].SetHandler(new StartHandler());
-                                CollectionUserServices.GetInstance()._userService[numberClient].HandleUpdate(update);
+                                ClientServicesCollection.GetInstance()._userService[numberClient].SetHandler(new StartHandler());
+                                ClientServicesCollection.GetInstance()._userService[numberClient].HandleUpdate(update);
                             }
 
                             userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник удален");
@@ -114,11 +109,11 @@ namespace TaskManager.Handler
                     else if (userService.ClientUserService.GetActiveBoard().IDMembers.Contains(numberClient) == true && numberClient != userService.Id)
                     {
                         userService.ClientUserService.GetActiveBoard().IDMembers.Remove(numberClient);
-                       
-                        if (CollectionUserServices.GetInstance()._userService.ContainsKey(numberClient) && userService.ClientUserService.GetActiveBoard() == CollectionUserServices.GetInstance()._userService[numberClient].ClientUserService.GetActiveBoard())
+
+                        if (ClientServicesCollection.GetInstance()._userService.ContainsKey(numberClient) && userService.ClientUserService.GetActiveBoard() == ClientServicesCollection.GetInstance()._userService[numberClient].ClientUserService.GetActiveBoard())
                         {
-                            CollectionUserServices.GetInstance()._userService[numberClient].SetHandler(new StartHandler());
-                            CollectionUserServices.GetInstance()._userService[numberClient].HandleUpdate(update);
+                            ClientServicesCollection.GetInstance()._userService[numberClient].SetHandler(new StartHandler());
+                            ClientServicesCollection.GetInstance()._userService[numberClient].HandleUpdate(update);
                         }
 
                         userService.TgClient.SendTextMessageAsync(userService.Id, $"Участник удален");

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager.Handl;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -13,7 +7,7 @@ namespace TaskManager.Handler
 {
     public class IncreaseLevelRightsHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, ClientService userService)
         {
             switch (update.Type)
             {
@@ -38,7 +32,7 @@ namespace TaskManager.Handler
             }
         }
 
-        private void SubmitsQuestion(UserService userService)
+        private void SubmitsQuestion(ClientService userService)
         {
             userService.TgClient.SendTextMessageAsync(userService.Id, "Введите id участника", replyMarkup: ButtonBack());
         }
@@ -49,7 +43,7 @@ namespace TaskManager.Handler
             return keyboard;
         }
 
-        private void IncreaseLevelRights(Update update, UserService userService) 
+        private void IncreaseLevelRights(Update update, ClientService userService)
         {
             string text = update.Message.Text;
             long numberClient;

@@ -7,7 +7,7 @@ namespace TaskManager
 {
     public class TelegramService
     {
-        private CollectionUserServices _collectionUserServices = CollectionUserServices.GetInstance();
+        private ClientServicesCollection _collectionUserServices = ClientServicesCollection.GetInstance();
 
         private DataStorage _dataStorage = DataStorage.GetInstance();
 
@@ -52,7 +52,7 @@ namespace TaskManager
                         {
                             if (!_collectionUserServices._userService.ContainsKey(chatId))
                             {
-                                UserService userService = new UserService(chatId, update.Message.Chat.FirstName, _bot);
+                                ClientService userService = new ClientService(chatId, update.Message.Chat.FirstName, _bot);
                                 userService.AccName = "@" + update.Message.Chat.Username;
                                 _collectionUserServices._userService.Add(chatId, userService);
                             }

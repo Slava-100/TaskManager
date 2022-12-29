@@ -8,7 +8,7 @@ namespace TaskManager.Handler
 {
     public class StartHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, ClientService userService)
         {
             switch (update.Type)
             {
@@ -31,7 +31,7 @@ namespace TaskManager.Handler
             }
         }
 
-        private void SendStart(UserService userService)
+        private void SendStart(ClientService userService)
         {
             InlineKeyboardMarkup keyboard = new InlineKeyboardButton("Начать работу") { CallbackData = "StartWork" };
 

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace TaskManager.Handler
 {
-    public class ShowAllTasksHandler : IHandler
+    public class ShowAllIssueHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, ClientService userService)
         {
             switch (update.Type)
             {
@@ -23,24 +18,18 @@ namespace TaskManager.Handler
                             userService.SetHandler(new ShowTasksHandler());
                             userService.HandleUpdate(update);
                             break;
-
                         case "ShowAllMyIssues":
-                            //ShowsAllIssuesInBoard(userService);
                             userService.SetHandler(new ShowIssueHandler());
                             userService.HandleUpdate(update);
                             break;
-
                         case "ShowDoneAndReviewMyIssues":
                             ShowsDoneAndReviewIssuesForMember(userService);
-
                             break;
-
                         case "ShowFreeIssues":
                             ShowsFreeIssuesForMember(userService);
                             userService.SetHandler(new ShowsFreeIssuesInBoardHandler());
                             userService.HandleUpdate(update);
                             break;
-
                         case "BackToBoard":
                             userService.SetHandler(new BoardHandler());
                             userService.HandleUpdate(update);
@@ -56,12 +45,12 @@ namespace TaskManager.Handler
             }
         }
 
-        private void SubmitsQuestion(UserService userService)
+        private void SubmitsQuestion(ClientService userService)
         {
             userService.TgClient.SendTextMessageAsync(userService.Id, $"Доска №{userService.ClientUserService.GetActiveBoard().NumberBoard} (Твоя роль: {userService.ClientUserService.GetRole()})", replyMarkup: Button(userService));
         }
 
-        private InlineKeyboardMarkup Button(UserService userService)
+        private InlineKeyboardMarkup Button(ClientService userService)
         {
             InlineKeyboardMarkup keyboard;
             keyboard = new InlineKeyboardMarkup(
@@ -83,39 +72,14 @@ namespace TaskManager.Handler
             return keyboard;
         }
 
-        //private async void ShowsAllIssuesInBoard(UserService userService)
-        //{
-        //    await userService.TgClient.SendTextMessageAsync
-        //        (userService.Id, $"Перед вами список всех ваших задач в исполнении в текущей доске: \n" +
-        //        $" {GetAllIssuesInProgressForClientInBoard(userService)}", replyMarkup: GetBackButton());
-        //}
-
-        private string GetAllIssuesInProgressForClientInBoard(UserService userService)
-        {
-            List<Issue> issues = userService.ClientUserService.GetIssuesInProgressForClientInBoard();
-            if (issues.Count > 0)
-            {
-                string result = $"{issues[0]}";
-                for (int i = 1; i < issues.Count; i++)
-                {
-                    result = $"{result}\n{issues[i]}";
-                }
-                return result;
-            }
-            else
-            {
-                return "Ваш список заданий в текущей доске пуст.";
-            }
-        }
-
-        private async void ShowsDoneAndReviewIssuesForMember(UserService userService)
+        private async void ShowsDoneAndReviewIssuesForMember(ClientService userService)
         {
             await userService.TgClient.SendTextMessageAsync
                 (userService.Id, $"Перед вами список всех выполненных вами задач текущей доски: \n" +
                 $" {GetIssuesReviewAndDoneInBoard(userService)}", replyMarkup: GetBackButton());
         }
 
-        private string GetIssuesReviewAndDoneInBoard(UserService userService)
+        private string GetIssuesReviewAndDoneInBoard(ClientService userService)
         {
             List<Issue> issues = userService.ClientUserService.GetIssuesReviewAndDoneForClientInBoard();
             if (issues.Count > 0)
@@ -133,14 +97,14 @@ namespace TaskManager.Handler
             }
         }
 
-        private async void ShowsFreeIssuesForMember(UserService userService)
+        private async void ShowsFreeIssuesForMember(ClientService userService)
         {
             await userService.TgClient.SendTextMessageAsync
                 (userService.Id, $"Перед вами список всех свободных задач текущей доски, которые вы можете взять в исполнение: \n" +
                 $" {GetIssuesFreeInBoard(userService)}", replyMarkup: GetBackButton());
         }
 
-        private string GetIssuesFreeInBoard(UserService userService)
+        private string GetIssuesFreeInBoard(ClientService userService)
         {
             List<Issue> issues = userService.ClientUserService.GetIssuesFreeInBoardForClientByBoard();
             if (issues.Count > 0)

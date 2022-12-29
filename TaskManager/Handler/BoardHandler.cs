@@ -7,7 +7,7 @@ namespace TaskManager.Handler
 {
     public class BoardHandler : IHandler
     {
-        public void HandleUpdateHandler(Update update, UserService userService)
+        public void HandleUpdateHandler(Update update, ClientService userService)
         {
             switch (update.Type)
             {
@@ -15,7 +15,7 @@ namespace TaskManager.Handler
                     switch (update.CallbackQuery.Data)
                     {
                         case "ShowAllTasks":
-                            userService.SetHandler(new ShowAllTasksHandler());
+                            userService.SetHandler(new ShowAllIssueHandler());
                             userService.HandleUpdate(update);
                             break;
                         case "ShowMembers":
@@ -41,12 +41,12 @@ namespace TaskManager.Handler
             }
         }
 
-        private void SubmitsQuestion(UserService userService)
+        private void SubmitsQuestion(ClientService userService)
         {
             userService.TgClient.SendTextMessageAsync(userService.Id, $"Доска №{userService.ClientUserService.GetActiveBoard().NumberBoard} (Твоя роль: {userService.ClientUserService.GetRole()})", replyMarkup: Button(userService));
         }
 
-        private InlineKeyboardMarkup Button(UserService userService)
+        private InlineKeyboardMarkup Button(ClientService userService)
         {
             InlineKeyboardMarkup keyboard;
             if (userService.ClientUserService.GetActiveBoard().OwnerBoard == userService.Id)
