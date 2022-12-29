@@ -83,12 +83,12 @@ namespace TaskManager.Handler
             return keyboard;
         }
 
-        private async void ShowsAllIssuesInBoard(UserService userService)
-        {
-            await userService.TgClient.SendTextMessageAsync
-                (userService.Id, $"Перед вами список всех ваших задач в исполнении в текущей доске: \n" +
-                $" {GetAllIssuesInProgressForClientInBoard(userService)}", replyMarkup: GetBackButton());
-        }
+        //private async void ShowsAllIssuesInBoard(UserService userService)
+        //{
+        //    await userService.TgClient.SendTextMessageAsync
+        //        (userService.Id, $"Перед вами список всех ваших задач в исполнении в текущей доске: \n" +
+        //        $" {GetAllIssuesInProgressForClientInBoard(userService)}", replyMarkup: GetBackButton());
+        //}
 
         private string GetAllIssuesInProgressForClientInBoard(UserService userService)
         {
